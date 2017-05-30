@@ -11,7 +11,6 @@ colorlinks: yes
 cover-image: images/main.png
 ---
 
-
 `r if (knitr:::is_html_output()) '# Preface {-}'`
 
 `r if (knitr:::is_html_output()) '![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)'`
