@@ -5,8 +5,8 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Master thesis</a></li>
       after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
+        <li><a href="https://github.com/sylvainschmitt/master-thesis" target="blank">work in progress</a></li>
+    edit: https://github.com/sylvainschmitt/master-thesis/blob/master/%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:

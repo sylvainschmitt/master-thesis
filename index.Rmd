@@ -11,14 +11,17 @@ colorlinks: yes
 cover-image: images/main.png
 ---
 
-# Preface {-}
+
+`r if (knitr:::is_html_output()) '# Preface {-}'`
+
+`r if (knitr:::is_html_output()) '![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)'`
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
 knitr::include_graphics('images/main.png', dpi = NA)
 ```
 
-This is the online html version of my master thesis. The pdf version is available for download with the download button on top of the windows.
+`r if (knitr:::is_html_output()) 'This is the online html version of my master thesis. The pdf version is available for download with the download button on top of the windows.'`
 
-Have a nice reading.
+`r if (knitr:::is_html_output()) 'Have a nice reading.'`
 
-<div align="right">  *Sylvain*
+`r if (knitr:::is_html_output()) '<div align="right">  *Sylvain*'`
