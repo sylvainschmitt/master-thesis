@@ -7,7 +7,7 @@ bookdown::gitbook:
       after: |
         <li><a href="https://github.com/sylvainschmitt/master-thesis" target="blank">work in progress</a></li>
     edit: https://github.com/sylvainschmitt/master-thesis/blob/master/%s
-    download: ["pdf", "epub"]
+    download: ["pdf"]
 bookdown::pdf_book:
   includes:
     in_header: latex/preamble.tex

@@ -4,8 +4,8 @@ title: "Master thesis"
 author: "Sylvain SCHMITT"
 date: "`r Sys.Date()`"
 output: bookdown::gitbook
-csl: bibliography/mee.csl
-bibliography: bibliography/library.bib
+csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes
 colorlinks: yes
 cover-image: images/main.png

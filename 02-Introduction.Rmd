@@ -1,27 +1,13 @@
 # Introduction {-}
 
-* Introduce why tropical rainforest are such a good study case
-* Define biodiversity 
-* Define ecosystem functionning
-* Define ecosystem services
-* Introduce tropical sylviculture
-* Define selective logging
-* Introduce biodiversity erosion in tropical rainforests ant its impact
-* Introduce Loreau partitionning
-* Introduce the interest of modelling
-* Introduce the idea to look at biodiversity as both a parameter and an output
+Sutainable forest management in the tropics (i.e. managed selective harvesting of timber) has been widely promoted internationnaly to combat tropical deforestation and degradation [@Zimmerman2012]. Currently tropical logging accounts for one eight of global timber production [@Blaser2011] and is still increasing. Most tropical timber production originates from selective logging, the targeted harvesting of timber from commercial species in a single cuttint cycle [@Martin2015].
 
-Tropical rainforests have fascinated ecologists due to their outstanding diversity [@connell_diversity_1978].
+On the other hand, tropical rainforests have fascinated ecologists due to their outstanding diversity [@connell_diversity_1978]. Effectively tropical forests host over half of the Earth's biodiversity [@Scheffers2012]. High biodiversity from tropical rainforests is the source of many ecosystem functions. Amongst others, tropical forests play a key role in biogeochemical cycles, including carbone storage [@Lewis2004]. **Add insights into carbon storage role of tropical forest.** Ecosystem functions from tropical forests support numerous ecosystem services, such as timber production and climate regulation. 
 
-Tropical forests are primary ecosystems in terms of biodiversit and carbon storage [@Lewis2004].
+But several authors argue that selective logging represents a major threat to biodiversity [@Carreno-Rocabado2012; @DeAvila2015; @Gibson2013; @Martin2015; @Zimmerman2012], challenging the sustainable definition from current selective logging. We consequently need to assess both short and long term impacts of selective logging on tropical forest ecosystems to implement better syslvicultural practives in order to reach sustainability.
 
-High biodiversity from tropical rainforests is the source of many ecosystem functions, which support ecosystem services.
+The question of selective logging impact on tropical forest can be directly related to the emerging field of biodiversity and ecosystem functionning [@Loreau2000]. Tropical forest outstanding biodiversity will be both a factor and a result of forest ecosystem response to logging disturbance. And forest ecosystem response to logging disturbance will directly modify ecosystem functionning in both short and long term. Consequently assessing selective logging effect on tropical forest linking biodiversity and ecosystem seems an obvious and promising way [@Loreau2010]. **Paragraph to fully review !**
 
-Biodiversity and ecosystem functionning field is emmering [@Loreau2000].
+Negative short term impacts of selective logging have been assessed [@Carreno-Rocabado2012; @DeAvila2015;  but see @Martin2015]. Much less is known about the long term impact [@Osazuwa-Peters2015]. The main reason is the difficulty to conduct long term empirical study [but see @Herault2010], which can be completed by the use of forest simulators [@Huth2004; @Khler2004; @Ruger2008; @Tietjen2006]. Individual-based models of forest dynamics present the perfect framework to develop such joint biodiversity-ecosystem approaches [@Li]. Individual-based models describe forest 'patches' accumulating carbon through time, assessing tree growth within the patch, or releasing carbon through gap opening [@Bugmann2001]. Up to several dozens of different Plant Functional Types (PFTs) are generally defined and models can sometimes be fully spatially explicit **Cite Pacala et al. 1996**. Recently, the forest growth simulator TROLL [@Chave1999], an individual-based and spatially explicit forest model, was developped to introduce recent advances in plant physiological community. TROLL model relates physiological processes to species-specific functional traits [@Li]. Consequently, TROLL model allow to simulate fully a neotropical forest biodiversity to study biodiversity-ecosystem functionning link response to logging disturbance.
 
-Selective logging is increasing in tropical forests.
-
-Tropical logging accounts for one eight of global timber production [@Blaser2011].
-
-Selective logging represents a major threat to biodiversity [@Gibson2013].
-
+**Major question greater diversity (taxonomic and functional) brought a better resilience to disturbance ?**

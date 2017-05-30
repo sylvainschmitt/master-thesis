@@ -99,6 +99,17 @@
 }
 \makeatother
 
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
 \begin{document}
 \maketitle
 
@@ -132,82 +143,99 @@ I would like to thank\ldots{}
 \section*{Introduction}\label{introduction}
 \addcontentsline{toc}{section}{Introduction}
 
-\begin{itemize}
-\tightlist
-\item
-  Introduce why tropical rainforest are such a good study case
-\item
-  Define biodiversity
-\item
-  Define ecosystem functionning
-\item
-  Define ecosystem services
-\item
-  Introduce tropical sylviculture
-\item
-  Define selective logging
-\item
-  Introduce biodiversity erosion in tropical rainforests ant its impact
-\item
-  Introduce Loreau partitionning
-\item
-  Introduce the interest of modelling
-\item
-  Introduce the idea to look at biodiversity as both a parameter and an
-  output
-\end{itemize}
+Sutainable forest management in the tropics (i.e.~managed selective
+harvesting of timber) has been widely promoted internationnaly to combat
+tropical deforestation and degradation \citep{Zimmerman2012}. Currently
+tropical logging accounts for one eight of global timber production
+\citep{Blaser2011} and is still increasing. Most tropical timber
+production originates from selective logging, the targeted harvesting of
+timber from commercial species in a single cuttint cycle
+\citep{Martin2015}.
 
-Tropical rainforests have fascinated ecologists due to their outstanding
-diversity \citep{connell_diversity_1978}.
+On the other hand, tropical rainforests have fascinated ecologists due
+to their outstanding diversity \citep{connell_diversity_1978}.
+Effectively tropical forests host over half of the Earth's biodiversity
+\citep{Scheffers2012}. High biodiversity from tropical rainforests is
+the source of many ecosystem functions. Amongst others, tropical forests
+play a key role in biogeochemical cycles, including carbone storage
+\citep{Lewis2004}. \textbf{Add insights into carbon storage role of
+tropical forest.} Ecosystem functions from tropical forests support
+numerous ecosystem services, such as timber production and climate
+regulation.
 
-Tropical forests are primary ecosystems in terms of biodiversit and
-carbon storage \citep{Lewis2004}.
+But several authors argue that selective logging represents a major
+threat to biodiversity
+\citep{Carreno-Rocabado2012, DeAvila2015, Gibson2013, Martin2015, Zimmerman2012},
+challenging the sustainable definition from current selective logging.
+We consequently need to assess both short and long term impacts of
+selective logging on tropical forest ecosystems to implement better
+syslvicultural practives in order to reach sustainability.
 
-High biodiversity from tropical rainforests is the source of many
-ecosystem functions, which support ecosystem services.
+The question of selective logging impact on tropical forest can be
+directly related to the emerging field of biodiversity and ecosystem
+functionning \citep{Loreau2000}. Tropical forest outstanding
+biodiversity will be both a factor and a result of forest ecosystem
+response to logging disturbance. And forest ecosystem response to
+logging disturbance will directly modify ecosystem functionning in both
+short and long term. Consequently assessing selective logging effect on
+tropical forest linking biodiversity and ecosystem seems an obvious and
+promising way \citep{Loreau2010}. \textbf{Paragraph to fully review !}
 
-Biodiversity and ecosystem functionning field is emmering
-\citep{Loreau2000}.
+Negative short term impacts of selective logging have been assessed
+\citetext{\citealp{Carreno-Rocabado2012}; \citealp{DeAvila2015}; \citealp[but
+see][]{Martin2015}}. Much less is known about the long term impact
+\citep{Osazuwa-Peters2015}. The main reason is the difficulty to conduct
+long term empirical study \citep[but see][]{Herault2010}, which can be
+completed by the use of forest simulators
+\citep{Huth2004, Khler2004, Ruger2008, Tietjen2006}. Individual-based
+models of forest dynamics present the perfect framework to develop such
+joint biodiversity-ecosystem approaches \citep{Li}. Individual-based
+models describe forest `patches' accumulating carbon through time,
+assessing tree growth within the patch, or releasing carbon through gap
+opening \citep{Bugmann2001}. Up to several dozens of different Plant
+Functional Types (PFTs) are generally defined and models can sometimes
+be fully spatially explicit \textbf{Cite Pacala et al. 1996}. Recently,
+the forest growth simulator TROLL \citep{Chave1999}, an individual-based
+and spatially explicit forest model, was developped to introduce recent
+advances in plant physiological community. TROLL model relates
+physiological processes to species-specific functional traits
+\citep{Li}. Consequently, TROLL model allow to simulate fully a
+neotropical forest biodiversity to study biodiversity-ecosystem
+functionning link response to logging disturbance.
 
-Selective logging is increasing in tropical forests.
+\textbf{Major question greater diversity (taxonomic and functional)
+brought a better resilience to disturbance ?}
 
-Tropical logging accounts for one eight of global timber production
-\citep{Blaser2011}.
+\section{Model description}\label{model-description}
 
-Selective logging represents a major threat to biodiversity
-\citep{Gibson2013}.
+\subsection{Overview}\label{overview}
 
-\section{Materials and methods}\label{materials-and-methods}
+\subsection{Abiotic environment}\label{abiotic-environment}
 
-\subsection{TROLL simulator}\label{troll-simulator}
+\subsection{Photosynthesis}\label{photosynthesis}
 
-\subsubsection{Abiotic environment}\label{abiotic-environment}
+\subsection{Autotrpohic respiration}\label{autotrpohic-respiration}
 
-\subsubsection{Photosynthesis}\label{photosynthesis}
+\subsection{Carbon uptake}\label{carbon-uptake}
 
-\subsubsection{Autotrpohic respiration}\label{autotrpohic-respiration}
+\subsection{Tree growth}\label{tree-growth}
 
-\subsubsection{Carbon uptake}\label{carbon-uptake}
-
-\subsubsection{Tree growth}\label{tree-growth}
-
-\subsubsection{Seed dispersion, production and
+\subsection{Seed dispersion, production and
 recruitment}\label{seed-dispersion-production-and-recruitment}
 
-\subsubsection{Mortality}\label{mortality}
+\subsection{Mortality}\label{mortality}
 
-\subsection{TROLL sensitivity
-analysis}\label{troll-sensitivity-analysis}
+\section{Sensitivity analysis}\label{sensitivity-analysis}
 
-\subsubsection{Functional traits}\label{functional-traits}
+\subsection{Functional traits}\label{functional-traits}
 
-\subsubsection{Seed rain}\label{seed-rain}
+\subsection{Seed rain}\label{seed-rain}
 
-\subsection{Disturbance}\label{disturbance}
+\section{Disturbance}\label{disturbance}
 
-\subsubsection{Disturbance module}\label{disturbance-module}
+\subsection{Model description}\label{model-description-1}
 
-\subsubsection{Design of experiment}\label{design-of-experiment}
+\subsection{Design of experiment}\label{design-of-experiment}
 
 \begin{figure}[htbp]
 \centering
@@ -219,43 +247,45 @@ dispersion (FDis) resulting in a broad range of aboveground biomass
 area, wood specific gravity, maximum diameter, maximum height).}
 \end{figure}
 
-\subsubsection{Outputs anlaysis ?}\label{outputs-anlaysis}
+\subsection{Outputs anlaysis ?}\label{outputs-anlaysis}
 
-\paragraph{Resistance and resilience
+\subsubsection{Resistance and resilience
 metrics}\label{resistance-and-resilience-metrics}
 
-\paragraph{Biodiversity partitioning}\label{biodiversity-partitioning}
+\subsubsection{Biodiversity
+partitioning}\label{biodiversity-partitioning}
 
-\subsection{Selective logging}\label{selective-logging}
+\section{Selective logging}\label{selective-logging}
 
-\subsubsection{Selective logging module}\label{selective-logging-module}
+\subsection{Model description}\label{model-description-2}
 
-\paragraph{Designation}\label{designation}
+\subsubsection{Designation}\label{designation}
 
-\paragraph{Selection}\label{selection}
+\subsubsection{Selection}\label{selection}
 
-\paragraph{Rotten trees}\label{rotten-trees}
+\subsubsection{Rotten trees}\label{rotten-trees}
 
-\paragraph{Felling}\label{felling}
+\subsubsection{Felling}\label{felling}
 
-\paragraph{Tracks}\label{tracks}
+\subsubsection{Tracks}\label{tracks}
 
-\paragraph{Gap damages}\label{gap-damages}
+\subsubsection{Gap damages}\label{gap-damages}
 
-\subsubsection{Design of experiment}\label{design-of-experiment-1}
+\subsection{Design of experiment}\label{design-of-experiment-1}
 
-\subsubsection{Outputs analysis ?}\label{outputs-analysis}
+\subsection{Outputs analysis ?}\label{outputs-analysis}
 
-\paragraph{Resistance and resilience
+\subsubsection{Resistance and resilience
 metrics}\label{resistance-and-resilience-metrics-1}
 
-\paragraph{Biodiversity partitioning}\label{biodiversity-partitioning-1}
+\subsubsection{Biodiversity
+partitioning}\label{biodiversity-partitioning-1}
 
 \section{Results}\label{results}
 
 \section{Discussion}\label{discussion}
 
-\bibliography{bibliography/library.bib}
+\bibliography{/home/sylvain/Documents/Bibliography/library.bib}
 
 
 \end{document}

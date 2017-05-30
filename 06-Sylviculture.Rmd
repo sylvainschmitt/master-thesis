@@ -1,0 +1,23 @@
+# Selective logging
+
+## Model description
+
+### Designation
+
+### Selection
+
+### Rotten trees
+
+### Felling
+
+### Tracks
+
+### Gap damages
+
+## Design of experiment
+
+## Outputs analysis ?
+
+### Resistance and resilience metrics
+
+### Biodiversity partitioning
