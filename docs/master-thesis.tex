@@ -194,9 +194,9 @@ models describe forest `patches' accumulating carbon through time,
 assessing tree growth within the patch, or releasing carbon through gap
 opening \citep{Bugmann2001}. Up to several dozens of different Plant
 Functional Types (PFTs) are generally defined and models can sometimes
-be fully spatially explicit \textbf{Cite Pacala et al. 1996}. Recently,
-the forest growth simulator TROLL \citep{Chave1999}, an individual-based
-and spatially explicit forest model, was developped to introduce recent
+be fully spatially explicit \citep{Pacala1996}. Recently, the forest
+growth simulator TROLL \citep{Chave1999}, an individual-based and
+spatially explicit forest model, was developped to introduce recent
 advances in plant physiological community. TROLL model relates
 physiological processes to species-specific functional traits
 \citep{Li}. Consequently, TROLL model allow to simulate fully a
@@ -210,18 +210,122 @@ brought a better resilience to disturbance ?}
 
 \subsection{Overview}\label{overview}
 
+TROLL model each tree indivdually in a located environment. Thus TROLL
+model, alongside with SORTIE \citep{Pacala1996, Uriarte2009} and FORMIND
+\citep{Fischer2016, Kohler1998}, can be defined as an individual-based
+and spatially explicit forest growth model. TROLL simulates the life
+cycle of individual trees from recruitment, with a diameter at breast
+height (dbh) above 1 cm, to death with growth and seed production. Trees
+are growing in a located light environment explicitly computed witin
+voxels of 1 \(m^3\). Each tree is consistently defined by its age,
+diameter at brest height (dbh), height (h), crown radius (CR), crown
+depth (CD) and leaf area (LA) (see figure \ref{fig:TROLLtree}). Tree
+geometry is calculated with allometric equations but leaf area vary
+dinamically within each crown following carbon allocations. Voxels
+resolution of 1 \(m^3\) allow the establishment of maximum one tree by
+1x1 m pixels. Each tree is flagged with a species label inherited from
+the parent tree through the seedling recruitment. A species label is
+associated to a number of species specific parameters (see table
+\ref{tab:traits}) related to functional trait values which can be
+sampled on the field.
+
+\begin{table}
+
+\caption{\label{tab:traits}Species-specific parameters used in TROLL from @Li. Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.}
+\centering
+\begin{tabular}[t]{l|l|l}
+\hline
+Abbreviation & Description & Units\\
+\hline
+\$LMA\$ & leaf mass per area & \$g.m\textasciicircum{}-2\$\\
+\hline
+\$N\_m\$ & leaf nitrogen content per dry mass & \$mg.g\textasciicircum{}-1\$\\
+\hline
+\$P\_m\$ & leaf phosphorous content per dry mass & \$mg.g\textasciicircum{}-1\$\\
+\hline
+\$wsg\$ & wood specific gravity & \$g.cm\textasciicircum{}-3\$\\
+\hline
+\$dbh\_\{thresh\}\$ & diameter at breasth height threshold & \$m\$\\
+\hline
+\$h\_\{lim\}\$ & asymptotic height & \$m\$\\
+\hline
+\$a\_h\$ & parameter of the tree-height-dbh allometry & \$m\$\\
+\hline
+\end{tabular}
+\end{table}
+
+Carbon assimilation is computed over half-hourly period of a
+representative day. Then allocation is computed to simulate tree growth
+from an explicit carbone balance (in contrast to previous models).
+Finally environment is updated at each timestep set to one month.
+Seedlings are not simulated explicitly but as a pool. In addition
+belowground processes, herbaceous plants, epiphytes and lianas are not
+simulated inside TROLL. The source code is written in C++ and available
+upon request. All analyses were conducted in R version 3.4.0
+\textbf{Cite R, add entry in Mendeley}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{images/TROLLtree.png}
+\caption{\label{fig:TROLLtree}Individuals tree inside TROLL explicit spatial
+grid from \citet{Li}. Tree geometry (crown radius CR, crown depth CD,
+height h, diameter at breast height dbh) is updated at each timestep
+following allometric relationship with assimilated carbon allocated to
+growth. Each tree is flagged with a species label linking to its
+species-specific attributes. Light is compputed explicitly at each
+timestep for each voxel.}
+\end{figure}
+
 \subsection{Abiotic environment}\label{abiotic-environment}
+
+A voxel space, with a resolution of 1 \(m^3\), is used to explicilty
+model the abiotic environment. For each tree crown, leaf area density is
+calculated on tree geometry assuming a uniform distriution across voxels
+occupied by the crown. Leaf area density is computed within each voxel
+summing all tree crowns inside the voxel \(v\), and is denoted
+\(LAD(v)\) (leaf area per voxel in \(m².m^-3\)). The vertical sum of
+\(LAD\) from voxel \(v\) to the ground level defines \(LAI(v)\) (leaf
+area per fround area in \(m^2.m^-2\) commonly called leaf area index):
+
+\begin{equation}
+  LAI(v) = \sum _{v'=v} ^\infty LAD(v') 
+  \label{eq:LAI}
+\end{equation}
+
+Daily variations in light intensity (photosynthetic photon flux density
+PPFD in \(\mu mol_{photons}.m^-2.s^-1\)), temperature (T in degrees
+Celsius), and vapor pressure deficit (VPD in \(kPA\)) are computed to
+assess carbon assimilation within each voxel of the canopy and for a
+representative day per month (see Appendix 1 from \citet{Li} for further
+details). Variation of PPFD Within the canopy is calculated as a loacal
+Beer-Lambert extinction law:
+
+\begin{equation}
+  PPFD_{max,month}(v) = PPFD_{top,max,month}*e^{-k*LAI(v)}
+  \label{eq:PPFD}
+\end{equation}
+
+The daily maximum incident PPFD at the top of canopy
+\(PPFD_{top,max,month}\) is given as input. The extinction rate \(k\) is
+assumed as constant (see table \ref{tab:par} for parameters value),
+besides is variation with zenith angle and species leaf inclination
+angle \citep{Meir2000}. Moreover only vertical light diffusion is
+considered ignoring lateral light diffusion, which can have an important
+role especially in logging gaps. Finally, intra-day variation at half
+hour time steps \(t\) for a representative day every month are used to
+compute \(PPFD_{month}(v,t)\), \(T_{month}(v,t)\) and
+\(VPD_{month}(v,t)\). Water and nutrient process both in soil and inside
+trees are not simulated.
 
 \subsection{Photosynthesis}\label{photosynthesis}
 
-\subsection{Autotrpohic respiration}\label{autotrpohic-respiration}
+\subsection{Autotrophic respiration}\label{autotrophic-respiration}
 
 \subsection{Carbon uptake}\label{carbon-uptake}
 
 \subsection{Tree growth}\label{tree-growth}
 
-\subsection{Seed dispersion, production and
-recruitment}\label{seed-dispersion-production-and-recruitment}
+\subsection{Recruitment}\label{recruitment}
 
 \subsection{Mortality}\label{mortality}
 

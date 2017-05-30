@@ -74,10 +74,10 @@
 <li class="chapter" data-level="1.1" data-path="model-description.html"><a href="model-description.html#overview"><i class="fa fa-check"></i><b>1.1</b> Overview</a></li>
 <li class="chapter" data-level="1.2" data-path="model-description.html"><a href="model-description.html#abiotic-environment"><i class="fa fa-check"></i><b>1.2</b> Abiotic environment</a></li>
 <li class="chapter" data-level="1.3" data-path="model-description.html"><a href="model-description.html#photosynthesis"><i class="fa fa-check"></i><b>1.3</b> Photosynthesis</a></li>
-<li class="chapter" data-level="1.4" data-path="model-description.html"><a href="model-description.html#autotrpohic-respiration"><i class="fa fa-check"></i><b>1.4</b> Autotrpohic respiration</a></li>
+<li class="chapter" data-level="1.4" data-path="model-description.html"><a href="model-description.html#autotrophic-respiration"><i class="fa fa-check"></i><b>1.4</b> Autotrophic respiration</a></li>
 <li class="chapter" data-level="1.5" data-path="model-description.html"><a href="model-description.html#carbon-uptake"><i class="fa fa-check"></i><b>1.5</b> Carbon uptake</a></li>
 <li class="chapter" data-level="1.6" data-path="model-description.html"><a href="model-description.html#tree-growth"><i class="fa fa-check"></i><b>1.6</b> Tree growth</a></li>
-<li class="chapter" data-level="1.7" data-path="model-description.html"><a href="model-description.html#seed-dispersion-production-and-recruitment"><i class="fa fa-check"></i><b>1.7</b> Seed dispersion, production and recruitment</a></li>
+<li class="chapter" data-level="1.7" data-path="model-description.html"><a href="model-description.html#recruitment"><i class="fa fa-check"></i><b>1.7</b> Recruitment</a></li>
 <li class="chapter" data-level="1.8" data-path="model-description.html"><a href="model-description.html#mortality"><i class="fa fa-check"></i><b>1.8</b> Mortality</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>2</b> Sensitivity analysis</a><ul>
@@ -134,15 +134,81 @@
 <h1><span class="header-section-number">1</span> Model description</h1>
 <div id="overview" class="section level2">
 <h2><span class="header-section-number">1.1</span> Overview</h2>
+<p>TROLL model each tree indivdually in a located environment. Thus TROLL model, alongside with SORTIE <span class="citation">(Pacala <em>et al.</em> <a href="#ref-Pacala1996">1996</a>; Uriarte <em>et al.</em> <a href="#ref-Uriarte2009">2009</a>)</span> and FORMIND <span class="citation">(Köhler &amp; Huth <a href="#ref-Kohler1998">1998</a>; Fischer <em>et al.</em> <a href="#ref-Fischer2016">2016</a>)</span>, can be defined as an individual-based and spatially explicit forest growth model. TROLL simulates the life cycle of individual trees from recruitment, with a diameter at breast height (dbh) above 1 cm, to death with growth and seed production. Trees are growing in a located light environment explicitly computed witin voxels of 1 <span class="math inline">\(m^3\)</span>. Each tree is consistently defined by its age, diameter at brest height (dbh), height (h), crown radius (CR), crown depth (CD) and leaf area (LA) (see figure <a href="model-description.html#fig:TROLLtree">1.1</a>). Tree geometry is calculated with allometric equations but leaf area vary dinamically within each crown following carbon allocations. Voxels resolution of 1 <span class="math inline">\(m^3\)</span> allow the establishment of maximum one tree by 1x1 m pixels. Each tree is flagged with a species label inherited from the parent tree through the seedling recruitment. A species label is associated to a number of species specific parameters (see table <a href="model-description.html#tab:traits">1.1</a>) related to functional trait values which can be sampled on the field.</p>
+<table>
+<caption><span id="tab:traits">Table 1.1: </span>Species-specific parameters used in TROLL from <span class="citation">Maréchaux &amp; Chave</span>. Data originates from the BRIDGE <span class="citation">(Baraloto <em>et al.</em> <a href="#ref-Baraloto2010">2010</a>)</span> and TRY <span class="citation">(Kattge <em>et al.</em> <a href="#ref-Kattge2011">2011</a>)</span> datasets.</caption>
+<thead>
+<tr class="header">
+<th align="left">Abbreviation</th>
+<th align="left">Description</th>
+<th align="left">Units</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(LMA\)</span></td>
+<td align="left">leaf mass per area</td>
+<td align="left"><span class="math inline">\(g.m^-2\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(N_m\)</span></td>
+<td align="left">leaf nitrogen content per dry mass</td>
+<td align="left"><span class="math inline">\(mg.g^-1\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(P_m\)</span></td>
+<td align="left">leaf phosphorous content per dry mass</td>
+<td align="left"><span class="math inline">\(mg.g^-1\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(wsg\)</span></td>
+<td align="left">wood specific gravity</td>
+<td align="left"><span class="math inline">\(g.cm^-3\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(dbh_{thresh}\)</span></td>
+<td align="left">diameter at breasth height threshold</td>
+<td align="left"><span class="math inline">\(m\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(h_{lim}\)</span></td>
+<td align="left">asymptotic height</td>
+<td align="left"><span class="math inline">\(m\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(a_h\)</span></td>
+<td align="left">parameter of the tree-height-dbh allometry</td>
+<td align="left"><span class="math inline">\(m\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Carbon assimilation is computed over half-hourly period of a representative day. Then allocation is computed to simulate tree growth from an explicit carbone balance (in contrast to previous models). Finally environment is updated at each timestep set to one month. Seedlings are not simulated explicitly but as a pool. In addition belowground processes, herbaceous plants, epiphytes and lianas are not simulated inside TROLL. The source code is written in C++ and available upon request. All analyses were conducted in R version 3.4.0 <strong>Cite R, add entry in Mendeley</strong>.</p>
+<div class="figure"><span id="fig:TROLLtree"></span>
+<img src="images/TROLLtree.png" alt="Individuals tree inside TROLL explicit spatial grid from @Li. Tree geometry (crown radius CR, crown depth CD, height h, diameter at breast height dbh) is updated at each timestep following allometric relationship with assimilated carbon allocated to growth. Each tree is flagged with a species label linking to its species-specific attributes. Light is compputed explicitly at each timestep for each voxel."  />
+<p class="caption">
+Figure 1.1: Individuals tree inside TROLL explicit spatial grid from <span class="citation">Maréchaux &amp; Chave</span>. Tree geometry (crown radius CR, crown depth CD, height h, diameter at breast height dbh) is updated at each timestep following allometric relationship with assimilated carbon allocated to growth. Each tree is flagged with a species label linking to its species-specific attributes. Light is compputed explicitly at each timestep for each voxel.
+</p>
+</div>
 </div>
 <div id="abiotic-environment" class="section level2">
 <h2><span class="header-section-number">1.2</span> Abiotic environment</h2>
+<p>A voxel space, with a resolution of 1 <span class="math inline">\(m^3\)</span>, is used to explicilty model the abiotic environment. For each tree crown, leaf area density is calculated on tree geometry assuming a uniform distriution across voxels occupied by the crown. Leaf area density is computed within each voxel summing all tree crowns inside the voxel <span class="math inline">\(v\)</span>, and is denoted <span class="math inline">\(LAD(v)\)</span> (leaf area per voxel in <span class="math inline">\(m².m^-3\)</span>). The vertical sum of <span class="math inline">\(LAD\)</span> from voxel <span class="math inline">\(v\)</span> to the ground level defines <span class="math inline">\(LAI(v)\)</span> (leaf area per fround area in <span class="math inline">\(m^2.m^-2\)</span> commonly called leaf area index):</p>
+<span class="math display" id="eq:LAI">\[\begin{equation}
+  LAI(v) = \sum _{v&#39;=v} ^\infty LAD(v&#39;) 
+  \tag{1.1}
+\end{equation}\]</span>
+<p>Daily variations in light intensity (photosynthetic photon flux density PPFD in <span class="math inline">\(\mu mol_{photons}.m^-2.s^-1\)</span>), temperature (T in degrees Celsius), and vapor pressure deficit (VPD in <span class="math inline">\(kPA\)</span>) are computed to assess carbon assimilation within each voxel of the canopy and for a representative day per month (see Appendix 1 from <span class="citation">Maréchaux &amp; Chave</span> for further details). Variation of PPFD Within the canopy is calculated as a loacal Beer-Lambert extinction law:</p>
+<span class="math display" id="eq:PPFD">\[\begin{equation}
+  PPFD_{max,month}(v) = PPFD_{top,max,month}*e^{-k*LAI(v)}
+  \tag{1.2}
+\end{equation}\]</span>
+<p>The daily maximum incident PPFD at the top of canopy <span class="math inline">\(PPFD_{top,max,month}\)</span> is given as input. The extinction rate <span class="math inline">\(k\)</span> is assumed as constant (see table <a href="#tab:par"><strong>??</strong></a> for parameters value), besides is variation with zenith angle and species leaf inclination angle <span class="citation">(Meir <em>et al.</em> <a href="#ref-Meir2000">2000</a>)</span>. Moreover only vertical light diffusion is considered ignoring lateral light diffusion, which can have an important role especially in logging gaps. Finally, intra-day variation at half hour time steps <span class="math inline">\(t\)</span> for a representative day every month are used to compute <span class="math inline">\(PPFD_{month}(v,t)\)</span>, <span class="math inline">\(T_{month}(v,t)\)</span> and <span class="math inline">\(VPD_{month}(v,t)\)</span>. Water and nutrient process both in soil and inside trees are not simulated.</p>
 </div>
 <div id="photosynthesis" class="section level2">
 <h2><span class="header-section-number">1.3</span> Photosynthesis</h2>
 </div>
-<div id="autotrpohic-respiration" class="section level2">
-<h2><span class="header-section-number">1.4</span> Autotrpohic respiration</h2>
+<div id="autotrophic-respiration" class="section level2">
+<h2><span class="header-section-number">1.4</span> Autotrophic respiration</h2>
 </div>
 <div id="carbon-uptake" class="section level2">
 <h2><span class="header-section-number">1.5</span> Carbon uptake</h2>
@@ -150,12 +216,36 @@
 <div id="tree-growth" class="section level2">
 <h2><span class="header-section-number">1.6</span> Tree growth</h2>
 </div>
-<div id="seed-dispersion-production-and-recruitment" class="section level2">
-<h2><span class="header-section-number">1.7</span> Seed dispersion, production and recruitment</h2>
+<div id="recruitment" class="section level2">
+<h2><span class="header-section-number">1.7</span> Recruitment</h2>
 </div>
 <div id="mortality" class="section level2">
 <h2><span class="header-section-number">1.8</span> Mortality</h2>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Pacala1996">
+<p>Pacala, S.W., Canham, C.D., Saponara, J., Silander, J.A., Kobe, R.K. &amp; Ribbens, E. (1996). Forest models defined by field measurements: estimation, error analysis and dynamics. <em>Ecological Monographs</em>, <strong>66</strong>, 1–43.</p>
+</div>
+<div id="ref-Uriarte2009">
+<p>Uriarte, M., Canham, C.D., Thompson, J., Zimmerman, J.K., Murphy, L., Sabat, A.M., Fetcher, N. &amp; Haines, B.L. (2009). Natural disturbance and human land use as determinants of tropical forest dynamics: Results from a forest simulator. <em>Ecological Monographs</em>, <strong>79</strong>, 423–443.</p>
+</div>
+<div id="ref-Kohler1998">
+<p>Köhler, P. &amp; Huth, A. (1998). The effects of tree species grouping in tropical rainforest modelling: Simulations with the individual-based model FORMIND. <em>Ecological Modelling</em>, <strong>109</strong>, 301–321.</p>
+</div>
+<div id="ref-Fischer2016">
+<p>Fischer, R., Bohn, F., Dantas de Paula, M., Dislich, C., Groeneveld, J., Guti??rrez, A.G., Kazmierczak, M., Knapp, N., Lehmann, S., Paulick, S., P??tz, S., R??dig, E., Taubert, F., K??hler, P. &amp; Huth, A. (2016). Lessons learned from applying a forest gap model to understand ecosystem and carbon dynamics of complex tropical forests. <em>Ecological Modelling</em>, <strong>326</strong>, 124–133.</p>
+</div>
+<div id="ref-Baraloto2010">
+<p>Baraloto, C., Paine, C.E.T., Poorter, L., Beauchene, J., Bonal, D., Domenach, A.M., Hérault, B., Patiño, S., Roggy, J.C. &amp; Chave, J. (2010). Decoupled leaf and stem economics in rain forest trees. <em>Ecology Letters</em>, <strong>13</strong>, 1338–1347.</p>
+</div>
+<div id="ref-Kattge2011">
+<p>Kattge, J., Diaz, S., Lavorel, S., Prentice, I.C., Leadley, P., B??nisch, G., Garnier, E., Westoby, M., Reich, P.B., Wright, I.J., Cornelissen, J.H.C., Violle, C., Harrison, S.P., Van Bodegom, P.M., Reichstein, M., Enquist, B.J., Soudzilovskaia, N.A., Ackerly, D.D., Anand, M., Atkin, O., Bahn, M., Baker, T.R., Baldocchi, D., Bekker, R., Blanco, C.C., Blonder, B., Bond, W.J., Bradstock, R., Bunker, D.E., Casanoves, F., Cavender-Bares, J., Chambers, J.Q., Chapin, F.S., Chave, J., Coomes, D., Cornwell, W.K., Craine, J.M., Dobrin, B.H., Duarte, L., Durka, W., Elser, J., Esser, G., Estiarte, M., Fagan, W.F., Fang, J., Fern??ndez-M??ndez, F., Fidelis, A., Finegan, B., Flores, O., Ford, H., Frank, D., Freschet, G.T., Fyllas, N.M., Gallagher, R.V., Green, W.A., Gutierrez, A.G., Hickler, T., Higgins, S.I., Hodgson, J.G., Jalili, A., Jansen, S., Joly, C.A., Kerkhoff, A.J., Kirkup, D., Kitajima, K., Kleyer, M., Klotz, S., Knops, J.M.H., Kramer, K., K??hn, I., Kurokawa, H., Laughlin, D., Lee, T.D., Leishman, M., Lens, F., Lenz, T., Lewis, S.L., Lloyd, J., Llusi??, J., Louault, F., Ma, S., Mahecha, M.D., Manning, P., Massad, T., Medlyn, B.E., Messier, J., Moles, A.T., M??ller, S.C., Nadrowski, K., Naeem, S., Niinemets, ?., N??llert, S., N??ske, A., Ogaya, R., Oleksyn, J., Onipchenko, V.G., Onoda, Y., Ordo??ez, J., Overbeck, G., Ozinga, W.A., Pati??o, S., Paula, S., Pausas, J.G., Pe??uelas, J., Phillips, O.L., Pillar, V., Poorter, H., Poorter, L., Poschlod, P., Prinzing, A., Proulx, R., Rammig, A., Reinsch, S., Reu, B., Sack, L., Salgado-Negret, B., Sardans, J., Shiodera, S., Shipley, B., Siefert, A., Sosinski, E., Soussana, J.F., Swaine, E., Swenson, N., Thompson, K., Thornton, P., Waldram, M., Weiher, E., White, M., White, S., Wright, S.J., Yguel, B., Zaehle, S., Zanne, A.E. &amp; Wirth, C. (2011). TRY - a global database of plant traits. <em>Global Change Biology</em>, <strong>17</strong>, 2905–2935.</p>
+</div>
+<div id="ref-Meir2000">
+<p>Meir, P., Grace, J. &amp; Miranda, A.C. (2000). Photographic method to measure the vertical distribution of leaf area density in forests. <em>Agricultural and Forest Meteorology</em>, <strong>102</strong>, 105–111.</p>
 </div>
 </div>
             </section>
@@ -204,6 +294,17 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -2,16 +2,49 @@
 
 ## Overview
 
+TROLL model each tree indivdually in a located environment. Thus TROLL model, alongside with SORTIE  [@Pacala1996; @Uriarte2009] and FORMIND [@Fischer2016; @Kohler1998], can be defined as an individual-based and spatially explicit forest growth model. TROLL simulates the life cycle of individual trees from recruitment, with a diameter at breast height (dbh) above 1 cm, to death with growth and seed production. Trees are growing in a located light environment explicitly computed witin voxels of 1 $m^3$. Each tree is consistently defined by its age, diameter at brest height (dbh), height (h), crown radius (CR), crown depth (CD) and leaf area (LA) (see figure \@ref(fig:TROLLtree)). Tree geometry is calculated with allometric equations but leaf area vary dinamically within each crown following carbon allocations. Voxels resolution of 1 $m^3$ allow the establishment of maximum one tree by 1x1 m pixels. Each tree is flagged with a species label inherited from the parent tree through the seedling recruitment. A species label is associated to a number of species specific parameters (see table \@ref(tab:traits)) related to functional trait values which can be sampled on the field.
+
+```{r traits, echo=FALSE}
+table <- data.frame(
+  Abbreviation = c('$LMA$', '$N_m$', '$P_m$', '$wsg$', '$dbh_{thresh}$', '$h_{lim}$', '$a_h$'),
+  Description = c('leaf mass per area', 'leaf nitrogen content per dry mass', 'leaf phosphorous content per dry mass', 'wood specific gravity', 'diameter at breasth height threshold', 'asymptotic height', 'parameter of the tree-height-dbh allometry'),
+  Units = c('$g.m^-2$', '$mg.g^-1$', '$mg.g^-1$', '$g.cm^-3$', '$m$', '$m$', '$m$')
+)
+knitr::kable(table, caption = 'Species-specific parameters used in TROLL from @Li. Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.')
+```
+
+Carbon assimilation is computed over half-hourly period of a representative day. Then allocation is computed to simulate tree growth from an explicit carbone balance (in contrast to previous models). Finally environment is updated at each timestep set to one month. Seedlings are not simulated explicitly but as a pool. In addition belowground processes, herbaceous plants, epiphytes and lianas are not simulated inside TROLL. The source code is written in C++ and available upon request. All analyses were conducted in R version 3.4.0 **Cite R, add entry in Mendeley**.
+
+```{r TROLLtree, echo=FALSE, fig.cap='Individuals tree inside TROLL explicit spatial grid from @Li. Tree geometry (crown radius CR, crown depth CD, height h, diameter at breast height dbh) is updated at each timestep following allometric relationship with assimilated carbon allocated to growth. Each tree is flagged with a species label linking to its species-specific attributes. Light is compputed explicitly at each timestep for each voxel.'}
+knitr::include_graphics('images/TROLLtree.png', dpi = NA)
+```
+
 ## Abiotic environment
+
+A voxel space, with a resolution of 1 $m^3$, is used to explicilty model the abiotic environment. For each tree crown, leaf area density is calculated on tree geometry assuming a uniform distriution across voxels occupied by the crown. Leaf area density is computed within each voxel summing all tree crowns inside the voxel $v$, and is denoted $LAD(v)$ (leaf area per voxel in $m².m^-3$). The vertical sum of $LAD$ from voxel $v$ to the ground level defines $LAI(v)$ (leaf area per fround area in $m^2.m^-2$ commonly called leaf area index):
+
+\begin{equation}
+  LAI(v) = \sum _{v'=v} ^\infty LAD(v') 
+  (\#eq:LAI)
+\end{equation}
+
+Daily variations in light intensity (photosynthetic photon flux density PPFD in $\mu mol_{photons}.m^-2.s^-1$), temperature (T in degrees Celsius), and vapor pressure deficit (VPD in $kPA$) are computed to assess carbon assimilation within each voxel of the canopy and for a representative day per month (see Appendix 1 from @Li for further details). Variation of PPFD Within the canopy is calculated as a loacal Beer-Lambert extinction law:
+
+\begin{equation}
+  PPFD_{max,month}(v) = PPFD_{top,max,month}*e^{-k*LAI(v)}
+  (\#eq:PPFD)
+\end{equation}
+
+The daily maximum incident PPFD at the top of canopy $PPFD_{top,max,month}$ is given as input. The extinction rate $k$ is assumed as constant (see table \@ref(tab:par) for parameters value), besides is variation with zenith angle and species leaf inclination angle [@Meir2000]. Moreover only vertical light diffusion is considered ignoring lateral light diffusion, which can have an important role especially in logging gaps. Finally, intra-day variation at half hour time steps $t$ for a representative day every month are used to compute $PPFD_{month}(v,t)$, $T_{month}(v,t)$ and $VPD_{month}(v,t)$. Water and nutrient process both in soil and inside trees are not simulated.
 
 ## Photosynthesis
 
-## Autotrpohic respiration
+## Autotrophic respiration
 
 ## Carbon uptake
 
 ## Tree growth
 
-## Seed dispersion, production and recruitment
+## Recruitment
 
 ## Mortality
