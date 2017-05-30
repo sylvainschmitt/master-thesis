@@ -1,0 +1,261 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{unicode=true,
+            pdftitle={Master thesis},
+            pdfauthor={Sylvain SCHMITT},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=Blue,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Master thesis}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Sylvain SCHMITT}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{2017-05-30}
+
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+\begin{document}
+\maketitle
+
+\date{}
+
+\thispagestyle{empty}
+\begin{center}
+\includegraphics{images/main.pdf}
+\end{center}
+
+\setlength{\abovedisplayskip}{-5pt}
+\setlength{\abovedisplayshortskip}{-5pt}
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section*{Preface}\label{preface}
+\addcontentsline{toc}{section}{Preface}
+
+This is the online html version of my master thesis. The pdf version is
+available for download with the download button on top of the windows.
+
+Have a nice reading.
+
+\emph{Sylvain}
+
+\section*{Résumé et Abstract}\label{resume-et-abstract}
+\addcontentsline{toc}{section}{Résumé et Abstract}
+
+Écrire le résumé français ici\ldots{}
+
+Write the english abstract here\ldots{}
+
+\section*{Acknowledgments}\label{acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+I would like to thank\ldots{}
+
+\section*{Introduction}\label{introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+\begin{itemize}
+\tightlist
+\item
+  Introduce why tropical rainforest are such a good study case
+\item
+  Define biodiversity
+\item
+  Define ecosystem functionning
+\item
+  Define ecosystem services
+\item
+  Introduce tropical sylviculture
+\item
+  Define selective logging
+\item
+  Introduce biodiversity erosion in tropical rainforests ant its impact
+\item
+  Introduce Loreau partitionning
+\item
+  Introduce the interest of modelling
+\item
+  Introduce the idea to look at biodiversity as both a parameter and an
+  output
+\end{itemize}
+
+Tropical rainforests have fascinated ecologists due to their outstanding
+diversity \citep{connell_diversity_1978}.
+
+Tropical forests are primary ecosystems in terms of biodiversit and
+carbon storage \citep{Lewis2004}.
+
+High biodiversity from tropical rainforests is the source of many
+ecosystem functions, which support ecosystem services.
+
+Biodiversity and ecosystem functionning field is emmering
+\citep{Loreau2000}.
+
+Selective logging is increasing in tropical forests.
+
+Tropical logging accounts for one eight of global timber production
+\citep{Blaser2011}.
+
+Selective logging represents a major threat to biodiversity
+\citep{Gibson2013}.
+
+\section{Materials and methods}\label{materials-and-methods}
+
+\subsection{TROLL simulator}\label{troll-simulator}
+
+\subsubsection{Abiotic environment}\label{abiotic-environment}
+
+\subsubsection{Photosynthesis}\label{photosynthesis}
+
+\subsubsection{Autotrpohic respiration}\label{autotrpohic-respiration}
+
+\subsubsection{Carbon uptake}\label{carbon-uptake}
+
+\subsubsection{Tree growth}\label{tree-growth}
+
+\subsubsection{Seed dispersion, production and
+recruitment}\label{seed-dispersion-production-and-recruitment}
+
+\subsubsection{Mortality}\label{mortality}
+
+\subsection{TROLL sensitivity
+analysis}\label{troll-sensitivity-analysis}
+
+\subsubsection{Functional traits}\label{functional-traits}
+
+\subsubsection{Seed rain}\label{seed-rain}
+
+\subsection{Disturbance}\label{disturbance}
+
+\subsubsection{Disturbance module}\label{disturbance-module}
+
+\subsubsection{Design of experiment}\label{design-of-experiment}
+
+\subsubsection{Outputs anlaysis ?}\label{outputs-anlaysis}
+
+\paragraph{Resistance and resilience
+metrics}\label{resistance-and-resilience-metrics}
+
+\paragraph{Biodiversity partitioning}\label{biodiversity-partitioning}
+
+\subsection{Selective logging}\label{selective-logging}
+
+\subsubsection{Selective logging module}\label{selective-logging-module}
+
+\paragraph{Designation}\label{designation}
+
+\paragraph{Selection}\label{selection}
+
+\paragraph{Rotten trees}\label{rotten-trees}
+
+\paragraph{Felling}\label{felling}
+
+\paragraph{Tracks}\label{tracks}
+
+\paragraph{Gap damages}\label{gap-damages}
+
+\subsubsection{Design of experiment}\label{design-of-experiment-1}
+
+\subsubsection{Outputs analysis ?}\label{outputs-analysis}
+
+\paragraph{Resistance and resilience
+metrics}\label{resistance-and-resilience-metrics-1}
+
+\paragraph{Biodiversity partitioning}\label{biodiversity-partitioning-1}
+
+\section{Results}\label{results}
+
+\section{Discussion}\label{discussion}
+
+\bibliography{bibliography/library.bib}
+
+
+\end{document}

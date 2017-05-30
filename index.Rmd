@@ -1,0 +1,24 @@
+--- 
+site: "bookdown::bookdown_site"
+title: "Master thesis"
+author: "Sylvain SCHMITT"
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+csl: bibliography/mee.csl
+bibliography: bibliography/library.bib
+link-citations: yes
+colorlinks: yes
+cover-image: images/main.png
+---
+
+# Preface {-}
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
+knitr::include_graphics('images/main.png', dpi = NA)
+```
+
+This is the online html version of my master thesis. The pdf version is available for download with the download button on top of the windows.
+
+Have a nice reading.
+
+<div align="right">  *Sylvain*

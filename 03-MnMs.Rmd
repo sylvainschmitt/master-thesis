@@ -1,0 +1,59 @@
+# Materials and methods
+
+## TROLL simulator
+
+### Abiotic environment
+
+### Photosynthesis
+
+### Autotrpohic respiration
+
+### Carbon uptake
+
+### Tree growth
+
+### Seed dispersion, production and recruitment
+
+### Mortality
+
+## TROLL sensitivity analysis
+
+### Functional traits
+
+### Seed rain
+
+## Disturbance
+
+### Disturbance module
+
+### Design of experiment
+
+### Outputs anlaysis ?
+
+#### Resistance and resilience metrics
+
+#### Biodiversity partitioning
+
+## Selective logging
+
+### Selective logging module
+
+#### Designation
+
+#### Selection
+
+#### Rotten trees
+
+#### Felling
+
+#### Tracks
+
+#### Gap damages
+
+### Design of experiment
+
+### Outputs analysis ?
+
+#### Resistance and resilience metrics
+
+#### Biodiversity partitioning
