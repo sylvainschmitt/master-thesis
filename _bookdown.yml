@@ -1,4 +1,5 @@
 book_filename: "master-thesis"
+repo: "https://github.com/sylvainschmitt/master-thesis"
 output_dir: "docs"
 language:
   ui:

@@ -8,6 +8,8 @@ bookdown::gitbook:
         <li><a href="https://github.com/sylvainschmitt/master-thesis" target="blank">work in progress</a></li>
     edit: https://github.com/sylvainschmitt/master-thesis/blob/master/%s
     download: ["pdf"]
+  includes:
+    after_body: html/disqus.html
 bookdown::pdf_book:
   includes:
     in_header: latex/preamble.tex
@@ -15,4 +17,3 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
-bookdown::epub_book: default
