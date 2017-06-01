@@ -14,6 +14,7 @@ bookdown::pdf_book:
   includes:
     in_header: latex/preamble.tex
     before_body: latex/before_body.tex
+  template: null
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
