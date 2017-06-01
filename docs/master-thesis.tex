@@ -747,9 +747,62 @@ significantly influenced by the studied parameter.
 
 \section{Disturbance}\label{disturbance}
 
+Most tropical timber production originates from selective logging, the
+targeted harvesting of timber from species of interest. Consequently,
+tropical sylviculture can be assimilated to a disturbance. The main
+difference between a disturbance and selective logging is the targetting
+of both species and individuals of interest. So we decided to first
+asses unselective disturbance effect on tropical forest ecosystem to
+subsequently better understand selective logging effect.
+
+We first implemented a disturbance module inside TROLL model to simulate
+unselective disturbance. 60 tree communities were then defined with
+different levels of both specific and functional richness to explore the
+role of biodiversity on tropical forest ecosystem answer to disturbance.
+Next, different levels of disturbance were simulated on previous mature
+communities. Finally, resilience of ecosystem major global variables
+(related to carbon stock, forest dynamic and florisitic structure) from
+simulations were partitioned between selection effects and niche
+complementarity \citep{Loreau2001}.
+
 \subsection{Model description}\label{model-description-1}
 
+Disturbance module was designed in the simplest way in order to relate
+the ecosystem answer to volume lost without any individuals nor species
+targetting. For a given iteration \(disturb_{iter}\), individuals are
+picked randomly with a uniform law on the number of trees. Selected
+individuals are then removed without trigerring a treefall to avoid any
+side effect. The operation is repeated untill the disturbance result in
+a defined lost basal area (\(disturb_{intensity}\) in \% of BA).
+
 \subsection{Design of experiment}\label{design-of-experiment}
+
+In order to assess the role of biodiversity in ecosystem answer to
+disturbance, we needed to create a space of experiments encompassing
+both variation of disturbance, biodiversity and time. Disturbance was
+represented by percentage of basal area loss (0\%, 25\%, 50\% and 75\%).
+Biodiversity was integrated with two components specific and functional
+diversities. We used species richness \(SR\) to represents species
+diversity (5, 25, and 125). Functional diversity can be related to
+numerous components, and \citet{Borgy2017} argued for 5: richness,
+divergence, regularity, overlap and mean. Because mature forest were
+created from a bare soil with TROLL simulations, we could not control a
+priori divergence, regularity and overlap but only assess theim before
+diturbance. Consequently, we focused on functional richness with convex
+hull volume \(CHV\) and functional mean with community weighted mean
+\(CWM\). For each level of species richness \(SR\), we selected 20
+communities with growing convex hull volume \(CHV\) but with a community
+weighted means close to the regional species pool community weighted
+means. Effectivelly, we did not wanted drastic change in community means
+that could have more effect than functional richness itself. This design
+of experiments resulted in 60 communities (\(5~SR*20~CHV\)) and 240
+simulations (\(60 ~communities*4~levels~of~disturbance\)) over 600 years
+(maturity being assumed after 500 years of regeneration \citep{Li}).
+Figure \ref{fig:DOE} presents the design of experiment for communities
+biodiversity after the forest mature were simulated, and thus before
+disturbance. We obtained a broad range of both functionl dispersion
+\(FDis\) and aboveground biomass \(AGB\) for simulated forest ecosystems
+before disturbance.
 
 \begin{figure}[htbp]
 \centering
@@ -761,13 +814,89 @@ dispersion (FDis) resulting in a broad range of aboveground biomass
 area, wood specific gravity, maximum diameter, maximum height).}
 \end{figure}
 
-\subsection{Outputs anlaysis ?}\label{outputs-anlaysis}
+\subsection{Ecosystem answer anlaysis}\label{ecosystem-answer-anlaysis}
 
-\subsubsection{Resistance and resilience
-metrics}\label{resistance-and-resilience-metrics}
+Tropical forest ecosystems provides numerous ecosystem services linked
+to several ecosystem functions. We focused on few functions and related
+metrics to analyse ecosystem answer to disturbance: carbon stock with
+aboveground biomass (\(AGB\) in \(ton~C.ha^{-1}\)), forest dynamic with
+number of stem above \(10~cm\) diameter at breast height (\(N10\)), and
+floristic composition with \textbf{?} (\textbf{?} in \textbf{?}).
 
-\subsubsection{Biodiversity
-partitioning}\label{biodiversity-partitioning}
+The resilience of metrics values post disturbance were assessed through
+\citet{Henry2012} formula:
+
+\begin{equation}
+  R\left(t\right)=\frac{Recovery\left(t\right)}{Loss\left(t_d\right)} \approx \frac{X(t)}{X(t_d-1)}
+  \label{eq:Resilience}
+\end{equation}
+
+The resilience of the system \(R(t)\) at the time \(t\) is described by
+the ratio of recovery \(Recovery(t)\) at time \(t\) to loss suffered
+\(Loss(t_d)\) at disturbance time \(t_d\). We transformed the equation
+in the resilience of the system \(R(t)\) at the time \(t\) being the
+ratio of the ecosystem metric \(X(t)\) at time \(t\) to the ecosystem
+metric before the disturbance happened \(X(t_d-1)\) at time \(t_d-1\).
+\(X(t_d-1)\) was calculated as the mean of the ecosystem output for 50
+last years of the simulation of the mature forest (over 600 years).
+Then, we calculated for each simulation the recovery time
+\(t_{recovery}\) were the ecosystem reached back its stable state
+defined as its state before disturbance. But some ecosystem metrics can
+reach pre disturbance value wihtout revealing ecosystem recovery. For
+instance, number of stem above \(10~cm\) diameter at breast height
+\(N10\) will first decrease due to disturbance. Then \(N10\) will exceed
+its initial value due to new seedlings recruitment before decreasing
+towards its pre disturbanec value. Consequently, the first time \(N10\)
+reaches back its pre disturbance value can not be considered as the
+recovery time \(t_{recovery}\). In order to solve this issue, we
+considered the ecosystem as stable again when its whole set of observed
+metrics reach their pre disturbance values.
+
+Biodiversity is not only a facet of the experimental design and an
+ecosystem output through florisitic composition, but also interact on
+ecosystem functioning and consequently on its answer to disturbance.
+Biodiversity ecosystem functioning relation can be split in
+complementarity and selection effect with \citet{Loreau2001}
+partitioning:
+
+\begin{equation}
+  \begin{array}{c}
+    NE = X_O - X_E = CE + SE \\
+    CE = N* \overline{\Delta RX} \overline{M}\\
+    SE = N*cov(\Delta RX,M)
+  \end{array}
+  \label{eq:BiodivPart}
+\end{equation}
+
+Biodiversity net effect \(NE\) is based on the difference between
+ecosystem variable \(X\) observed value \(X_O\) within the community
+mixture of species and its expected value \(X_E\) if species performance
+were equal to their performance in monocultures. This effect can be
+partitioned between complementarity effect \(CE\), representing niche
+partitionning, positive interactions, and resource supply, and selectvie
+effect \(SE\) due to dominant species pool driving the ecosystem. Both
+metrics depend on the variation of relative ecosystem variable
+\(\Delta RX\):
+
+\begin{equation}
+  \Delta RX_{sp} = \frac{X_{sp}(mixture)}{X_{sp}(monoculture)} - P_{sp}
+  \label{eq:DeltaRY}
+\end{equation}
+
+\(X_sp\) is the ecosystem variable value for one species either in
+mixture \(X_{sp}(mixture)\) or in monoculture \(X_{sp}(monoculture)\).
+\(P_{sp}\) is the proportion of the species in the mixture represented
+by species relative abundance. Consequently, \(CE\) averages diversity
+effects of all species presents in the mixture (both negatives and
+positives). Whereas \(SE\) become positive when dominant species
+outperform theimselves in mixture than in monoculture, and negative when
+less dominant species outperform theimselves in mixture than in
+monoculture \citep{Tobner2016}.
+
+Recovery trajectories of ecosystem variable after disturbance were
+partitioned between complementarity effect \(CE\) and selection effect
+\(SE\). In order to do that, the design of experiment was repeated for
+each species indivdually representing 652 simulations of monoculture.
 
 \section{Selective logging}\label{selective-logging}
 
@@ -790,10 +919,10 @@ partitioning}\label{biodiversity-partitioning}
 \subsection{Outputs analysis ?}\label{outputs-analysis}
 
 \subsubsection{Resistance and resilience
-metrics}\label{resistance-and-resilience-metrics-1}
+metrics}\label{resistance-and-resilience-metrics}
 
 \subsubsection{Biodiversity
-partitioning}\label{biodiversity-partitioning-1}
+partitioning}\label{biodiversity-partitioning}
 
 \section{Results}\label{results}
 
