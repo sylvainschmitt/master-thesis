@@ -1,59 +1,74 @@
+% model from https://github.com/jgm/pandoc-templates/blob/master/default.latex
+
+%%% STYLE %%%
 \documentclass[]{article}
+
+%%% PACKAGES %%%
+
+% fonts
 \usepackage{lmodern}
+
+% pdf
+\usepackage{pdfpages}
+
+% formulae
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-\fi
-% use upquote if available, for straight quotes in verbatim environments
+\usepackage{fixltx2e}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% hyperlinks
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
 \IfFileExists{microtype.sty}{%
-\usepackage{microtype}
+\usepackage[]{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
 \usepackage[unicode=true]{hyperref}
-\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+  \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\definecolor{maroon}{cmyk}{0, 0.87, 0.68, 0.32}
 \hypersetup{
-            pdftitle={Master thesis},
-            pdfauthor={Sylvain SCHMITT},
-            colorlinks=true,
-            linkcolor=Maroon,
-            citecolor=Blue,
-            urlcolor=Blue,
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+      colorlinks=true,
+    linkcolor=maroon,
+    citecolor=blue,
+    urlcolor=blue,
+      breaklinks=true}
+\urlstyle{same} % don't use monospace font for urls
+
+% Bibliography
 \usepackage{natbib}
 \bibliographystyle{plainnat}
+
+% Tables
 \usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+
+% graphics
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 \makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% indent
 \IfFileExists{parskip.sty}{%
 \usepackage{parskip}
 }{% else
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 }
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+% prevent overfull lines
+\setlength{\emergencystretch}{3em}  
 \providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\setcounter{secnumdepth}{0}
+
+% paragraphs
 % Redefines (sub)paragraphs to behave more like sections
 \ifx\paragraph\undefined\else
 \let\oldparagraph\paragraph
@@ -63,19 +78,13 @@
 \let\oldsubparagraph\subparagraph
 \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\usepackage{booktabs}
-\usepackage{amsthm}
-\makeatletter
-\def\thm@space@setup{%
-  \thm@preskip=8pt plus 2pt minus 4pt
-  \thm@postskip=\thm@preskip
-}
+
+% set default figure placement to htbp
+\makeatletter 
+\def\fps@figure{htbp}
 \makeatother
 
-\title{Master thesis}
-\author{Sylvain SCHMITT}
-\date{2017-06-01}
-
+%%% BODY %%%
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}{Lemma}[section]
@@ -88,29 +97,13 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \begin{document}
-\maketitle
 
-\thispagestyle{empty}
-\begin{center}
-\includegraphics{images/main.pdf}
-\end{center}
+% first pages (to wirte manually ?)
+\includepdf{images/main.pdf}
+\includepdf{images/second.pdf}
 
-\setlength{\abovedisplayskip}{-5pt}
-\setlength{\abovedisplayshortskip}{-5pt}
-
-\thispagestyle{empty}
-\begin{center}
-\includegraphics{images/second.pdf}
-\end{center}
-
-\setlength{\abovedisplayskip}{-5pt}
-\setlength{\abovedisplayshortskip}{-5pt}
-
-{
-\hypersetup{linkcolor=black}
-\setcounter{tocdepth}{2}
 \tableofcontents
-}
+
 \section*{Résumé et Abstract}\label{resume-et-abstract}
 \addcontentsline{toc}{section}{Résumé et Abstract}
 
@@ -900,6 +893,10 @@ each species indivdually representing 652 simulations of monoculture.
 
 \section{Selective logging}\label{selective-logging}
 
+Once the unselective effect of disturbance on forest ecosystem studied,
+we can focus on selective logging to highlight the effect of species and
+individuals targetting on the ecosystem answer.
+
 \subsection{Model description}\label{model-description-2}
 
 \subsubsection{Designation}\label{designation}
@@ -916,13 +913,10 @@ each species indivdually representing 652 simulations of monoculture.
 
 \subsection{Design of experiment}\label{design-of-experiment-1}
 
-\subsection{Outputs analysis ?}\label{outputs-analysis}
+\subsection{Ecosystem answer
+anlaysis}\label{ecosystem-answer-anlaysis-1}
 
-\subsubsection{Resistance and resilience
-metrics}\label{resistance-and-resilience-metrics}
-
-\subsubsection{Biodiversity
-partitioning}\label{biodiversity-partitioning}
+Similar to disturbance
 
 \section{Results}\label{results}
 
@@ -934,6 +928,10 @@ partitioning}\label{biodiversity-partitioning}
 
 \section{Discussion}\label{discussion}
 
+\listoftables
+\listoffigures
+
+\renewcommand\refname{}
 \bibliography{/home/sylvain/Documents/Bibliography/library.bib}
 
 \end{document}

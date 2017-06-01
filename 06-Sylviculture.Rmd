@@ -1,5 +1,7 @@
 # Selective logging
 
+Once the unselective effect of disturbance on forest ecosystem studied, we can focus on selective logging to highlight the effect of species and individuals targetting on the ecosystem answer.
+
 ## Model description
 
 ### Designation
@@ -16,8 +18,6 @@
 
 ## Design of experiment
 
-## Outputs analysis ?
+## Ecosystem answer anlaysis
 
-### Resistance and resilience metrics
-
-### Biodiversity partitioning
+Similar to disturbance
