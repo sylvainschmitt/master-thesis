@@ -25,7 +25,7 @@
 <meta name="author" content="Sylvain SCHMITT">
 
 
-<meta name="date" content="2017-05-31">
+<meta name="date" content="2017-06-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -140,11 +140,16 @@
             <section class="normal" id="section-">
 <div id="sensitivity-analysis" class="section level1">
 <h1><span class="header-section-number">2</span> Sensitivity analysis</h1>
+<p><span class="citation">Maréchaux &amp; Chave</span> already assessed TROLL model sensitivity to several parameters (<span class="math inline">\(k\)</span> see <a href="model-description.html#eq:PPFD">(1.2)</a>, <span class="math inline">\(\phi\)</span> see <a href="model-description.html#eq:LCP">(1.27)</a>, <span class="math inline">\(g1\)</span> see <a href="model-description.html#eq:gs">(1.6)</a>, <span class="math inline">\(f_{wood}\)</span> see <a href="model-description.html#eq:DeltaV">(1.14)</a>, <span class="math inline">\(f_{canopy}\)</span> see <a href="model-description.html#eq:DeltaLA">(1.16)</a> and <span class="math inline">\(m\)</span> see <a href="model-description.html#eq:db">(1.23)</a>) which they assumed having a key role in model functioning.</p>
+<p>On the other hand, we decided to use TROLL to study resistance and resilience of ecosystem face to disturbance, highlighting the role of biodiversit. Consequently we particulrarly needed to assess the importance of functional traits to further better control and evaluate functional diversities. We also needed to assess the sensitivity of TROLL model to the seed rain constant (<span class="math inline">\(n_{ext}\)</span>, see <a href="model-description.html#eq:next">(1.26)</a>) because we assume it is one of the main factor of tree recruitments after disturbance in simulations.</p>
 <div id="functional-traits" class="section level2">
 <h2><span class="header-section-number">2.1</span> Functional traits</h2>
+<p>TROLL model currenty uses leaf mass per area (<span class="math inline">\(LMA\)</span> in <span class="math inline">\(g.m^{-2}\)</span>), leaf nitrogen content per dry mass (<span class="math inline">\(N_m\)</span> in <span class="math inline">\(mg.g^{-1}\)</span>), leaf phosphorus content per dry mass (<span class="math inline">\(P_m\)</span> in <span class="math inline">\(mg.g^{-1}\)</span>), wood specific gravity (<span class="math inline">\(wsg\)</span> in <span class="math inline">\(g.cm^{-3}\)</span>), diameter at breasth height threshold (<span class="math inline">\(dbh_{thresh}\)</span> in <span class="math inline">\(m\)</span>), asymptotic height (<span class="math inline">\(h_{lim}\)</span> in <span class="math inline">\(m\)</span>), and parameter of the tree-height-dbh allometry (<span class="math inline">\(a_h\)</span> in <span class="math inline">\(m\)</span>). To assess the sensitivity of TROLL model to species functionnal traits, we performed a sensitivity analysis by fixing species trait values to their mean. Each trait was tested independently. We reduce to a common mean traits with a Perason’s correlation value <span class="math inline">\(r \geq 0.8\)</span> (<span class="math inline">\(h_{max}\)</span> and <span class="math inline">\(a_h\)</span> with a correlation of <span class="math inline">\(r=0.98\)</span>).</p>
 </div>
 <div id="seed-rain" class="section level2">
 <h2><span class="header-section-number">2.2</span> Seed rain</h2>
+<p>To assess the sensitivity of TROLL model to seed rain, we performed a sensitivity analysis by fixing simulations seed rain constant to 2, 20, 200 and 2000 seeds per hectare (default value being 200 seeds per hectare).</p>
+<p>Simulations were conducted on Intel Xeon(R) with 32 CPUs of 2.00GHz and 188.9 GB of memory. We assumed maturity of the forest after 500 years of regeneration (Maréchaux &amp; Chave) and computed simulation 100 years after a disturbance event with 40% loss of basal area. Due to computer limitations we did not run replicate (besides it should be necessary to reduce simulation stochasticity). To assess ecosystem outputs sensitivity to studied parameters, we compared it to 100 replicates of control simulations with all parameters set to default values. Ecosystem outputs outside of the range of the control replicates values are significantly influenced by the studied parameter.</p>
 
 </div>
 </div>
