@@ -1,18 +1,26 @@
-```{r config5, message=FALSE, warning=FALSE, include=FALSE}
-rm(list = ls()) ; invisible(gc())
-library(ggplot2)
-library(ggrepel)
-```
+# Material and Methods
 
-# Disturbance
+## Sensitivity analysis
 
-Most tropical timber production originates from selective logging, the targeted harvesting of timber from species of interest. Consequently, tropical sylviculture can be assimilated to a disturbance. The main difference between a disturbance and selective logging is the targetting of both species and individuals of interest. So we decided to first asses unselective disturbance effect on tropical forest ecosystem to subsequently better understand selective logging effect.
+@Li already assessed TROLL model sensitivity to several parameters ($k$ see \@ref(eq:PPFD), $\phi$ see \@ref(eq:LCP), $g1$ see \@ref(eq:gs), $f_{wood}$ see \@ref(eq:DeltaV), $f_{canopy}$ see \@ref(eq:DeltaLA) and $m$ see \@ref(eq:db)) which they assumed having a key role in model functioning.
+
+On the other hand, we decided to use TROLL to study resistance and resilience of ecosystem face to disturbance, highlighting the role of biodiversit. Consequently we particulrarly needed to assess the importance of functional traits to further better control and evaluate functional diversities. We also needed to assess the sensitivity of TROLL model to the seed rain constant ($n_{ext}$, see \@ref(eq:next)) because we assume it is one of the main factor of tree recruitments after disturbance in simulations.
+
+TROLL model currenty uses leaf mass per area ($LMA$ in $g.m^{-2}$), leaf nitrogen content per dry mass ($N_m$ in $mg.g^{-1}$), leaf phosphorus content per dry mass ($P_m$ in $mg.g^{-1}$), wood specific gravity ($wsg$ in $g.cm^{-3}$), diameter at breasth height threshold ($dbh_{thresh}$ in $m$), asymptotic height ($h_{lim}$ in $m$), and parameter of the tree-height-dbh allometry ($a_h$ in $m$). To assess the sensitivity of TROLL model to species functionnal traits, we performed a sensitivity analysis by fixing species trait values to their mean. Each trait was tested independently. We reduce to a common mean traits with a Perason's correlation value $r \geq 0.8$ ($h_{max}$ and $a_h$ with a correlation of $r=0.98$).
+
+To assess the sensitivity of TROLL model to seed rain, we performed a sensitivity analysis by fixing simulations seed rain constant to 2, 20, 200 and 2000 seeds per hectare (default value being 200 seeds per hectare).
+
+Simulations were conducted on Intel Xeon(R) with 32 CPUs of 2.00GHz and 188.9 GB of memory. We assumed maturity of the forest after 500 years of regeneration (Maréchaux & Chave) and computed simulation 100 years after a disturbance event with 40% loss of basal area. Due to computer limitations we did not run replicate (besides it should be necessary to reduce simulation stochasticity). To assess ecosystem outputs sensitivity to studied parameters, we compared it to 100 replicates of control simulations with all parameters set to default values. Ecosystem outputs outside of the range of the control replicates values are significantly influenced by the studied parameter.
+
+## Disturbance
+
+*Most tropical timber production originates from selective logging, the targeted harvesting of timber from species of interest. Consequently, tropical sylviculture can be assimilated to a disturbance. The main difference between a disturbance and selective logging is the targetting of both species and individuals of interest. So we decided to first asses unselective disturbance effect on tropical forest ecosystem to subsequently better understand selective logging effect. We first implemented a simple disturbance module inside TROLL model to simulate unselective disturbance.* **Already inside model descripiton !**
 
 We first implemented a disturbance module inside TROLL model to simulate unselective disturbance. 60 tree communities were then defined with different levels of both specific and functional richness to explore the role of biodiversity on tropical forest ecosystem answer to disturbance. Next, different levels of disturbance were simulated on previous mature communities. Finally, resilience of ecosystem major global variables (related to carbon stock, forest dynamic and florisitic structure) from simulations were partitioned between selection effects and niche complementarity [@Loreau2001].
 
-## Model description
+## Selective logging
 
-Disturbance module was designed in the simplest way in order to relate the ecosystem answer to volume lost without any individuals nor species targetting. For a given iteration $disturb_{iter}$, individuals are picked randomly with a uniform law on the number of trees. Selected individuals are then removed without trigerring a treefall to avoid any side effect. The operation is repeated untill the disturbance result in a defined lost basal area ($disturb_{intensity}$ in % of BA).
+Once the unselective effect of disturbance on forest ecosystem studied, we can focus on selective logging to highlight the effect of species and individuals targetting on the ecosystem answer. We first implemented a sylviculture module inside TROLL model to simulate selective logging in regards to french Guiana practices. We used the 60 communities from disturbance simulations to study the role of biodiversity in both forest ecosystem and commercial species answer to selective logging. We then 
 
 ## Design of experiment
 

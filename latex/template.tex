@@ -49,8 +49,8 @@ $if(verbatim-in-note)$
 $endif$
 
 % geometry
-\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
-\renewcommand{\baselinestretch}{1.5}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\renewcommand{\baselinestretch}{1.1}
 
 % Bibliography
 \usepackage{natbib}
@@ -99,6 +99,7 @@ $endif$
 \titleformat*{\paragraph}{\large\bfseries\itshape}
 \titleformat*{\subparagraph}{\normalsize\itshape}
 
+
 % set default figure placement to htbp
 \makeatletter 
 \def\fps@figure{htbp}
@@ -116,6 +117,7 @@ $endfor$
 
 $body$
 
+\addcontentsline{toc}{section}{References}
 \bibliography{$bibliography$}
 \listoftables
 \listoffigures
