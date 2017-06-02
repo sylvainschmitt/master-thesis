@@ -1,7 +1,7 @@
 % template adapted from https://github.com/jgm/pandoc-templates/blob/master/default.latex
 
 %%% STYLE %%%
-\documentclass[]{article}
+\documentclass[12pt,]{article}
 
 %%% PACKAGES %%%
 
@@ -35,6 +35,10 @@
     urlcolor=blue,
       breaklinks=true}
 \urlstyle{same} % don't use monospace font for urls
+
+% geometry
+\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\renewcommand{\baselinestretch}{1.5}
 
 % Bibliography
 \usepackage{natbib}

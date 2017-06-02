@@ -1,7 +1,7 @@
 % template adapted from https://github.com/jgm/pandoc-templates/blob/master/default.latex
 
 %%% STYLE %%%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[12pt,$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 
 %%% PACKAGES %%%
 
@@ -47,6 +47,10 @@ $endif$
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
+
+% geometry
+\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\renewcommand{\baselinestretch}{1.5}
 
 % Bibliography
 \usepackage{natbib}
