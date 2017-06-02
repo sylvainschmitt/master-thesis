@@ -1,4 +1,4 @@
-% model from https://github.com/jgm/pandoc-templates/blob/master/default.latex
+% template adapted from https://github.com/jgm/pandoc-templates/blob/master/default.latex
 
 %%% STYLE %%%
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
@@ -85,15 +85,15 @@ $endif$
 \setcounter{secnumdepth}{0}
 
 % paragraphs
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
+\usepackage{titlesec}
+\let\oldsection\section
+\renewcommand\section{\newpage\oldsection}
+\titleformat{\section}
+{\huge\center\scshape}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+\titleformat*{\subsection}{\LARGE\bfseries}
+\titleformat*{\subsubsection}{\Large\bfseries}
+\titleformat*{\paragraph}{\large\bfseries\itshape}
+\titleformat*{\subparagraph}{\normalsize\itshape}
 
 % set default figure placement to htbp
 \makeatletter 
@@ -103,18 +103,22 @@ $endif$
 %%% BODY %%%
 \begin{document}
 
-% first pages (to wirte manually ?)
-\includepdf{images/main.pdf}
-\includepdf{images/second.pdf}
+% First pages
+$for(include-before)$
+  $include-before$
+$endfor$
 
 \tableofcontents
 
 $body$
 
+\bibliography{$bibliography$}
 \listoftables
 \listoffigures
 
-\renewcommand\refname{$biblio-title$}
-\bibliography{$bibliography$}
+% Last pages
+$for(include-after)$
+  $include-after$
+$endfor$
 
 \end{document}

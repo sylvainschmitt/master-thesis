@@ -20,7 +20,7 @@ cover-image: images/main.png
 knitr::include_graphics('images/main.png', dpi = NA)
 ```
 
-`r if (knitr:::is_html_output()) 'This is the online html version of my master thesis. The pdf version is available for download with the download button on top of the windows.'`
+`r if (knitr:::is_html_output()) 'This is the online html version of my master thesis. The pdf version is available for download with the download button on top of the window.'`
 
 `r if (knitr:::is_html_output()) 'Have a nice reading.'`
 

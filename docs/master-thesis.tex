@@ -1,4 +1,4 @@
-% model from https://github.com/jgm/pandoc-templates/blob/master/default.latex
+% template adapted from https://github.com/jgm/pandoc-templates/blob/master/default.latex
 
 %%% STYLE %%%
 \documentclass[]{article}
@@ -69,15 +69,15 @@
 \setcounter{secnumdepth}{0}
 
 % paragraphs
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
+\usepackage{titlesec}
+\let\oldsection\section
+\renewcommand\section{\newpage\oldsection}
+\titleformat{\section}
+{\huge\center\scshape}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+\titleformat*{\subsection}{\LARGE\bfseries}
+\titleformat*{\subsubsection}{\Large\bfseries}
+\titleformat*{\paragraph}{\large\bfseries\itshape}
+\titleformat*{\subparagraph}{\normalsize\itshape}
 
 % set default figure placement to htbp
 \makeatletter 
@@ -98,9 +98,41 @@
 \newtheorem*{remark}{Remark}
 \begin{document}
 
-% first pages (to wirte manually ?)
-\includepdf{images/main.pdf}
-\includepdf{images/second.pdf}
+% First pages
+  % First page
+  \includegraphics{images/logos}
+  
+  \begin{center}
+    \vspace*{\stretch{1}}
+    \LARGE{\textbf{Mémoire de stage}} \\
+    \vspace*{\fill}
+    \large{présenté par} \\
+    \large{Sylvain SCHMITT} \\
+    \vspace*{\fill}
+    \large{pour obtenir le diplôme national de master} \\
+    \large{mention Biodiversité, écologie, évolution} \\
+    \small{parcours Biodiversité végétale et gestion des écosystèmes tropicaux (BIOGET)} \\
+    \vspace*{\fill}
+    \large{Sujet :} \\
+    \Large{\textbf{A COMPLETER}} \\
+    \vspace*{\fill}
+    \large{soutenu publiquement le XX.xxxx.201X} \\
+    \large{à Kourou} \\
+    \vspace*{\fill}
+    \large{devant le jury suivant :} \\
+    \vspace*{\fill}
+    Dr Bruno HÉRAULT  \emph{Tuteur de stage} \\
+    Titre Prénom NOM  \emph{Examinateur} \\
+    Titre Prénom NOM  \emph{Examinateur} \\
+    Dr Stéphane TRAISSAC  \emph{Enseignant-réferent} \\
+    \vspace*{\stretch{1}}
+  \end{center}
+  
+  % Second page
+  \newpage
+  \vspace*{\fill}
+  \emph{Les opinions émises par les auteurs sont personnelles et n'engagent pas AgroParisTech.}
+  \newpage
 
 \tableofcontents
 
@@ -205,30 +237,31 @@ associated to a number of species specific parameters (see table
 \ref{tab:traits}) related to functional trait values which can be
 sampled on the field.
 
-\begin{table}
-
-\caption{\label{tab:traits}Species-specific parameters used in TROLL from @Li. Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.}
-\centering
-\begin{tabular}[t]{l|l|l}
-\hline
-Abbreviation & Description & Units\\
-\hline
-\$LMA\$ & leaf mass per area & \$g.m\textasciicircum{}\{-2\}\$\\
-\hline
-\$N\_m\$ & leaf nitrogen content per dry mass & \$mg.g\textasciicircum{}\{-1\}\$\\
-\hline
-\$P\_m\$ & leaf phosphorous content per dry mass & \$mg.g\textasciicircum{}\{-1\}\$\\
-\hline
-\$wsg\$ & wood specific gravity & \$g.cm\textasciicircum{}\{-3\}\$\\
-\hline
-\$dbh\_\{thresh\}\$ & diameter at breasth height threshold & \$m\$\\
-\hline
-\$h\_\{lim\}\$ & asymptotic height & \$m\$\\
-\hline
-\$a\_h\$ & parameter of the tree-height-dbh allometry & \$m\$\\
-\hline
-\end{tabular}
-\end{table}
+\begin{longtable}[]{@{}lll@{}}
+\caption{\label{tab:traits}Species-specific parameters used in TROLL from
+\citet{Li}. Data originates from the BRIDGE \citep{Baraloto2010} and TRY
+\citep{Kattge2011} datasets.}\tabularnewline
+\toprule
+Abbreviation & Description & Units\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Abbreviation & Description & Units\tabularnewline
+\midrule
+\endhead
+\(LMA\) & leaf mass per area & \(g.m^{-2}\)\tabularnewline
+\(N_m\) & leaf nitrogen content per dry mass &
+\(mg.g^{-1}\)\tabularnewline
+\(P_m\) & leaf phosphorous content per dry mass &
+\(mg.g^{-1}\)\tabularnewline
+\(wsg\) & wood specific gravity & \(g.cm^{-3}\)\tabularnewline
+\(dbh_{thresh}\) & diameter at breasth height threshold &
+\(m\)\tabularnewline
+\(h_{lim}\) & asymptotic height & \(m\)\tabularnewline
+\(a_h\) & parameter of the tree-height-dbh allometry &
+\(m\)\tabularnewline
+\bottomrule
+\end{longtable}
 
 Carbon assimilation is computed over half-hourly period of a
 representative day. Then allocation is computed to simulate tree growth
@@ -529,7 +562,7 @@ mean square error of prediction RMSEP) was kept. We selected following
 model with a maximum likelihood of 13.6 and a RMSEP of 12 months:
 
 \begin{equation}
-  LL_{d} \sim \mathcal{logN}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
+  LL_{d} \sim log\mathcal{N}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
   \label{eq:LLb}
 \end{equation}
 
@@ -928,10 +961,22 @@ Similar to disturbance
 
 \section{Discussion}\label{discussion}
 
+\bibliography{/home/sylvain/Documents/Bibliography/library.bib}
 \listoftables
 \listoffigures
 
-\renewcommand\refname{}
-\bibliography{/home/sylvain/Documents/Bibliography/library.bib}
+% Last pages
+  %Last page
+  \newpage
+  \paragraph{Résumé :}
+  Écrire le résumé ici...
+  \paragraph{Mots clés :} mots clés
+  \newline\newline
+  \paragraph{Abstract:}
+  Write abstract here
+  \paragraph{Keywords:} keywords
+  
+  \vspace*{\fill}
+  \includegraphics{images/logo}
 
 \end{document}

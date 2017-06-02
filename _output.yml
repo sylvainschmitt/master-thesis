@@ -11,6 +11,9 @@ bookdown::gitbook:
   includes:
     after_body: html/disqus.html
 bookdown::pdf_book:
+  includes:
+    before_body: latex/before_body.tex
+    after_body: latex/after_body.tex
   template: latex/template.tex
   latex_engine: xelatex
   citation_package: natbib

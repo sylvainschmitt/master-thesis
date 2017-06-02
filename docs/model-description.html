@@ -25,7 +25,7 @@
 <meta name="author" content="Sylvain SCHMITT">
 
 
-<meta name="date" content="2017-06-01">
+<meta name="date" content="2017-06-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -318,7 +318,7 @@ Figure 1.1: Individuals tree inside TROLL explicit spatial grid from <span class
 <h2><span class="header-section-number">1.6</span> Leaf lifespan</h2>
 <p>The underestimation of leaf lifespan for low LMA species with the allometry from <span class="citation">Reich <em>et al.</em> (<a href="#ref-Reich1991a">1991</a>)</span> resulted in indivduals unealistic early death from carbon starvation. We gathered data from TRY<span class="citation">(Kattge <em>et al.</em> <a href="#ref-Kattge2011">2011</a>)</span>, DRYAD <span class="citation">(Chave <em>et al.</em> <a href="#ref-chave_towards_2009">2009</a>)</span> and GLOPNET <span class="citation">(Wright <em>et al.</em> <a href="#ref-wright_worldwide_2004">2004</a>)</span> datasets. We used an out of the bag method applied on a random forest to select variables with highest importance to explain leaf lifespan. We thus selected leaf mass per are <span class="math inline">\(LMA\)</span>, leaf nitrogen content <span class="math inline">\(N\)</span> and wood specific gravity <span class="math inline">\(wsg\)</span>. We then used a bayesian approach to test different models with growing level of complexity. The model with the best tradeoff between complexity (number of parameters), convergence, likelihood, and prediction quality (root mean square error of prediction RMSEP) was kept. We selected following model with a maximum likelihood of 13.6 and a RMSEP of 12 months:</p>
 <span class="math display" id="eq:LLb">\[\begin{equation}
-  LL_{d} \sim \mathcal{logN}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
+  LL_{d} \sim log\mathcal{N}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
   \tag{1.17}
 \end{equation}\]</span>
 <p>Leaf lifespan <span class="math inline">\(LL\)</span> follows a lognormal law with location infered from leaf lifespan <span class="math inline">\(LMA\)</span>, nitrogen content <span class="math inline">\(N\)</span> and wood specific gravity <span class="math inline">\(wsg\)</span> and a scale <span class="math inline">\(\sigma\)</span>. Each <span class="math inline">\({\beta_i}_d\)</span> is following a normal law located on <span class="math inline">\(\beta_i\)</span> with a scale of <span class="math inline">\(\sigma_i\)</span>. All <span class="math inline">\(\beta_i\)</span>, <span class="math inline">\(\sigma_i\)</span>, and <span class="math inline">\(\sigma\)</span> are assumed without presemption following a gamma law. <span class="math inline">\(d\)</span> represents the dataset random effects and encompass environmental and protocol variations. The sampling of model <a href="model-description.html#eq:LLb">(1.17)</a> resulted in the following allometry:</p>

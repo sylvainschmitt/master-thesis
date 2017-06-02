@@ -10,7 +10,7 @@ table <- data.frame(
   Description = c('leaf mass per area', 'leaf nitrogen content per dry mass', 'leaf phosphorous content per dry mass', 'wood specific gravity', 'diameter at breasth height threshold', 'asymptotic height', 'parameter of the tree-height-dbh allometry'),
   Units = c('$g.m^{-2}$', '$mg.g^{-1}$', '$mg.g^{-1}$', '$g.cm^{-3}$', '$m$', '$m$', '$m$')
 )
-knitr::kable(table, caption = 'Species-specific parameters used in TROLL from @Li. Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.')
+knitr::kable(table, caption = 'Species-specific parameters used in TROLL from @Li. Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.', format = 'pandoc')
 ```
 
 Carbon assimilation is computed over half-hourly period of a representative day. Then allocation is computed to simulate tree growth from an explicit carbone balance (in contrast to previous models). Finally environment is updated at each timestep set to one month. Seedlings are not simulated explicitly but as a pool. In addition belowground processes, herbaceous plants, epiphytes and lianas are not simulated inside TROLL. The source code is written in C++ and available upon request. All analyses were conducted in R version 3.4.0 **Cite R, add entry in Mendeley**.
@@ -182,7 +182,7 @@ $\tau_{young}$, $\tau_{mature}$, and $\tau_{old}$ are species residence times in
 The underestimation of leaf lifespan for low LMA species with the allometry from @Reich1991a resulted in indivduals unealistic early death from carbon starvation. We gathered data from TRY[@Kattge2011], DRYAD [@chave_towards_2009] and GLOPNET [@wright_worldwide_2004] datasets. We used an out of the bag method applied on a random forest to select variables with highest importance to explain leaf lifespan. We thus selected leaf mass per are $LMA$, leaf nitrogen content $N$ and wood specific gravity $wsg$. We then used a bayesian approach to test different models with growing level of complexity. The model with the best tradeoff between complexity (number of parameters), convergence, likelihood, and prediction quality (root mean square error of prediction RMSEP) was kept. We selected following model with a maximum likelihood of 13.6 and a RMSEP of 12 months:
 
 \begin{equation}
-  LL_{d} \sim \mathcal{logN}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
+  LL_{d} \sim log\mathcal{N}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
   (\#eq:LLb)
 \end{equation}
 
