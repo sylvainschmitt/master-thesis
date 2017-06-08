@@ -1,6 +1,6 @@
 # (APPENDIX) Appendix {-} 
 
-# Appendix 1
+# Appendix 1: TROLL model
 
 I this Appendix we further detail modules of TROLL model.
 
@@ -161,22 +161,6 @@ Finally, TROLL can compute carbon allocation to canopy with canopy NPP fraction 
 \end{equation}
 
 $\tau_{young}$, $\tau_{mature}$, and $\tau_{old}$ are species residence times in each leaf pools ($years$). The sum of residency time thus defined the leaf lifespan $LL = \tau_{young} + \tau_{mature} + \tau_{old}$ ($years$). $\tau_{young}$ is set to one month and $\tau_{mature}$ is set to a third of leaf lifespan $LL$. Belowground carbon allocation is not simulated inside TROLL.
-
-## Leaf lifespan
-
-The underestimation of leaf lifespan for low LMA species with the allometry from @Reich1991a resulted in indivduals unealistic early death from carbon starvation. We gathered data from TRY[@Kattge2011], DRYAD [@chave_towards_2009] and GLOPNET [@wright_worldwide_2004] datasets. We used an out of the bag method applied on a random forest to select variables with highest importance to explain leaf lifespan. We thus selected leaf mass per are $LMA$, leaf nitrogen content $N$ and wood specific gravity $wsg$. We then used a bayesian approach to test different models with growing level of complexity. The model with the best tradeoff between complexity (number of parameters), convergence, likelihood, and prediction quality (root mean square error of prediction RMSEP) was kept. We selected following model with a maximum likelihood of 13.6 and a RMSEP of 12 months:
-
-\begin{equation}
-  LL_{d} \sim log\mathcal{N}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
-  (\#eq:LLb)
-\end{equation}
-
-Leaf lifespan $LL$ follows a lognormal law with location infered from leaf lifespan $LMA$, nitrogen content $N$ and wood specific gravity $wsg$ and a scale $\sigma$. Each ${\beta_i}_d$ is following a normal law located on $\beta_i$ with a scale of $\sigma_i$. All $\beta_i$, $\sigma_i$, and $\sigma$ are assumed without presemption following a gamma law. $d$ represents the dataset random effects and encompass environmental and protocol variations. The sampling of model \@ref(eq:LLb) resulted in the following allometry:
-
-\begin{equation}
-  LL = e^{0.017*LMA - 0.103*Nmass + 1.94*wsg}
-  (\#eq:LL)
-\end{equation}
 
 ## Tree growth
 

@@ -8,7 +8,7 @@ TROLL model each tree indivdually in a located environment. Thus TROLL model, al
 knitr::include_graphics('images/TROLLtree.png', dpi = NA)
 ```
 
-Carbon assimilation is computed over half-hourly period of a representative day. Then allocation is computed to simulate tree growth from an explicit carbone balance (in contrast to previous models). Finally environment is updated at each timestep set to one month. Seedlings are not simulated explicitly but as a pool. In addition belowground processes, herbaceous plants, epiphytes and lianas are not simulated inside TROLL. The source code is written in C++ and available upon request. All modules of TROLL models are further detailed in [Appendix 1].
+Carbon assimilation is computed over half-hourly period of a representative day. Then allocation is computed to simulate tree growth from an explicit carbone balance (in contrast to previous models). Finally environment is updated at each timestep set to one month. Seedlings are not simulated explicitly but as a pool. In addition belowground processes, herbaceous plants, epiphytes and lianas are not simulated inside TROLL. The source code is written in C++ and available upon request. All modules of TROLL models are further detailed in [Appendix 1: TROLL model].
 
 ```{r traits, echo=FALSE}
 table <- data.frame(
@@ -19,7 +19,7 @@ table <- data.frame(
 knitr::kable(table, caption = 'Species-specific parameters used in TROLL from @Li. Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.', format = 'pandoc')
 ```
 
-Previous implementation of TROLL model used @Reich1991a allometry to infer leaf lifespan $LL$ from species leaf mass per area $LMA$ [@Li, see [Appendix 1]]. But the use of the allometrie from @Reich1991a with current implementation of the TROLL model resulted in an underestimation of leaf lifespan for low LMA species. Consequently in the following paragraph we suggest a new allometry.
+Previous implementation of TROLL model used @Reich1991a allometry to infer leaf lifespan $LL$ from species leaf mass per area $LMA$ [@Li, see [Appendix 1: TROLL model]]. But the use of the allometrie from @Reich1991a with current implementation of the TROLL model resulted in an underestimation of leaf lifespan for low LMA species. Consequently in the following paragraph we suggest a new allometry.
 
 Selective logging is defined as the targeted harvesting of timber from species of interest. Consequently, tropical sylviculture can be assimilated to a disturbance. The main difference between a disturbance and selective logging is the targetting of both species and individuals of interest. So we decided to first asses unselective disturbance effect on tropical forest ecosystem to subsequently better understand selective logging effect. First, we implemented a disturbance module inside TROLL model to simulate unselective disturbance. Secondly, we implemented a sylviculture module inside TROLL model to simulate selective logging in regards to french Guiana practices.
 
@@ -32,7 +32,7 @@ The underestimation of leaf lifespan for low LMA species with the allometry from
   (\#eq:LL)
 \end{equation}
 
-Leaf lifespan $LL$ follows a lognormal law with location infered from leaf lifespan $LMA$, nitrogen content $N$ and wood specific gravity $wsg$ and a scale $\sigma$. Each ${\beta_i}_d$ is following a normal law located on $\beta_i$ with a scale of $\sigma_i$. All $\beta_i$, $\sigma_i$, and $\sigma$ are assumed without presemption following a gamma law. $d$ represents the dataset random effects and encompass environmental and protocol variations. **Add Appendix ?**
+Leaf lifespan $LL$ follows a lognormal law with location infered from leaf lifespan $LMA$, nitrogen content $N$ and wood specific gravity $wsg$ and a scale $\sigma$. Each ${\beta_i}_d$ is following a normal law located on $\beta_i$ with a scale of $\sigma_i$. All $\beta_i$, $\sigma_i$, and $\sigma$ are assumed without presemption following a gamma law. $d$ represents the dataset random effects and encompass environmental and protocol variations (see [Appendix 2: Leaf lifespan model] for more details).
 
 ## Disturbance
 
@@ -60,7 +60,7 @@ Rotten trees are not random and depends both on tree species and diameter.
   (\#eq:rotten)
 \end{equation}
 
-**Add Appendix ?**
+(see [Appendix 3: Rotten tree model] for more details)
 
 ### Harvesting
 
@@ -80,4 +80,4 @@ Most of models account long term damages due to selective logging with a 10 year
   (\#eq:death)
 \end{equation} 
 
-$Death$ of a tree $i$ follows a $\mathcal{Bernoulli}$ law of probability $P(Death_i)$. The odds for a tree $i$ to die $O(Death_i)$ is calculated by the sum of the natural tree death odd $\theta$ and a perturbation index $\beta*e^{\alpha*d_{gaps}}$. The perturbation index depend on the distance $d_{gaps}$ of the tree $i$ to the closest logging gap. The probability for a tree $i$ to die $P(Death_i)$ is finally calculated by taking the inverse logit of the odd $logit^{-1}[O(Death_i)]$. **Add Appendix ?**
+$Death$ of a tree $i$ follows a $\mathcal{Bernoulli}$ law of probability $P(Death_i)$. The odds for a tree $i$ to die $O(Death_i)$ is calculated by the sum of the natural tree death odd $\theta$ and a perturbation index $\beta*e^{\alpha*d_{gaps}}$. The perturbation index depend on the distance $d_{gaps}$ of the tree $i$ to the closest logging gap. The probability for a tree $i$ to die $P(Death_i)$ is finally calculated by taking the inverse logit of the odd $logit^{-1}[O(Death_i)]$ (see [Appendix 4: Gap damages model] for more details).

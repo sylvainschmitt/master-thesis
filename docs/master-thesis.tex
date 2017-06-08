@@ -286,7 +286,7 @@ Seedlings are not simulated explicitly but as a pool. In addition
 belowground processes, herbaceous plants, epiphytes and lianas are not
 simulated inside TROLL. The source code is written in C++ and available
 upon request. All modules of TROLL models are further detailed in
-\protect\hyperlink{appendix-1}{Appendix 1}.
+\protect\hyperlink{appendix-1-troll-model}{Appendix 1: TROLL model}.
 
 \begin{longtable}[]{@{}lll@{}}
 \caption{\label{tab:traits}Species-specific parameters used in TROLL from
@@ -316,11 +316,11 @@ Abbreviation & Description & Units\tabularnewline
 
 Previous implementation of TROLL model used \citet{Reich1991a} allometry
 to infer leaf lifespan \(LL\) from species leaf mass per area \(LMA\)
-\citep[see \protect\hyperlink{appendix-1}{Appendix 1}]{Li}. But the use
-of the allometrie from \citet{Reich1991a} with current implementation of
-the TROLL model resulted in an underestimation of leaf lifespan for low
-LMA species. Consequently in the following paragraph we suggest a new
-allometry.
+\citep[see \protect\hyperlink{appendix-1-troll-model}{Appendix 1: TROLL
+model}]{Li}. But the use of the allometrie from \citet{Reich1991a} with
+current implementation of the TROLL model resulted in an underestimation
+of leaf lifespan for low LMA species. Consequently in the following
+paragraph we suggest a new allometry.
 
 Selective logging is defined as the targeted harvesting of timber from
 species of interest. Consequently, tropical sylviculture can be
@@ -360,8 +360,9 @@ leaf lifespan \(LMA\), nitrogen content \(N\) and wood specific gravity
 normal law located on \(\beta_i\) with a scale of \(\sigma_i\). All
 \(\beta_i\), \(\sigma_i\), and \(\sigma\) are assumed without
 presemption following a gamma law. \(d\) represents the dataset random
-effects and encompass environmental and protocol variations. \textbf{Add
-Appendix ?}
+effects and encompass environmental and protocol variations (see
+\protect\hyperlink{appendix-2-leaf-lifespan-model}{Appendix 2: Leaf
+lifespan model} for more details).
 
 \subsection{Disturbance}\label{disturbance}
 
@@ -416,7 +417,8 @@ species and diameter.
   \label{eq:rotten}
 \end{equation}
 
-\textbf{Add Appendix ?}
+(see \protect\hyperlink{appendix-3-rotten-tree-model}{Appendix 3: Rotten
+tree model} for more details)
 
 \subsubsection{Harvesting}\label{harvesting}
 
@@ -424,7 +426,7 @@ Due to crown aspects, treefall from logs are often random (whereas
 difficult to manage, treefall can still be oriented, Laurent Descroix,
 ONF, personnal communication). Consequently, TROLL consider treefall
 from log as random like current natural treefall implementation inside
-TROLL (see code \protect\hyperlink{appendix-1}{Appendix 1}).
+TROLL (see code {[}Appendix 1{]}).
 
 Tree harvesting roads are split in three classes: truck roads, main
 tractor track, and secondary track. Because TROLL assumes a flat
@@ -470,7 +472,9 @@ probability \(P(Death_i)\). The odds for a tree \(i\) to die
 perturbation index depend on the distance \(d_{gaps}\) of the tree \(i\)
 to the closest logging gap. The probability for a tree \(i\) to die
 \(P(Death_i)\) is finally calculated by taking the inverse logit of the
-odd \(logit^{-1}[O(Death_i)]\). \textbf{Add Appendix ?}
+odd \(logit^{-1}[O(Death_i)]\) (see
+\protect\hyperlink{appendix-4-gap-damages-model}{Appendix 4: Gap damages
+model} for more details).
 
 \section{Material and Methods}\label{material-and-methods}
 
@@ -480,16 +484,15 @@ odd \(logit^{-1}[O(Death_i)]\). \textbf{Add Appendix ?}
 parameters (\(k\) see \eqref{eq:PPFD}, \(\phi\) see \eqref{eq:LCP}, \(g1\)
 see \eqref{eq:gs}, \(f_{wood}\) see \eqref{eq:DeltaV}, \(f_{canopy}\) see
 \eqref{eq:DeltaLA} and \(m\) see \eqref{eq:db}) which they assumed having a
-key role in model functioning.
-
-On the other hand, we decided to use TROLL to study resistance and
-resilience of ecosystem face to disturbance, highlighting the role of
-biodiversit. Consequently we particulrarly needed to assess the
-importance of functional traits to further better control and evaluate
-functional diversities. We also needed to assess the sensitivity of
-TROLL model to the seed rain constant (\(n_{ext}\), see \eqref{eq:next})
-because we assume it is one of the main factor of tree recruitments
-after disturbance in simulations.
+key role in model functioning. On the other hand, we decided to use
+TROLL to study resistance and resilience of ecosystem face to
+disturbance, highlighting the role of biodiversity. Consequently we
+particulrarly needed to assess the importance of functional traits to
+further better control and evaluate functional diversities. We also
+needed to assess the sensitivity of TROLL model to the seed rain
+constant (\(n_{ext}\), see \eqref{eq:next}) because we assumed it as one
+of the main factors of tree recruitments after disturbance within
+simulations.
 
 TROLL model currenty uses leaf mass per area (\(LMA\) in \(g.m^{-2}\)),
 leaf nitrogen content per dry mass (\(N_m\) in \(mg.g^{-1}\)), leaf
@@ -500,13 +503,11 @@ threshold (\(dbh_{thresh}\) in \(m\)), asymptotic height (\(h_{lim}\) in
 \(m\)). To assess the sensitivity of TROLL model to species functionnal
 traits, we performed a sensitivity analysis by fixing species trait
 values to their mean. Each trait was tested independently. We reduce to
-a common mean traits with a Perason's correlation value \(r \geq 0.8\)
-(\(h_{max}\) and \(a_h\) with a correlation of \(r=0.98\)).
-
-To assess the sensitivity of TROLL model to seed rain, we performed a
-sensitivity analysis by fixing simulations seed rain constant to 2, 20,
-200 and 2000 seeds per hectare (default value being 200 seeds per
-hectare).
+a common mean traits with a Pearson's correlation value \(r \geq 0.8\)
+(\(h_{max}\) and \(a_h\) with a correlation of \(r=0.98\)). To assess
+the sensitivity of TROLL model to seed rain, we performed a sensitivity
+analysis by fixing simulations seed rain constant to 2, 20, 200 and 2000
+seeds per hectare.
 
 Simulations were conducted on Intel Xeon(R) with 32 CPUs of 2.00GHz and
 188.9 GB of memory. We assumed maturity of the forest after 500 years of
@@ -519,63 +520,33 @@ control simulations with all parameters set to default values. Ecosystem
 outputs outside of the range of the control replicates values are
 significantly influenced by the studied parameter.
 
-\subsection{Disturbance}\label{disturbance-1}
-
-\emph{Most tropical timber production originates from selective logging,
-the targeted harvesting of timber from species of interest.
-Consequently, tropical sylviculture can be assimilated to a disturbance.
-The main difference between a disturbance and selective logging is the
-targetting of both species and individuals of interest. So we decided to
-first asses unselective disturbance effect on tropical forest ecosystem
-to subsequently better understand selective logging effect. We first
-implemented a simple disturbance module inside TROLL model to simulate
-unselective disturbance.} \textbf{Already inside model descripiton !}
-
-We first implemented a disturbance module inside TROLL model to simulate
-unselective disturbance. 60 tree communities were then defined with
-different levels of both specific and functional richness to explore the
-role of biodiversity on tropical forest ecosystem answer to disturbance.
-Next, different levels of disturbance were simulated on previous mature
-communities. Finally, resilience of ecosystem major global variables
-(related to carbon stock, forest dynamic and florisitic structure) from
-simulations were partitioned between selection effects and niche
-complementarity \citep{Loreau2001}.
-
-\subsection{Selective logging}\label{selective-logging}
-
-Once the unselective effect of disturbance on forest ecosystem studied,
-we can focus on selective logging to highlight the effect of species and
-individuals targetting on the ecosystem answer. We first implemented a
-sylviculture module inside TROLL model to simulate selective logging in
-regards to french Guiana practices. We used the 60 communities from
-disturbance simulations to study the role of biodiversity in both forest
-ecosystem and commercial species answer to selective logging. We then
-
 \subsection{Design of experiment}\label{design-of-experiment}
 
-In order to assess the role of biodiversity in ecosystem answer to
-disturbance, we needed to create a space of experiments encompassing
-both variation of disturbance, biodiversity and time. Disturbance was
-represented by percentage of basal area loss (0\%, 25\%, 50\% and 75\%).
-Biodiversity was integrated with two components specific and functional
-diversities. We used species richness \(SR\) to represents species
-diversity (5, 25, and 125). Functional diversity can be related to
-numerous components, and \citet{Borgy2017} argued for 5: richness,
-divergence, regularity, overlap and mean. Because mature forest were
-created from a bare soil with TROLL simulations, we could not control a
-priori divergence, regularity and overlap but only assess theim before
-diturbance. Consequently, we focused on functional richness with convex
-hull volume \(CHV\) and functional mean with community weighted mean
-\(CWM\). For each level of species richness \(SR\), we selected 20
-communities with growing convex hull volume \(CHV\) but with a community
-weighted means close to the regional species pool community weighted
-means. Effectivelly, we did not wanted drastic change in community means
-that could have more effect than functional richness itself. This design
-of experiments resulted in 60 communities (\(5~SR*20~CHV\)) and 240
-simulations (\(60 ~communities*4~levels~of~disturbance\)) over 600 years
-(maturity being assumed after 500 years of regeneration \citep{Li}).
-Figure \ref{fig:DOE} presents the design of experiment for communities
-biodiversity after the forest mature were simulated, and thus before
+In order to assess the role of biodiversity in ecosystem answer to both
+disturbance and sylviculture, we needed to create a space of experiments
+encompassing both variation of disturbance, biodiversity and time.
+Disturbance was represented by percentage of basal area loss (0\%, 25\%,
+50\% and 75\%), or as a selective logging simulation. Biodiversity was
+integrated with two components of its components: taxonomic and
+functional diversities. We used species richness \(SR\) to represents
+taxonomic diversity (5, 25, and 125 species). Functional diversity can
+be related to numerous components, and \citet{Borgy2017} argued for 5:
+richness, divergence, regularity, overlap and mean. Because mature
+forest were created from a bare soil with TROLL simulations, we could
+not control a priori divergence, regularity and overlap but only assess
+theim before diturbance. Consequently, we focused on functional richness
+with convex hull volume \(CHV\) and functional mean with community
+weighted mean \(CWM\). For each level of species richness \(SR\), we
+selected 20 communities with growing convex hull volume \(CHV\) but with
+a community weighted means close to the regional species pool community
+weighted means. Effectivelly, we did not wanted drastic change in
+community means that could have more effect than functional richness
+itself. This design of experiments resulted in 60 communities
+(\(5~SR*20~CHV\)) and 240 simulations
+(\(60 ~communities*4~levels~of~disturbance\)) over 600 years (maturity
+being assumed after 500 years of regeneration \citep{Li}). Figure
+\ref{fig:DOE} presents the design of experiment for communities
+biodiversity after the mature forest were simulated, and thus before
 disturbance. We obtained a broad range of both functionl dispersion
 \(FDis\) and aboveground biomass \(AGB\) for simulated forest ecosystems
 before disturbance.
@@ -587,49 +558,55 @@ before disturbance.
 are implemented along a gradient of species richness (SR) and functional
 dispersion (FDis) resulting in a broad range of aboveground biomass
 (AGB). FDis was caluclated based on 4 functional traits (leaf mass per
-area, wood specific gravity, maximum diameter, maximum height).}
+area, wood specific gravity, maximum diameter, and maximum height).}
 \end{figure}
 
-\subsection{Ecosystem answer anlaysis}\label{ecosystem-answer-anlaysis}
+\subsection{Ecosystem answer analysis}\label{ecosystem-answer-analysis}
+
+\subsubsection{Resilience}\label{resilience}
 
 Tropical forest ecosystems provides numerous ecosystem services linked
-to several ecosystem functions. We focused on few functions and related
-metrics to analyse ecosystem answer to disturbance: carbon stock with
-aboveground biomass (\(AGB\) in \(ton~C.ha^{-1}\)), forest dynamic with
-number of stem above \(10~cm\) diameter at breast height (\(N10\)), and
-floristic composition with \textbf{?} (\textbf{?} in \textbf{?}).
+to several ecosystem functions. We decided to describe simiulated
+tropical forests in three major functions: forest dynamic, forest
+production, and forest diversity. Forest dynamic was represented by
+aboveground biomass (\(AGB\) in \(ton~C.ha^{-1}\)), basal area (\(BA\)
+in \(m^2.ha^{-1}\)), total number of stem (\(N\)), number of stem above
+\(10~cm\) diameter (\(N10\)), and number of stem above \(30~cm\)
+diameter (\(N30\)). Forest production was represented by growth pimary
+productivity (\(GPP\) in \(MgC.ha^{-1}\)), net pimary productivity
+(\(NPP\) in \(MgC.ha^{-1}\)), tree autotrophic respiration in day
+(\(Rday\) in \(MgC.ha^{-1}\)) and tree autotrophic respiration in night
+(\(Rnight\) in \(MgC.ha^{-1}\)). Finally, forest diversity was
+represented by \textbf{??}.
 
 The resilience of metrics values post disturbance were assessed through
 \citet{Henry2012} formula:
 
 \begin{equation}
-  R\left(t\right)=\frac{Recovery\left(t\right)}{Loss\left(t_d\right)} \approx \frac{X(t)}{X(t_d-1)}
+  R\left(t\right)=\frac{Recovery\left(t\right)}{Loss\left(t_d\right)} \approx \frac{X_T(t)}{X_C(t)}
   \label{eq:Resilience}
 \end{equation}
 
 The resilience of the system \(R(t)\) at the time \(t\) is described by
 the ratio of recovery \(Recovery(t)\) at time \(t\) to loss suffered
-\(Loss(t_d)\) at disturbance time \(t_d\). We transformed the equation
-in the resilience of the system \(R(t)\) at the time \(t\) being the
-ratio of the ecosystem metric \(X(t)\) at time \(t\) to the ecosystem
-metric before the disturbance happened \(X(t_d-1)\) at time \(t_d-1\).
-\(X(t_d-1)\) was calculated as the mean of the ecosystem output for 50
-last years of the simulation of the mature forest (over 600 years).
-Then, we calculated for each simulation the recovery time
-\(t_{recovery}\) were the ecosystem reached back its stable state
-defined as its state before disturbance. But some ecosystem metrics can
-reach pre disturbance value wihtout revealing ecosystem recovery. For
-instance, number of stem above \(10~cm\) diameter at breast height
-\(N10\) will first decrease due to disturbance. Then \(N10\) will exceed
-its initial value due to new seedlings recruitment before decreasing
-towards its pre disturbanec value. Consequently, the first time \(N10\)
-reaches back its pre disturbance value can not be considered as the
-recovery time \(t_{recovery}\). In order to solve this issue, we
-considered the ecosystem as stable again when its whole set of observed
-metrics reach their pre disturbance values.
+\(Loss(t_d)\) at disturbance time \(t_d\). But in our peculiar case of
+tropical forest ecosystems, the equilibrium used to calculate
+\(Loss(t_d)\) can not be reduced to a specific time if the equilibrium
+is dynamic. Consequently, to encompass undisturbed ecosystem variations
+throught time, we simulated an undisturbed control ecosystem \(C\). And
+the resilience of the system \(R(t)\) at the time \(t\) was defined as
+the ratio of the ecosystem metric values in the disturbed simulation
+\(X_T(t)\) over the the ecosystem metric values from the control
+\(X_C(t)\) . Thus, the value of resilience \(R(t)\) is normalized for
+all simulations and metrics. \(R(t)\) will be equal to \(R_{eq} = 1\)
+when reaching the equilibrium value. Consequently we can calculate an
+euclidean distance to equilibrium \(d_{eq}(t)\) as
+\(d_{eq}(t) = \sqrt{(R_{eq} - R(t))^2}\).
+
+\subsubsection{Biodiversity effect}\label{biodiversity-effect}
 
 Biodiversity is not only a facet of the experimental design and an
-ecosystem output through florisitic composition, but also interact on
+ecosystem output through forest diversity, but also interact on
 ecosystem functioning and consequently on its answer to disturbance.
 Biodiversity ecosystem functioning relation can be split in
 complementarity and selection effect with \citet{Loreau2001}
@@ -678,7 +655,7 @@ each species indivdually representing 652 simulations of monoculture.
 
 \subsection{Sensitivity}\label{sensitivity}
 
-\subsection{Disturbance}\label{disturbance-2}
+\subsection{Disturbance}\label{disturbance-1}
 
 \subsection{Sylviculture}\label{sylviculture-1}
 
@@ -687,7 +664,8 @@ each species indivdually representing 652 simulations of monoculture.
 \appendix
 
 
-\hypertarget{appendix-1}{\section{Appendix 1}\label{appendix-1}}
+\hypertarget{appendix-1-troll-model}{\section{Appendix 1: TROLL
+model}\label{appendix-1-troll-model}}
 
 I this Appendix we further detail modules of TROLL model.
 
@@ -946,41 +924,6 @@ time thus defined the leaf lifespan
 third of leaf lifespan \(LL\). Belowground carbon allocation is not
 simulated inside TROLL.
 
-\subsection{Leaf lifespan}\label{leaf-lifespan-1}
-
-The underestimation of leaf lifespan for low LMA species with the
-allometry from \citet{Reich1991a} resulted in indivduals unealistic
-early death from carbon starvation. We gathered data from
-TRY\citep{Kattge2011}, DRYAD \citep{chave_towards_2009} and GLOPNET
-\citep{wright_worldwide_2004} datasets. We used an out of the bag method
-applied on a random forest to select variables with highest importance
-to explain leaf lifespan. We thus selected leaf mass per are \(LMA\),
-leaf nitrogen content \(N\) and wood specific gravity \(wsg\). We then
-used a bayesian approach to test different models with growing level of
-complexity. The model with the best tradeoff between complexity (number
-of parameters), convergence, likelihood, and prediction quality (root
-mean square error of prediction RMSEP) was kept. We selected following
-model with a maximum likelihood of 13.6 and a RMSEP of 12 months:
-
-\begin{equation}
-  LL_{d} \sim log\mathcal{N}({\beta_1}_d*LMA - {\beta_2}_d*N*\beta_3*wsg, \sigma)
-  \label{eq:LLb}
-\end{equation}
-
-Leaf lifespan \(LL\) follows a lognormal law with location infered from
-leaf lifespan \(LMA\), nitrogen content \(N\) and wood specific gravity
-\(wsg\) and a scale \(\sigma\). Each \({\beta_i}_d\) is following a
-normal law located on \(\beta_i\) with a scale of \(\sigma_i\). All
-\(\beta_i\), \(\sigma_i\), and \(\sigma\) are assumed without
-presemption following a gamma law. \(d\) represents the dataset random
-effects and encompass environmental and protocol variations. The
-sampling of model \eqref{eq:LLb} resulted in the following allometry:
-
-\begin{equation}
-  LL = e^{0.017*LMA - 0.103*Nmass + 1.94*wsg}
-  \label{eq:LL}
-\end{equation}
-
 \subsection{Tree growth}\label{tree-growth}
 
 Once the increment of stem volume \(\Delta V\) calculated with equation
@@ -1122,6 +1065,141 @@ Seedlings are recruited with following intial geometry:
   \end{array}
   \label{eq:C}
 \end{equation}
+
+\hypertarget{appendix-2-leaf-lifespan-model}{\section{Appendix 2: Leaf
+lifespan model}\label{appendix-2-leaf-lifespan-model}}
+
+TROLL model previous implementation encompass Reich's 1991 and 1997 and
+Wright's 2004 allometries to estimate leaf lifespan with
+\citep{Reich1991a, Reich1997, wright_worldwide_2004}. But we have shown
+that Reich's allometries are underestimating leaf lifespan for low LMA
+species. Moreover simulations estimated unrealistically low aboveground
+biomass for low LMA species. We assumed Reich's allometries
+underestimation of leaf lifespan for low LMA species being the source of
+unrealistically low aboveground biomass inside TROLL simulations. We
+decided to find a better allometry with \citet{wright_worldwide_2004}
+GLOPNET dataset.
+
+\subsection{Material and methods}\label{material-and-methods-1}
+
+We gathered data from TRY database to evaluate and improve previous
+models. We requested functional traits available in Bridge dataset and
+leaf lifespan for tropical species present in GLOPNET dataset and used
+in TROLL (see \ref{tab:A2traits}). We compiled GLOPNET, TRY, and DRYAD
+databases. We kept dataset given by GLOPNET as origin dataset for
+observations. It correspond to leaf lifespan and also to LMA and Nmass
+in most of cases. We measured variable importance in functionnal traits
+to explain leaf lifespan with out-of bag method applied on a random
+forest.
+
+\begin{table}
+
+\caption{\label{tab:A2traits}Functional traits gathered with TRY.}
+\centering
+\begin{tabular}[t]{l|l|l|r}
+\hline
+Name & Trait & Unit & TRYcode\\
+\hline
+LL & Leaf lifespan (longevity) & month & 12\\
+\hline
+SLA & Leaf area per leaf dry mass (specific leaf area, SLA) & \$m\textasciicircum{}2.kg\textasciicircum{}\{-1\}\$ & 11\\
+\hline
+N & Leaf nitrogen (N) content per leaf dry mass & \$mg.g\textasciicircum{}\{-1\}\$ & 15\\
+\hline
+P & Leaf phosphorus (P) content per leaf dry mass & \$mg.g\textasciicircum{}\{-1\}\$ & 14\\
+\hline
+wsg & Stem dry mass per stem fresh volume (stem specific density) & \$mg.mm\textasciicircum{}\{-3\}\$ & 4\\
+\hline
+\end{tabular}
+\end{table}
+
+We tested different models and we kept the model with the best tradeoff
+between model complexity, convergence, likelihood, and prediction
+quality (see \href{LL2.html}{leaf lifespan model} document). We found
+following model, named \textbf{M1}:
+\[M1~~ {LL_s}_j \sim \mathcal{logN}(\beta_0*e^{{\beta_1}_s*{LMA_s}_j - {\beta_2}_s*{Nmass_s}_j},\,\sigma)\,\]
+\[s=1,...,S_{=4}~, ~~j=1,...,n_s\]
+\[{\beta_i}_s \sim \mathcal{N}({\beta_i},\,\sigma_i)\,^I, ~~(\beta_i, \sigma, \sigma_i) \sim \mathcal{\Gamma}(0.001,\,0.001)\,^{2I+1}\]
+
+Leaf lifespan (\(LL\)) is following a lognormal law with location
+\({\mu_s}_j\) and scale \(\sigma\). \(s\) represents the dataset used to
+do the fit between 1 and \(S=4\), it encompass environmental and
+protocol variations. \(j\) represents the observation for a given site
+\(s\). Location \({\mu_s}_j\) is the exponential from the difference
+between LMA and Nmass with parameters \({\beta_0}_s\), \({\beta_1}_s\),
+and \({\beta_2}_s\). Each \({\beta_i}_s\) is following a normal law
+located on \(\beta_i\) with scale \(\sigma_i\). Finally all \(beta_i\),
+\(\sigma\), and \(\sigma_i\) are assumed without presemption following
+gamma laws of parameters \(10^-2\), \(10^-2\).
+
+We decided to add to model \textbf{M1}, wood specific gravity as a new
+predictor through a parameter \(\beta_3\) in a new model named
+\textbf{M10}. We removed dataset random effect on \(\beta_3\) due to the
+fact that all wood specific gravities were provided by DRYAD database.
+Due to a correlation between \(\beta_0\) and \(\beta_3\) in \textbf{M10}
+(see figure 5), we tried also a model \textbf{M11} without intercept
+\(\beta_0\). We then sampled all models with this composite dataset, and
+obtained following results :
+
+\subsection{Results}\label{results-1}
+
+\begin{longtable}[]{@{}lrr@{}}
+\caption{\label{tab:OOB}Variable importance calculated with out-of the bag
+method applied on a random forest. Leaf lifespan (LL) is taken in
+GLOPNET database from \citet{wright_worldwide_2004}. Leaf mass per area
+(LMA), and leaf nitrogen content (Nmass) are taken both in TRY
+(\url{https://www.try-db.org}) and GLOPNET databases. Wood specific
+gravity (wsg) is taken both in TRY and DRYAD databases.}\tabularnewline
+\toprule
+& \%IncMSE & IncNodePurity\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+& \%IncMSE & IncNodePurity\tabularnewline
+\midrule
+\endhead
+LMA & 99.69390 & 2028.079\tabularnewline
+Nm & 159.03360 & 2666.670\tabularnewline
+wsg & 50.97284 & 1475.023\tabularnewline
+\bottomrule
+\end{longtable}
+
+Table 3: Model fit results for composite dataset. \emph{Data are taken
+from GLOPNET, TRY, and DRYAD datasets (see previous description). ML
+stand for maximum likelihood and RMSEP for root mean square error of
+prediction}
+
+All model have correctly converged.
+
+Model \textbf{M10} have shown a correlation between parameters
+\(\beta_0\) and \(\beta_3\), responsible for the creation of model
+\textbf{M11} (see previous paragraphs). Model \textbf{M11} only show a
+slight link between \(\beta_1\) and \(\beta_3\) which can be considered
+as non significant.
+
+We can denote that retained vector of parameters with maximum likelihood
+for model \textbf{M11} is close to 95\% confidence limit.
+
+We finally tested the new allometry obtained with the new model
+\textbf{M} on TROLL data (figure 7) and with TROLL simulations. Minimum
+leaf lifespan is now above 3 months for the new model \textbf{M} with
+TROLL species dataset. Moreover lowest leaf lifespan species are not the
+one with the smallest LMA with new model. Lastly, new model \textbf{M}
+variation of leaf lifespan is almost spanning all previous allometries
+prediciton on LMA axis.
+
+Simulations are validating that this new allometry resolve the issue of
+unrealistically low aboveground biomass for low LMA species due to an
+early edath of individuals inside simulations. For instance with this
+allometry Symphonia sp 1 (a low LMA species) is now reaching a realistic
+aboveground biomass above X tonnes of C/ha and realistic diameter and
+age distribution inside the final population.
+
+\hypertarget{appendix-3-rotten-tree-model}{\section{Appendix 3: Rotten
+tree model}\label{appendix-3-rotten-tree-model}}
+
+\hypertarget{appendix-4-gap-damages-model}{\section{Appendix 4: Gap
+damages model}\label{appendix-4-gap-damages-model}}
 
 \addcontentsline{toc}{section}{References}
 \bibliography{/home/sylvain/Documents/Bibliography/library.bib}

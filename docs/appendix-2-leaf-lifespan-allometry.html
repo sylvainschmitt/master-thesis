@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="resume-et-abstract.html">
+<link rel="prev" href="appendix-1-troll-model.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -108,12 +108,10 @@
 <li class="chapter" data-level="A.6" data-path="appendix-1-troll-model.html"><a href="appendix-1-troll-model.html#mortality"><i class="fa fa-check"></i><b>A.6</b> Mortality</a></li>
 <li class="chapter" data-level="A.7" data-path="appendix-1-troll-model.html"><a href="appendix-1-troll-model.html#recruitment"><i class="fa fa-check"></i><b>A.7</b> Recruitment</a></li>
 </ul></li>
-<li class="chapter" data-level="B" data-path="appendix-2-leaf-lifespan-model.html"><a href="appendix-2-leaf-lifespan-model.html"><i class="fa fa-check"></i><b>B</b> Appendix 2: Leaf lifespan model</a><ul>
-<li class="chapter" data-level="B.1" data-path="appendix-2-leaf-lifespan-model.html"><a href="appendix-2-leaf-lifespan-model.html#material-and-methods-1"><i class="fa fa-check"></i><b>B.1</b> Material and methods</a></li>
-<li class="chapter" data-level="B.2" data-path="appendix-2-leaf-lifespan-model.html"><a href="appendix-2-leaf-lifespan-model.html#results-1"><i class="fa fa-check"></i><b>B.2</b> Results</a></li>
+<li class="chapter" data-level="B" data-path="appendix-2-leaf-lifespan-allometry.html"><a href="appendix-2-leaf-lifespan-allometry.html"><i class="fa fa-check"></i><b>B</b> Appendix 2: Leaf lifespan allometry</a><ul>
+<li class="chapter" data-level="B.1" data-path="appendix-2-leaf-lifespan-allometry.html"><a href="appendix-2-leaf-lifespan-allometry.html#material-and-methods-1"><i class="fa fa-check"></i><b>B.1</b> Material and methods</a></li>
+<li class="chapter" data-level="B.2" data-path="appendix-2-leaf-lifespan-allometry.html"><a href="appendix-2-leaf-lifespan-allometry.html#results-1"><i class="fa fa-check"></i><b>B.2</b> Results</a></li>
 </ul></li>
-<li class="chapter" data-level="C" data-path="appendix-3-rotten-tree-model.html"><a href="appendix-3-rotten-tree-model.html"><i class="fa fa-check"></i><b>C</b> Appendix 3: Rotten tree model</a></li>
-<li class="chapter" data-level="D" data-path="appendix-4-gap-damages-model.html"><a href="appendix-4-gap-damages-model.html"><i class="fa fa-check"></i><b>D</b> Appendix 4: Gap damages model</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/sylvainschmitt/master-thesis" target="blank">work in progress</a></li>
@@ -135,23 +133,108 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Master thesis</h1>
-<h4 class="author"><em>Sylvain SCHMITT</em></h4>
-<h4 class="date"><em>2017-06-08</em></h4>
+<div id="appendix-2-leaf-lifespan-allometry" class="section level1">
+<h1><span class="header-section-number">B</span> Appendix 2: Leaf lifespan allometry</h1>
+<p>TROLL model previous implementation encompass Reich’s 1991 and 1997 and Wright’s 2004 allometries to estimate leaf lifespan with <span class="citation">(Reich <em>et al.</em> <a href="#ref-Reich1991a">1991</a>, <a href="#ref-Reich1997">1997</a>; Wright <em>et al.</em> <a href="#ref-wright_worldwide_2004">2004</a>)</span>. But we have shown that Reich’s allometries are underestimating leaf lifespan for low LMA species. Moreover simulations estimated unrealistically low aboveground biomass for low LMA species. We assumed Reich’s allometries underestimation of leaf lifespan for low LMA species being the source of unrealistically low aboveground biomass inside TROLL simulations. We decided to find a better allometry with <span class="citation">Wright <em>et al.</em> (<a href="#ref-wright_worldwide_2004">2004</a>)</span> GLOPNET dataset.</p>
+<div id="material-and-methods-1" class="section level2">
+<h2><span class="header-section-number">B.1</span> Material and methods</h2>
+<p>We gathered data from TRY database to evaluate and improve previous models. We requested functional traits available in Bridge dataset and leaf lifespan for tropical species present in GLOPNET dataset and used in TROLL (see <a href="appendix-2-leaf-lifespan-allometry.html#tab:A2traits">B.1</a>). We compiled GLOPNET, TRY, and DRYAD databases. We kept dataset given by GLOPNET as origin dataset for observations. It correspond to leaf lifespan and also to LMA and Nmass in most of cases. We measured variable importance in functionnal traits to explain leaf lifespan with out-of bag method applied on a random forest.</p>
+<table>
+<caption><span id="tab:A2traits">Table B.1: </span>Functional traits gathered with TRY.</caption>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Trait</th>
+<th align="left">Unit</th>
+<th align="right">TRYcode</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LL</td>
+<td align="left">Leaf lifespan (longevity)</td>
+<td align="left">month</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">SLA</td>
+<td align="left">Leaf area per leaf dry mass (specific leaf area, SLA)</td>
+<td align="left"><span class="math inline">\(m^2.kg^{-1}\)</span></td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">N</td>
+<td align="left">Leaf nitrogen (N) content per leaf dry mass</td>
+<td align="left"><span class="math inline">\(mg.g^{-1}\)</span></td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">P</td>
+<td align="left">Leaf phosphorus (P) content per leaf dry mass</td>
+<td align="left"><span class="math inline">\(mg.g^{-1}\)</span></td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">wsg</td>
+<td align="left">Stem dry mass per stem fresh volume (stem specific density)</td>
+<td align="left"><span class="math inline">\(mg.mm^{-3}\)</span></td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+<p>We tested different models and we kept the model with the best tradeoff between model complexity, convergence, likelihood, and prediction quality (see <a href="LL2.html">leaf lifespan model</a> document). We found following model, named <strong>M1</strong>: <span class="math display">\[M1~~ {LL_s}_j \sim \mathcal{logN}(\beta_0*e^{{\beta_1}_s*{LMA_s}_j - {\beta_2}_s*{Nmass_s}_j},\,\sigma)\,\]</span> <span class="math display">\[s=1,...,S_{=4}~, ~~j=1,...,n_s\]</span> <span class="math display">\[{\beta_i}_s \sim \mathcal{N}({\beta_i},\,\sigma_i)\,^I, ~~(\beta_i, \sigma, \sigma_i) \sim \mathcal{\Gamma}(0.001,\,0.001)\,^{2I+1}\]</span></p>
+<p>Leaf lifespan (<span class="math inline">\(LL\)</span>) is following a lognormal law with location <span class="math inline">\({\mu_s}_j\)</span> and scale <span class="math inline">\(\sigma\)</span>. <span class="math inline">\(s\)</span> represents the dataset used to do the fit between 1 and <span class="math inline">\(S=4\)</span>, it encompass environmental and protocol variations. <span class="math inline">\(j\)</span> represents the observation for a given site <span class="math inline">\(s\)</span>. Location <span class="math inline">\({\mu_s}_j\)</span> is the exponential from the difference between LMA and Nmass with parameters <span class="math inline">\({\beta_0}_s\)</span>, <span class="math inline">\({\beta_1}_s\)</span>, and <span class="math inline">\({\beta_2}_s\)</span>. Each <span class="math inline">\({\beta_i}_s\)</span> is following a normal law located on <span class="math inline">\(\beta_i\)</span> with scale <span class="math inline">\(\sigma_i\)</span>. Finally all <span class="math inline">\(beta_i\)</span>, <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(\sigma_i\)</span> are assumed without presemption following gamma laws of parameters <span class="math inline">\(10^-2\)</span>, <span class="math inline">\(10^-2\)</span>.</p>
+<p>We decided to add to model <strong>M1</strong>, wood specific gravity as a new predictor through a parameter <span class="math inline">\(\beta_3\)</span> in a new model named <strong>M10</strong>. We removed dataset random effect on <span class="math inline">\(\beta_3\)</span> due to the fact that all wood specific gravities were provided by DRYAD database. Due to a correlation between <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_3\)</span> in <strong>M10</strong> (see figure 5), we tried also a model <strong>M11</strong> without intercept <span class="math inline">\(\beta_0\)</span>. We then sampled all models with this composite dataset, and obtained following results :</p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<div class="figure">
-<img src="https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg" alt="stability-wip" />
-<p class="caption">stability-wip</p>
-</div>
-<p><img src="images/main.png" style="display: block; margin: auto;" /></p>
-<p>This is the online html version of my master thesis. The pdf version is available for download with the download button on top of the window.</p>
-<p>Have a nice reading.</p>
-<div align="right">
-<p><em>Sylvain</em></p>
+<div id="results-1" class="section level2">
+<h2><span class="header-section-number">B.2</span> Results</h2>
+<table>
+<caption><span id="tab:OOB">Table B.2: </span>Variable importance calculated with out-of the bag method applied on a random forest. Leaf lifespan (LL) is taken in GLOPNET database from <span class="citation">Wright <em>et al.</em> (<a href="#ref-wright_worldwide_2004">2004</a>)</span>. Leaf mass per area (LMA), and leaf nitrogen content (Nmass) are taken both in TRY (<a href="https://www.try-db.org" class="uri">https://www.try-db.org</a>) and GLOPNET databases. Wood specific gravity (wsg) is taken both in TRY and DRYAD databases.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">%IncMSE</th>
+<th align="right">IncNodePurity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LMA</td>
+<td align="right">96.11412</td>
+<td align="right">2046.155</td>
+</tr>
+<tr class="even">
+<td>Nm</td>
+<td align="right">158.27071</td>
+<td align="right">2681.129</td>
+</tr>
+<tr class="odd">
+<td>wsg</td>
+<td align="right">51.17126</td>
+<td align="right">1455.848</td>
+</tr>
+</tbody>
+</table>
+<p>Table 3: Model fit results for composite dataset. <em>Data are taken from GLOPNET, TRY, and DRYAD datasets (see previous description). ML stand for maximum likelihood and RMSEP for root mean square error of prediction</em></p>
+<p>All model have correctly converged.</p>
+<p>Model <strong>M10</strong> have shown a correlation between parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_3\)</span>, responsible for the creation of model <strong>M11</strong> (see previous paragraphs). Model <strong>M11</strong> only show a slight link between <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_3\)</span> which can be considered as non significant.</p>
+<p>We can denote that retained vector of parameters with maximum likelihood for model <strong>M11</strong> is close to 95% confidence limit.</p>
+<p>We finally tested the new allometry obtained with the new model <strong>M</strong> on TROLL data (figure 7) and with TROLL simulations. Minimum leaf lifespan is now above 3 months for the new model <strong>M</strong> with TROLL species dataset. Moreover lowest leaf lifespan species are not the one with the smallest LMA with new model. Lastly, new model <strong>M</strong> variation of leaf lifespan is almost spanning all previous allometries prediciton on LMA axis.</p>
+<p>Simulations are validating that this new allometry resolve the issue of unrealistically low aboveground biomass for low LMA species due to an early edath of individuals inside simulations. For instance with this allometry Symphonia sp 1 (a low LMA species) is now reaching a realistic aboveground biomass above X tonnes of C/ha and realistic diameter and age distribution inside the final population.</p>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Reich1991a">
+<p>Reich, P.B., Uhl, C., Walters, M.B. &amp; Ellsworth, D.S. (1991). Leaf lifespan as a determinant of leaf structure and function among 23 amazonian tree species. <em>Oecologia</em>, <strong>86</strong>, 16–24.</p>
+</div>
+<div id="ref-Reich1997">
+<p>Reich, P.B., Walters, M.B. &amp; Ellsworth, D.S. (1997). From tropics to tundra: Global convergence in plant functioning. <em>Ecology</em>, <strong>94</strong>, 13730–13734.</p>
+</div>
+<div id="ref-wright_worldwide_2004">
+<p>Wright, I.J., Reich, P.B., Westoby, M., Ackerly, D.D., Baruch, Z., Bongers, F., Cavender-Bares, J., Chapin, T., Cornelissen, J.H.C., Diemer, M. &amp; Others. (2004). The worldwide leaf economics spectrum. <em>Nature</em>, <strong>428</strong>, 821–827.</p>
+</div>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -178,8 +261,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="resume-et-abstract.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="appendix-1-troll-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -208,7 +291,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/sylvainschmitt/master-thesis/blob/master/index.Rmd",
+"link": "https://github.com/sylvainschmitt/master-thesis/blob/master/08-Appendix2.Rmd",
 "text": "Edit"
 },
 "download": ["master-thesis.pdf"],
