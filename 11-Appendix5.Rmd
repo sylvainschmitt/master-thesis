@@ -1,0 +1,88 @@
+# Appendix 5: Disturbance simulations
+
+```{r A5data, echo=FALSE, cache=TRUE}
+rich <- c(5,25,125)
+cvh <- 1:20
+dist <- c(0,25,50,75)
+path <- '~/Documents/ECOFOG/Results/disturbance/disturbance/data'
+load(file.path(path, 'disturbanceDOE.Rdata'))
+load(file.path(path, 'disturbanceResilience.Rdata'))
+deq <- data.frame(
+  time = resilience$time,
+  sim = resilience$sim,
+  structure = apply(resilience[c('agb', 'ba', 'n', 'n10', 'n30')], 1, 
+                  function(x) sqrt(sum((rep(1, length(x)) - x)^2))),
+  production = apply(resilience[c('gpp', 'npp', 'Rday', 'Rnight')], 1, 
+                  function(x) sqrt(sum((rep(1, length(x)) - x)^2))))
+sim <- c(sapply(c(sapply(rich, function(r) paste0(r, '.', cvh))), function(x) paste0(x, '.', dist[-1])))
+Ieq <- sapply(sim, function(s){
+  data_s <- subset(deq, sim ==s)
+  return(cbind(data_s[c(1,2)], cumsum(data_s[-c(1,2)])))
+}, simplify = F) ; rm(sim)
+Ieq <- data.frame(do.call('rbind', Ieq))
+names(Ieq)[3:4] <- paste0('Ieq.', names(Ieq)[3:4])
+load(file.path(path, 'disturbanceBE.Rdata'))
+load(file.path(path, 'disturbanceBErecovery.Rdata'))
+```
+
+## Ecosystem functions
+
+Appendix 4 presents ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. It encompass all functionnal diversity components [FRIC, FEve, FDiv, and FDis, @villeger_new_2008]. And it presents results for both forest dynamic (Figure \@ref(fig:A4IeqStructureAll)) and forest production (Figure \@ref(fig:A4IeqProductionAll)).
+
+```{r A5IeqStructureAll, echo=FALSE, fig.cap='Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest dynamic equilibrium after 600 years was represented against functional diversity [FRIC, FEve, FDiv, and FDis, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness.', cache=TRUE, fig.height=8, fig.width=12}
+Ieq %>% 
+  left_join(., doe, by = 'sim') %>% 
+  filter(time == 600) %>%
+  select(Ieq.structure, disturbance, richness, FRic, FEve, FDiv, FDis) %>% 
+  melt(id.vars = c('Ieq.structure', 'disturbance', 'richness')) %>% 
+  ggplot(aes(x = Ieq.structure, y = value)) + 
+  geom_smooth(method = 'lm', alpha = 0.3, colour= 'grey') +
+  geom_point(aes(shape = richness)) +
+  facet_grid(variable~disturbance, scales = "free", labeller = 'label_both') + 
+  ylab('Functional diversity') +
+  xlab('Cummulative integral from ecosystem 
+       distance to forest dynamic equilibrium after 600 years') +
+  scale_shape_discrete('Species\nrichness\n(SR)')
+```
+
+```{r A5IeqProductionAll, echo=FALSE, fig.cap='Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest production equilibrium after 600 years was represented against functional diversity [FRIC, FEve, FDiv, and FDis, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness.', cache=TRUE, fig.height=8, fig.width=12}
+Ieq %>% 
+  left_join(., doe, by = 'sim') %>% 
+  filter(time == 600) %>%
+  select(Ieq.production, disturbance, richness, FRic, FEve, FDiv, FDis) %>% 
+  melt(id.vars = c('Ieq.production', 'disturbance', 'richness')) %>% 
+  ggplot(aes(x = Ieq.production, y = value)) + 
+  geom_smooth(method = 'lm', alpha = 0.3, colour= 'grey') +
+  geom_point(aes(shape = richness)) +
+  facet_grid(variable~disturbance, scales = "free", labeller = 'label_both') + 
+  ylab('Functional diversity') +
+  xlab('Cummulative integral from ecosystem 
+       distance to forest production equilibrium after 600 years') +
+  scale_shape_discrete('Species\nrichness\n(SR)')
+```
+
+## Biodiversity effect
+
+Figure \@ref(fig:A4allBE) presents the resilience of complementarity and selection effects for different ecosystem metrics (AGB, BA, N, GPP and NPP).
+
+```{r A5allBE, echo=FALSE, fig.cap='Resilience of complementarity and selection effects. Complementarity effect (CE) and selection effect (SE) where normalized by control net effect (NEc), thus measuring their resilience over time for different ecosystem variables (AGB, BA, N, GPP).', cache=TRUE, fig.height=8, fig.width=12}
+BEresilience %>% 
+  select(BE, time, sim, agb, ba, n, gpp) %>% 
+  melt(id.vars = c('BE', 'time', 'sim')) %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(richness == 125) %>%
+  filter(BE %in% c('SE', 'CE')) %>% 
+  group_by(time, BE, disturbance, variable) %>%
+  summarise(qt1 =quantile(value, probs=0.05, na.rm = T),
+            qt2 =quantile(value, probs=0.75, na.rm = T),
+            mean=mean(value, na.rm = T)) %>% 
+  ggplot(aes(x = time)) +
+  geom_hline(yintercept = 1, color = 'red') +
+  geom_hline(yintercept = 0, color = 'blue') +
+  geom_ribbon(aes(ymin = qt1, ymax = qt2, fill = BE), alpha = 0.3) +
+  geom_line(aes(y = mean, color = BE)) +
+  facet_grid(variable ~ disturbance, scales = "free", labeller = 'label_both') +
+  xlab('Time (years)') +
+  ylab('Recovery of variable net effect') + 
+  ylim(-2.5,2.5)
+```

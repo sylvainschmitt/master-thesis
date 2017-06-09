@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="appendix-2-leaf-lifespan-model.html">
-<link rel="next" href="appendix-4-sensitivity-analysis.html">
+<link rel="prev" href="appendix-4-sensitivity-analysis.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -145,162 +145,40 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="appendix-3-rotten-tree-model" class="section level1">
-<h1><span class="header-section-number">C</span> Appendix 3: Rotten tree model</h1>
-<p>In order to simulate sylviculture with TROLL we need to implement a new sylviculture module inside TROLL model code. A first litterature review was completed by an interview with Laurent Descroix of the Office Nationale des Forêts. We discovered that rotten trees were not random and seemed to depend both on tree species and diameter. This document presents modelling of relation between rotten trees and their species and diameter.</p>
-<p>In fact we have two different questions:</p>
-<ul>
-<li>Predict if a tree will be probed as rotten (models <strong>M</strong>)</li>
-<li>Predict how much of tree volume is rotten (models <strong>N</strong>)</li>
-</ul>
-<p>First all <strong>M</strong> model can be written as follow: <span class="math display">\[Rotten_n \sim \mathcal{B}(\theta_n), ~~n \in [1,N_{=3816}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]\]</span> Secondly, all <strong>N</strong> models depend on a latent variable being the percentage of rotten wood <span class="math inline">\(Pt_r\)</span>. We can assume that all trees are growing depending on species <span class="math inline">\(s\)</span> and plot <span class="math inline">\(p\)</span> fertility and are supposed to have a full healthy volume <span class="math inline">\(V_h\)</span> for a given diameter <span class="math inline">\(dbh\)</span>. We obtain following model:</p>
-<p><span class="math display">\[V_f \sim \mathcal{logN}(V_h*Pt_r, \sigma), ~~n \in [1,N_{=3268}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]\]</span></p>
-<p>We retained following models :</p>
-<table>
-<caption><span id="tab:A3models">Table C.1: </span>Models summary.</caption>
-<thead>
-<tr class="header">
-<th align="left">M</th>
-<th align="left">Model</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><span class="math inline">\(M_{s,p}\)</span></td>
-<td align="left"><span class="math inline">\({P_{rotten}}_n \sim \mathcal{B}(inv_{logit}(\beta_0 + \beta_1*dbh_n + {\beta_2}_p + {\beta_3}_s))\)</span></td>
-</tr>
-<tr class="even">
-<td align="left"><span class="math inline">\(N_{s,p} + L_{s,p}\)</span></td>
-<td align="left"><span class="math inline">\(Volume_{of~wood} \sim \mathcal{logN} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)</span></td>
-</tr>
-</tbody>
-</table>
-<div id="probed-rotten-m" class="section level2">
-<h2><span class="header-section-number">C.1</span> Probed rotten (M)</h2>
-<p>Based on complexity (number of parameters), convergence and likelihood we selected model <span class="math inline">\(M_{p,s}\)</span>:</p>
-<p><span class="math inline">\(M_{s,p}\)</span>: <span class="math inline">\({P_{rotten}}_n \sim \mathcal{B}(inv_{logit}(\beta_0 + \beta_1*dbh_n + {\beta_2}_p + {\beta_3}_s))\)</span></p>
-<p><img src="master-thesis_files/figure-html/A3Mpred-1.png" width="672" /></p>
-<table>
-<caption><span id="tab:A3Mtab">Table C.2: </span>Models prediction. Probability to be probed as rotten (P in %) for a given dbh (cm).</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">45</th>
-<th align="right">50</th>
-<th align="right">55</th>
-<th align="right">60</th>
-<th align="right">65</th>
-<th align="right">70</th>
-<th align="right">75</th>
-<th align="right">80</th>
-<th align="right">85</th>
-<th align="right">90</th>
-<th align="right">95</th>
-<th align="right">100</th>
-<th align="right">105</th>
-<th align="right">110</th>
-<th align="right">115</th>
-<th align="right">120</th>
-<th align="right">125</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>P</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">7</td>
-<td align="right">8</td>
-<td align="right">10</td>
-<td align="right">12</td>
-<td align="right">14</td>
-<td align="right">17</td>
-<td align="right">20</td>
-<td align="right">24</td>
-<td align="right">28</td>
-<td align="right">32</td>
-<td align="right">37</td>
-<td align="right">42</td>
-<td align="right">47</td>
-<td align="right">52</td>
-</tr>
-</tbody>
-</table>
+<div id="appendix-5-disturbance-simulations" class="section level1">
+<h1><span class="header-section-number">E</span> Appendix 5: Disturbance simulations</h1>
+<div id="ecosystem-functions-2" class="section level2">
+<h2><span class="header-section-number">E.1</span> Ecosystem functions</h2>
+<p>Appendix 4 presents ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. It encompass all functionnal diversity components <span class="citation">(FRIC, FEve, FDiv, and FDis, Villéger <em>et al.</em> <a href="#ref-villeger_new_2008">2008</a>)</span>. And it presents results for both forest dynamic (Figure <a href="#fig:A4IeqStructureAll"><strong>??</strong></a>) and forest production (Figure <a href="#fig:A4IeqProductionAll"><strong>??</strong></a>).</p>
+<div class="figure"><span id="fig:A5IeqStructureAll"></span>
+<img src="master-thesis_files/figure-html/A5IeqStructureAll-1.png" alt="Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest dynamic equilibrium after 600 years was represented against functional diversity [FRIC, FEve, FDiv, and FDis, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness." width="1152" />
+<p class="caption">
+Figure E.1: Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest dynamic equilibrium after 600 years was represented against functional diversity <span class="citation">(FRIC, FEve, FDiv, and FDis, Villéger <em>et al.</em> <a href="#ref-villeger_new_2008">2008</a>)</span> for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness.
+</p>
 </div>
-<div id="rotten-volume-n" class="section level2">
-<h2><span class="header-section-number">C.2</span> Rotten volume (N)</h2>
-<p>Based on complexity (number of parameters), convergence and likelihood we selected model <span class="math inline">\(N_{p,s}\)</span> associated to hyperparameter <span class="math inline">\(\rho\)</span> with model <span class="math inline">\(L_{p,s}\)</span>:</p>
-<p><span class="math inline">\(N_{s,p} + L_{s,p}\)</span>: <span class="math inline">\(Volume_{of~wood} \sim \mathcal{logN} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)</span></p>
-<p><img src="master-thesis_files/figure-html/A3Npred-1.png" width="672" /></p>
-<table>
-<caption><span id="tab:A3Ntab">Table C.3: </span>Models prediction. Final volume of wood (<span class="math inline">\(V_f\)</span> in <span class="math inline">\(m^3\)</span>) and percent of rotten wood (<span class="math inline">\(V_p\)</span> in %) for a given dbh (cm) if the tree was probed rotten.</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="right">45</th>
-<th align="right">50</th>
-<th align="right">55</th>
-<th align="right">60</th>
-<th align="right">65</th>
-<th align="right">70</th>
-<th align="right">75</th>
-<th align="right">80</th>
-<th align="right">85</th>
-<th align="right">90</th>
-<th align="right">95</th>
-<th align="right">100</th>
-<th align="right">105</th>
-<th align="right">110</th>
-<th align="right">115</th>
-<th align="right">120</th>
-<th align="right">125</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Vf</td>
-<td align="right">1.66</td>
-<td align="right">2.02</td>
-<td align="right">2.39</td>
-<td align="right">2.78</td>
-<td align="right">3.18</td>
-<td align="right">3.58</td>
-<td align="right">3.98</td>
-<td align="right">4.37</td>
-<td align="right">4.74</td>
-<td align="right">5.09</td>
-<td align="right">5.41</td>
-<td align="right">5.68</td>
-<td align="right">5.9</td>
-<td align="right">6.06</td>
-<td align="right">6.15</td>
-<td align="right">6.16</td>
-<td align="right">6.08</td>
-</tr>
-<tr class="even">
-<td>Vp</td>
-<td align="right">7.00</td>
-<td align="right">9.00</td>
-<td align="right">11.00</td>
-<td align="right">13.00</td>
-<td align="right">15.00</td>
-<td align="right">18.00</td>
-<td align="right">20.00</td>
-<td align="right">23.00</td>
-<td align="right">26.00</td>
-<td align="right">29.00</td>
-<td align="right">32.00</td>
-<td align="right">36.00</td>
-<td align="right">40.0</td>
-<td align="right">43.00</td>
-<td align="right">47.00</td>
-<td align="right">52.00</td>
-<td align="right">56.00</td>
-</tr>
-</tbody>
-</table>
+<div class="figure"><span id="fig:A5IeqProductionAll"></span>
+<img src="master-thesis_files/figure-html/A5IeqProductionAll-1.png" alt="Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest production equilibrium after 600 years was represented against functional diversity [FRIC, FEve, FDiv, and FDis, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness." width="1152" />
+<p class="caption">
+Figure E.2: Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest production equilibrium after 600 years was represented against functional diversity <span class="citation">(FRIC, FEve, FDiv, and FDis, Villéger <em>et al.</em> <a href="#ref-villeger_new_2008">2008</a>)</span> for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness.
+</p>
+</div>
+</div>
+<div id="biodiversity-effect-2" class="section level2">
+<h2><span class="header-section-number">E.2</span> Biodiversity effect</h2>
+<p>Figure <a href="#fig:A4allBE"><strong>??</strong></a> presents the resilience of complementarity and selection effects for different ecosystem metrics (AGB, BA, N, GPP and NPP).</p>
+<div class="figure"><span id="fig:A5allBE"></span>
+<img src="master-thesis_files/figure-html/A5allBE-1.png" alt="Resilience of complementarity and selection effects. Complementarity effect (CE) and selection effect (SE) where normalized by control net effect (NEc), thus measuring their resilience over time for different ecosystem variables (AGB, BA, N, GPP)." width="1152" />
+<p class="caption">
+Figure E.3: Resilience of complementarity and selection effects. Complementarity effect (CE) and selection effect (SE) where normalized by control net effect (NEc), thus measuring their resilience over time for different ecosystem variables (AGB, BA, N, GPP).
+</p>
+</div>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-villeger_new_2008">
+<p>Villéger, S., Mason, N.W.H. &amp; Mouillot, D. (2008). New multidimensional functional diversity indices for a multifaceted framework in functional ecology. <em>Ecology</em>, <strong>89</strong>, 2290–2301.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>
@@ -328,8 +206,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-<a href="appendix-2-leaf-lifespan-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="appendix-4-sensitivity-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="appendix-4-sensitivity-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -358,7 +236,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/sylvainschmitt/master-thesis/blob/master/09-Appendix3.Rmd",
+"link": "https://github.com/sylvainschmitt/master-thesis/blob/master/11-Appendix5.Rmd",
 "text": "Edit"
 },
 "download": ["master-thesis.pdf"],
