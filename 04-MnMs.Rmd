@@ -45,9 +45,9 @@ g ; rm(data)
 
 ## Ecosystem answer analysis
 
-### Resilience
+### Ecosystem functions
 
-Tropical forest ecosystems provides numerous ecosystem services linked to several ecosystem functions. We decided to describe simiulated tropical forests in three major functions: forest dynamic, forest production, and forest diversity. Forest dynamic was represented by aboveground biomass ($AGB$ in $ton~C.ha^{-1}$), basal area ($BA$ in $m^2.ha^{-1}$), total number of stem ($N$), number of stem above $10~cm$ diameter ($N10$), and number of stem above $30~cm$ diameter ($N30$). Forest production was represented by growth pimary productivity ($GPP$ in $MgC.ha^{-1}$), net pimary productivity ($NPP$ in $MgC.ha^{-1}$), tree autotrophic respiration in day ($Rday$ in $MgC.ha^{-1}$) and tree autotrophic respiration in night ($Rnight$ in $MgC.ha^{-1}$). Finally, forest diversity was represented by **??**.
+Tropical forest ecosystems provides numerous ecosystem services linked to several ecosystem functions. We decided to describe simiulated tropical forests in two major functions: forest dynamic and forest production. Forest dynamic was represented by aboveground biomass ($AGB$ in $ton~C.ha^{-1}$), basal area ($BA$ in $m^2.ha^{-1}$), total number of stem ($N$), number of stem above $10~cm$ diameter ($N10$), and number of stem above $30~cm$ diameter ($N30$). Forest production was represented by growth pimary productivity ($GPP$ in $MgC.ha^{-1}$), net pimary productivity ($NPP$ in $MgC.ha^{-1}$), tree autotrophic respiration in day ($Rday$ in $MgC.ha^{-1}$) and tree autotrophic respiration in night ($Rnight$ in $MgC.ha^{-1}$).
 
 The resilience of metrics values post disturbance were assessed through @Henry2012 formula:
 
@@ -56,7 +56,7 @@ The resilience of metrics values post disturbance were assessed through @Henry20
   (\#eq:Resilience)
 \end{equation}
 
-The resilience of the system $R(t)$ at the time $t$ is described by the ratio of recovery $Recovery(t)$ at time $t$ to loss suffered $Loss(t_d)$ at disturbance time $t_d$. But in our peculiar case of tropical forest ecosystems, the equilibrium used to calculate $Loss(t_d)$ can not be reduced to a specific time if the equilibrium is dynamic. Consequently, to encompass undisturbed ecosystem variations throught time, we simulated an undisturbed control ecosystem $C$. And the resilience of the system $R(t)$ at the time $t$ was defined as the ratio of the ecosystem metric values in the disturbed simulation $X_T(t)$ over the the ecosystem metric values from the control $X_C(t)$ . Thus, the value of resilience $R(t)$ is normalized for all simulations and metrics. $R(t)$  will be equal to $R_{eq} = 1$ when reaching the equilibrium value. Consequently we can calculate an euclidean distance to equilibrium $d_{eq}(t)$ as $d_{eq}(t) = \sqrt{(R_{eq} - R(t))^2}$.
+The resilience of the system $R(t)$ at the time $t$ is described by the ratio of recovery $Recovery(t)$ at time $t$ to loss suffered $Loss(t_d)$ at disturbance time $t_d$. But in our peculiar case of tropical forest ecosystems, the equilibrium used to calculate $Loss(t_d)$ can not be reduced to a specific time if the equilibrium is dynamic. Consequently, to encompass undisturbed ecosystem variations throught time, we simulated an undisturbed control ecosystem $C$. And the resilience of the system $R(t)$ at the time $t$ was defined as the ratio of the ecosystem metric values in the disturbed simulation $X_T(t)$ over the the ecosystem metric values from the control $X_C(t)$ . Thus, the value of resilience $R(t)$ is normalized for all simulations and metrics. $R(t)$  will be equal to $R_{eq} = 1$ when reaching the equilibrium value. Consequently we can calculate an euclidean distance to equilibrium $d_{eq}(t)$ as $d_{eq}(t) = \sqrt{(R_{eq} - R(t))^2}$. Ecosystem euclidean distance to equilibrium was calculated in a multi-dimensional space for the two functions described above: forest dynamic (AGB, BA, N, N10, and N30) and forest production (GPP, NPP, Rday, and Rnight). We then used cummulative integral over time of eulcidean distance to equilibrium to assess simulations resilience.
 
 ### Biodiversity effect
 
@@ -78,6 +78,11 @@ Biodiversity net effect $NE$ is based on the difference between ecosystem variab
   (\#eq:DeltaRY)
 \end{equation}
 
-$X_sp$ is the ecosystem variable value for one species either in mixture $X_{sp}(mixture)$ or in monoculture $X_{sp}(monoculture)$. $P_{sp}$ is the proportion of the species in the mixture represented by species relative abundance. Consequently, $CE$ averages diversity effects of all species presents in the mixture (both negatives and positives). Whereas $SE$ become positive when dominant species outperform theimselves in mixture than in monoculture, and negative when less dominant species outperform theimselves in mixture than in monoculture [@Tobner2016].
+$X_{sp}$ is the ecosystem variable value for one species either in mixture $X_{sp}(mixture)$ or in monoculture $X_{sp}(monoculture)$. $P_{sp}$ is the proportion of the species in the mixture represented by species relative abundance. Consequently, $CE$ averages diversity effects of all species presents in the mixture (both negatives and positives). Whereas $SE$ become positive when dominant species outperform theimselves in mixture than in monoculture, and negative when less dominant species outperform theimselves in mixture than in monoculture [@Tobner2016]. But similarly to resilience measurement, biodiversity net effect $NE$ can be in a dynamic equilibrium and vary over time without disturbance. So in order to correctly assess selection and complementarity effect in answer to disturbance, we normalized it by undisturbed control ecosystem net effect $NE_C$ to measure treatments net effect resilience $R(NE_T)$:
 
-Recovery trajectories of ecosystem variable after disturbance were partitioned between complementarity effect $CE$ and selection effect $SE$. In order to do that, the design of experiment was repeated for each species indivdually representing 652 simulations of monoculture.
+\begin{equation}
+  R(NE_T) = \frac{NE_T}{NE_C} = \frac{SE_T}{NE_C} + \frac{CE_T}{NE_C}
+  (\#eq:RNE)
+\end{equation}
+
+Resilience trajectories of ecosystem variable after disturbance were partitioned between complementarity effect $CE$ and selection effect $SE$. In order to do that, the design of experiment was repeated for each species indivdually representing 652 simulations of monoculture.
