@@ -4,4 +4,149 @@
 
 ## Disturbance
 
+### Ecosystem functions
+
+```{r resilience, echo=FALSE}
+rich <- c(5,25,125)
+cvh <- 1:20
+dist <- c(0,25,50,75)
+path <- '~/Documents/ECOFOG/Results/disturbance/disturbance/data'
+load(file.path(path, 'disturbanceDOE.Rdata'))
+load(file.path(path, 'disturbanceData.Rdata'))
+load(file.path(path, 'disturbanceResilience.Rdata'))
+```
+
+```{r Deq, cache=TRUE, echo=FALSE}
+deq <- data.frame(
+  time = resilience$time,
+  sim = resilience$sim,
+  structure = apply(resilience[c('agb', 'ba', 'n', 'n10', 'n30')], 1, 
+                  function(x) sqrt(sum((rep(1, length(x)) - x)^2))),
+  production = apply(resilience[c('gpp', 'npp', 'Rday', 'Rnight')], 1, 
+                  function(x) sqrt(sum((rep(1, length(x)) - x)^2)))
+)
+```
+
+```{r Ieq, cache=TRUE, echo=FALSE}
+sim <- c(sapply(c(sapply(rich, function(r) paste0(r, '.', cvh))), function(x) paste0(x, '.', dist[-1])))
+Ieq <- sapply(sim, function(s){
+  data_s <- subset(deq, sim ==s)
+  return(cbind(data_s[c(1,2)], cumsum(data_s[-c(1,2)])))
+}, simplify = F) ; rm(sim)
+Ieq <- data.frame(do.call('rbind', Ieq))
+names(Ieq)[3:4] <- paste0('Ieq.', names(Ieq)[3:4])
+```
+
+We transformed all ecosystem outputs from the 240 disturbance simulations in resilience metrics normalizing the treatment values by their corresponding control (Figure \@ref(fig:datatrans) A et B). We then gathered ecosystem outputs by main ecosystem functions (forest dynamic, forest production and forest diversity) to compute ecosystem distance to equilibrium (Figure \@ref(fig:datatrans) C). Finally, we integrated distance to equilibrium in a cummulative sum over time (Figure \@ref(fig:datatrans) D). 
+
+```{r datatrans, echo=FALSE, fig.cap='Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate resilience (**B**); resilience of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance ot equilibirum is integrated over time in a cummulative sum (**D**). ', cache=TRUE, fig.height=8, fig.width=12}
+g_agb <- ecosystem %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(richness == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = agb/1000, color = disturbance)) +
+  geom_point() +
+  xlab('Time (years)') +
+  ylab('Aboveground biomass (tonC/ha)') +
+  scale_color_discrete('Disturbance\nintensity\n(% of BA)')
+g_resilience <- resilience %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(richness == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = agb, color = disturbance)) +
+  geom_hline(yintercept = 1, col = 'red') +
+  geom_point() +
+  xlab('Time (years)') +
+  ylab('Resilience of aboveground biomass') +
+  scale_color_discrete('Disturbance\nintensity\n(% of BA)')
+g_deq <- deq %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(richness == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = structure, color = disturbance)) +
+  geom_hline(yintercept = 0, col = 'red') +
+  geom_point() +
+  xlab('Time (years)') +
+  ylab('Distance to forest dynamic equilibrium\n(AGB, BA, N, N10 and N30)') +
+  scale_color_discrete('Disturbance\nintensity\n(% of BA)')
+g_Ieq <- Ieq %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(richness == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = Ieq.structure, color = disturbance)) +
+  geom_point() +
+  xlab('Time (years)') +
+  ylab('Cummulative integral of\ndistance to forest dynamic equilibrium\n(AGB, BA, N, N10 and N30)') +
+  scale_color_discrete('Disturbance\nintensity\n(% of BA)')
+cowplot::plot_grid(g_agb, g_resilience, g_deq, g_Ieq, labels = LETTERS[1:4])
+```
+
+The ranking was stable over time for the 240 simulations. So we used the cummulative integral after 600 years $Ieq_{600}$ as a measurement of ecosystem resilience. We compared cummulative integral after 600 years to communities taxonomic and functional diversity for each leavel of disturbance (see Figure \@ref(fig:gIeq)). We found that increased functional diversity [FDiv, @villeger_new_2008] was reducing cummulative integral from ecosystem distance to forest dynamic equilibrium after 600 years ($Ieq_{600}$). In addition, functional eveness was complementary reducing $Ieq_{600}$. Finally species richness was not directly link to $Ieq_{600}$. Effectivelly, low species richness could result in variant $Ieq_{600}$, but increased species richness resulted in increased functional diversity and consequently lower $Ieq_{600}$. We found similar results for all disturbance levels and other ecosystem functions (forest production and forest diversity, see [Appendix 4: Disturbance simulations]).
+
+```{r gIeq, echo=FALSE, fig.cap='Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest dynamic equilibrium after 600 years was represented against functional diversity [FDiv, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness whereas dot color represents functional eveness [FEve, @villeger_new_2008].', cache=TRUE, fig.width=12}
+Ieq %>% 
+  left_join(., doe, by = 'sim') %>% 
+  filter(time == 600) %>% 
+  ggplot(aes(x = FDiv, y = Ieq.structure, label = sim)) + 
+  geom_smooth(method = 'lm', alpha = 0.3, colour= 'grey') +
+  geom_point(aes(shape = richness, color = FEve)) +
+  facet_wrap(~disturbance, scales = "free", labeller = 'label_both') + 
+  xlab('Functional diversity (FDiv)') +
+  ylab('Cummulative integral from ecosystem 
+       distance to forest dynamic equilibrium after 600 years') +
+  scale_shape_discrete('Species\nrichness\n(SR)') +
+  scale_color_continuous('Functional\neveness\n(FEve)')
+```
+
+### Biodiversity effect
+
+```{r BE, echo=FALSE}
+load(file.path(path, 'disturbanceBE.Rdata'))
+load(file.path(path, 'disturbanceBErecovery.Rdata'))
+```
+
+We measured all ecosystem outputs biodiversity net effect in disturbance simulations by comparing theim to their species corresponding monoculture simulations. The net effect was then partition between selection and complementarity effect. We normalized treatments effect by control net effect (see Table \@ref(tab:tNE)) to measure their aboveground biomass resilience to disturbance (see Figure \@ref(fig:gBE)). We found that complementarity effect was recovering net effect in the first decades untill it disappeared after a century. On the contrary selection effect was reduced or even removed by the disturbance. It increased during the whole simulation and was greater than complementarity effect only after decades. The time lag for which complementarity effect was non null and greater than selection effect was increasing with disturbance intensity. Finally 600 years after the disturbance event biodiversity net effect was still not recovered for a disturbance intensity greater than 25% of basal area. We obtained those results for aboveground biomass. We found similar results but with an amlified signal for basal area ($BA$) and stem abundance ($N$ but with an inverted signal because of the forest self thinning) (see [Appendix 4: Disturbance simulations]). Finally, forest growth primary productivity ($GPP$) recovered in few years (proportionnaly to disturbance), and its net effect was maintained by complementarity effect (see [Appendix 4: Disturbance simulations]).
+
+```{r tNE, echo=FALSE, cache=TRUE}
+BE %>%
+  mutate(agb = agb/1000) %>% 
+  filter(BE == 'NE') %>%
+  melt(id.vars = c('BE', 'time', 'sim')) %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(richness == 125) %>%
+  filter(disturbance == 0) %>%
+  group_by(variable) %>% 
+  summarise(mean = mean(value, na.rm = T), 
+            'standard deviation' = sd(value, na.rm = T)) %>% 
+  filter(variable != 'n30') %>% 
+  bind_cols(., data.frame(
+    name = c('aboveground biomass', 'basal area', 'number of stems', 
+             'number of stems above 10cm dbh', 'growth primary production', 
+             'net primary production', 'autotrophic respiration during day',
+             'autotrophic respiration during night'),
+    unit = c('$tonC.ha^{-1}$', '$m^2.ha^{-1}$', '$n.ha^{-1}$', '$n.ha^{-1}$', 
+             '$MgC.ha^{-1}$', '$MgC.ha^{-1}$', '$MgC.ha^{-1}$', '$MgC.ha^{-1}$'))) %>% 
+  kable(caption = 'Table 1: Biodiversity net effect mean value and standard deviation for different ecosystem variable.', digits = 3, format = 'pandoc')
+```
+
+```{r gBE, echo=FALSE, fig.cap='Resilience of complementarity and selection effects. Complementarity effect (CE) and selection effect (SE) where normalized by control net effect (NEc), thus measuring their resilience over time.', cache=TRUE, fig.width=12}
+BEresilience %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(richness == 125) %>% 
+  filter(BE %in% c('SE', 'CE')) %>% 
+  group_by(time, BE, disturbance, richness) %>%
+  summarise(qt1 =quantile(agb, probs=0.05),
+            qt2 =quantile(agb, probs=0.75),
+            mean=mean(agb),
+            n=n()) %>% 
+  ggplot(aes(x = time)) +
+  geom_hline(yintercept = 1, color = 'red') +
+  geom_hline(yintercept = 0, color = 'blue') +
+  geom_ribbon(aes(ymin = qt1, ymax = qt2, fill = BE), alpha = 0.3) +
+  geom_line(aes(y = mean, color = BE)) +
+  facet_grid(richness ~ disturbance, labeller = 'label_both') +
+  xlab('Time (years)') +
+  ylab('Recovery of aboveground biomass net effect')
+```
+
 ## Sylviculture

@@ -576,21 +576,19 @@ area, wood specific gravity, maximum diameter, and maximum height).}
 
 \subsection{Ecosystem answer analysis}\label{ecosystem-answer-analysis}
 
-\subsubsection{Resilience}\label{resilience}
+\subsubsection{Ecosystem functions}\label{ecosystem-functions}
 
 Tropical forest ecosystems provides numerous ecosystem services linked
 to several ecosystem functions. We decided to describe simiulated
-tropical forests in three major functions: forest dynamic, forest
-production, and forest diversity. Forest dynamic was represented by
-aboveground biomass (\(AGB\) in \(ton~C.ha^{-1}\)), basal area (\(BA\)
-in \(m^2.ha^{-1}\)), total number of stem (\(N\)), number of stem above
-\(10~cm\) diameter (\(N10\)), and number of stem above \(30~cm\)
-diameter (\(N30\)). Forest production was represented by growth pimary
-productivity (\(GPP\) in \(MgC.ha^{-1}\)), net pimary productivity
-(\(NPP\) in \(MgC.ha^{-1}\)), tree autotrophic respiration in day
-(\(Rday\) in \(MgC.ha^{-1}\)) and tree autotrophic respiration in night
-(\(Rnight\) in \(MgC.ha^{-1}\)). Finally, forest diversity was
-represented by \textbf{??}.
+tropical forests in two major functions: forest dynamic and forest
+production. Forest dynamic was represented by aboveground biomass
+(\(AGB\) in \(ton~C.ha^{-1}\)), basal area (\(BA\) in \(m^2.ha^{-1}\)),
+total number of stem (\(N\)), number of stem above \(10~cm\) diameter
+(\(N10\)), and number of stem above \(30~cm\) diameter (\(N30\)). Forest
+production was represented by growth pimary productivity (\(GPP\) in
+\(MgC.ha^{-1}\)), net pimary productivity (\(NPP\) in \(MgC.ha^{-1}\)),
+tree autotrophic respiration in day (\(Rday\) in \(MgC.ha^{-1}\)) and
+tree autotrophic respiration in night (\(Rnight\) in \(MgC.ha^{-1}\)).
 
 The resilience of metrics values post disturbance were assessed through
 \citet{Henry2012} formula:
@@ -614,7 +612,12 @@ the ratio of the ecosystem metric values in the disturbed simulation
 all simulations and metrics. \(R(t)\) will be equal to \(R_{eq} = 1\)
 when reaching the equilibrium value. Consequently we can calculate an
 euclidean distance to equilibrium \(d_{eq}(t)\) as
-\(d_{eq}(t) = \sqrt{(R_{eq} - R(t))^2}\).
+\(d_{eq}(t) = \sqrt{(R_{eq} - R(t))^2}\). Ecosystem euclidean distance
+to equilibrium was calculated in a multi-dimensional space for the two
+functions described above: forest dynamic (AGB, BA, N, N10, and N30) and
+forest production (GPP, NPP, Rday, and Rnight). We then used cummulative
+integral over time of eulcidean distance to equilibrium to assess
+simulations resilience.
 
 \subsubsection{Biodiversity effect}\label{biodiversity-effect}
 
@@ -649,7 +652,7 @@ metrics depend on the variation of relative ecosystem variable
   \label{eq:DeltaRY}
 \end{equation}
 
-\(X_sp\) is the ecosystem variable value for one species either in
+\(X_{sp}\) is the ecosystem variable value for one species either in
 mixture \(X_{sp}(mixture)\) or in monoculture \(X_{sp}(monoculture)\).
 \(P_{sp}\) is the proportion of the species in the mixture represented
 by species relative abundance. Consequently, \(CE\) averages diversity
@@ -657,9 +660,19 @@ effects of all species presents in the mixture (both negatives and
 positives). Whereas \(SE\) become positive when dominant species
 outperform theimselves in mixture than in monoculture, and negative when
 less dominant species outperform theimselves in mixture than in
-monoculture \citep{Tobner2016}.
+monoculture \citep{Tobner2016}. But similarly to resilience measurement,
+biodiversity net effect \(NE\) can be in a dynamic equilibrium and vary
+over time without disturbance. So in order to correctly assess selection
+and complementarity effect in answer to disturbance, we normalized it by
+undisturbed control ecosystem net effect \(NE_C\) to measure treatments
+net effect resilience \(R(NE_T)\):
 
-Recovery trajectories of ecosystem variable after disturbance were
+\begin{equation}
+  R(NE_T) = \frac{NE_T}{NE_C} = \frac{SE_T}{NE_C} + \frac{CE_T}{NE_C}
+  \label{eq:RNE}
+\end{equation}
+
+Resilience trajectories of ecosystem variable after disturbance were
 partitioned between complementarity effect \(CE\) and selection effect
 \(SE\). In order to do that, the design of experiment was repeated for
 each species indivdually representing 652 simulations of monoculture.
@@ -669,6 +682,122 @@ each species indivdually representing 652 simulations of monoculture.
 \subsection{Sensitivity}\label{sensitivity}
 
 \subsection{Disturbance}\label{disturbance-1}
+
+\subsubsection{Ecosystem functions}\label{ecosystem-functions-1}
+
+We transformed all ecosystem outputs from the 240 disturbance
+simulations in resilience metrics normalizing the treatment values by
+their corresponding control (Figure \ref{fig:datatrans} A et B). We then
+gathered ecosystem outputs by main ecosystem functions (forest dynamic,
+forest production and forest diversity) to compute ecosystem distance to
+equilibrium (Figure \ref{fig:datatrans} C). Finally, we integrated
+distance to equilibrium in a cummulative sum over time (Figure
+\ref{fig:datatrans} D).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/datatrans-1.pdf}
+\caption{\label{fig:datatrans}Ecosystem outputs data transformation.
+Ecosystem outputs (\textbf{A}) are normalized by the control value over
+time to calculate resilience (\textbf{B}); resilience of different
+ecosystem outputs is then used in a multidimensional space to caluclate
+ecosystem distance to equilibrium (\textbf{C}); finally distance ot
+equilibirum is integrated over time in a cummulative sum (\textbf{D}).}
+\end{figure}
+
+The ranking was stable over time for the 240 simulations. So we used the
+cummulative integral after 600 years \(Ieq_{600}\) as a measurement of
+ecosystem resilience. We compared cummulative integral after 600 years
+to communities taxonomic and functional diversity for each leavel of
+disturbance (see Figure \ref{fig:gIeq}). We found that increased
+functional diversity \citep[FDiv,][]{villeger_new_2008} was reducing
+cummulative integral from ecosystem distance to forest dynamic
+equilibrium after 600 years (\(Ieq_{600}\)). In addition, functional
+eveness was complementary reducing \(Ieq_{600}\). Finally species
+richness was not directly link to \(Ieq_{600}\). Effectivelly, low
+species richness could result in variant \(Ieq_{600}\), but increased
+species richness resulted in increased functional diversity and
+consequently lower \(Ieq_{600}\). We found similar results for all
+disturbance levels and other ecosystem functions (forest production and
+forest diversity, see
+\protect\hyperlink{appendix-4-disturbance-simulations}{Appendix 4:
+Disturbance simulations}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/gIeq-1.pdf}
+\caption{\label{fig:gIeq}Ecosystem resilience after 600 years with taxonomic
+and functional diversity for different levels of disturbance.
+Cummulative integral from ecosystem distance to forest dynamic
+equilibrium after 600 years was represented against functional diversity
+\citep[FDiv,][]{villeger_new_2008} for different level of disturbance
+(25, 50 and 75\% of total basal area); dot shapes represents the species
+richness whereas dot color represents functional eveness
+\citep[FEve,][]{villeger_new_2008}.}
+\end{figure}
+
+\subsubsection{Biodiversity effect}\label{biodiversity-effect-1}
+
+We measured all ecosystem outputs biodiversity net effect in disturbance
+simulations by comparing theim to their species corresponding
+monoculture simulations. The net effect was then partition between
+selection and complementarity effect. We normalized treatments effect by
+control net effect (see Table \ref{tab:tNE}) to measure their
+aboveground biomass resilience to disturbance (see Figure
+\ref{fig:gBE}). We found that complementarity effect was recovering net
+effect in the first decades untill it disappeared after a century. On
+the contrary selection effect was reduced or even removed by the
+disturbance. It increased during the whole simulation and was greater
+than complementarity effect only after decades. The time lag for which
+complementarity effect was non null and greater than selection effect
+was increasing with disturbance intensity. Finally 600 years after the
+disturbance event biodiversity net effect was still not recovered for a
+disturbance intensity greater than 25\% of basal area. We obtained those
+results for aboveground biomass. We found similar results but with an
+amlified signal for basal area (\(BA\)) and stem abundance (\(N\) but
+with an inverted signal because of the forest self thinning) (see
+\protect\hyperlink{appendix-4-disturbance-simulations}{Appendix 4:
+Disturbance simulations}). Finally, forest growth primary productivity
+(\(GPP\)) recovered in few years (proportionnaly to disturbance), and
+its net effect was maintained by complementarity effect (see
+\protect\hyperlink{appendix-4-disturbance-simulations}{Appendix 4:
+Disturbance simulations}).
+
+\begin{longtable}[]{@{}lrrll@{}}
+\caption{\label{tab:tNE}Table 1: Biodiversity net effect mean value and
+standard deviation for different ecosystem variable.}\tabularnewline
+\toprule
+variable & mean & standard deviation & name & unit\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+variable & mean & standard deviation & name & unit\tabularnewline
+\midrule
+\endhead
+agb & 32.721 & 17.839 & aboveground biomass &
+\(tonC.ha^{-1}\)\tabularnewline
+ba & 1.633 & 0.743 & basal area & \(m^2.ha^{-1}\)\tabularnewline
+n & 103.880 & 231.623 & number of stems & \(n.ha^{-1}\)\tabularnewline
+n10 & -6.815 & 13.003 & number of stems above 10cm dbh &
+\(n.ha^{-1}\)\tabularnewline
+gpp & 0.147 & 0.047 & growth primary production &
+\(MgC.ha^{-1}\)\tabularnewline
+npp & -0.041 & 0.036 & net primary production &
+\(MgC.ha^{-1}\)\tabularnewline
+Rday & 0.046 & 0.018 & autotrophic respiration during day &
+\(MgC.ha^{-1}\)\tabularnewline
+Rnight & 0.074 & 0.030 & autotrophic respiration during night &
+\(MgC.ha^{-1}\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/gBE-1.pdf}
+\caption{\label{fig:gBE}Resilience of complementarity and selection effects.
+Complementarity effect (CE) and selection effect (SE) where normalized
+by control net effect (NEc), thus measuring their resilience over time.}
+\end{figure}
 
 \subsection{Sylviculture}\label{sylviculture-1}
 
@@ -1313,6 +1442,59 @@ Vp & 7.00 & 9.00 & 11.00 & 13.00 & 15.00 & 18.00 & 20.00 & 23.00 & 26.00
 56.00\tabularnewline
 \bottomrule
 \end{longtable}
+
+\hypertarget{appendix-4-disturbance-simulations}{\section{Appendix 4:
+Disturbance simulations}\label{appendix-4-disturbance-simulations}}
+
+\subsection{Ecosystem functions}\label{ecosystem-functions-2}
+
+Appendix 4 presents ecosystem resilience after 600 years with taxonomic
+and functional diversity for different levels of disturbance. It
+encompass all functionnal diversity components \citep[FRIC, FEve, FDiv,
+and FDis,][]{villeger_new_2008}. And it presents results for both forest
+dynamic (Figure \ref{fig:A4IeqStructureAll}) and forest production
+(Figure \ref{fig:A4IeqProductionAll}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/A4IeqStructureAll-1.pdf}
+\caption{\label{fig:A4IeqStructureAll}Figure S1.1: Ecosystem resilience
+after 600 years with taxonomic and functional diversity for different
+levels of disturbance. Cummulative integral from ecosystem distance to
+forest dynamic equilibrium after 600 years was represented against
+functional diversity \citep[FRIC, FEve, FDiv, and
+FDis,][]{villeger_new_2008} for different level of disturbance (25, 50
+and 75\% of total basal area); dot shapes represents the species
+richness.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/A4IeqProductionAll-1.pdf}
+\caption{\label{fig:A4IeqProductionAll}Figure S1.2: Ecosystem resilience
+after 600 years with taxonomic and functional diversity for different
+levels of disturbance. Cummulative integral from ecosystem distance to
+forest production equilibrium after 600 years was represented against
+functional diversity \citep[FRIC, FEve, FDiv, and
+FDis,][]{villeger_new_2008} for different level of disturbance (25, 50
+and 75\% of total basal area); dot shapes represents the species
+richness.}
+\end{figure}
+
+\subsection{Biodiversity effect}\label{biodiversity-effect-2}
+
+Figure \ref{fig:A4allBE} presents the resilience of complementarity and
+selection effects for different ecosystem metrics (AGB, BA, N, GPP and
+NPP).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/A4allBE-1.pdf}
+\caption{\label{fig:A4allBE}Resilience of complementarity and selection
+effects. Complementarity effect (CE) and selection effect (SE) where
+normalized by control net effect (NEc), thus measuring their resilience
+over time for different ecosystem variables (AGB, BA, N, GPP).}
+\end{figure}
 
 \addcontentsline{toc}{section}{References}
 \bibliography{/home/sylvain/Documents/Bibliography/library.bib}
