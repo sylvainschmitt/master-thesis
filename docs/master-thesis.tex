@@ -407,18 +407,34 @@ harvested volume \({V_{hd}}_{tot}\) (\({V_{hd}}_{tot}\) was set to
 \subsubsection{Rotten trees}\label{rotten-trees}
 
 20 to 30 \% of designated trees are considered as rotten once probed by
-the lumberman. Rotten trees are not random and depends both on tree
-species and diameter.
-
-\textbf{Explain rotten bayesian model}
+the lumberman, and thus not harvested. Rotten trees are not random and
+depends both on tree species and diameter. We gathered data from the
+forest office (ONF, Laurent Descroix, personnal communication)
+inventories precising if tree were probbed as rotten and their
+corresponding species and diameter. In addition, tree plots and sawed
+volume was informed. We then used a bayesian approach to model the link
+between tree species and diameter and their risk to be probbed as rotten
+by the lumberman. We test different models with growing level of
+complexity and kept the model with the best tradeoff between complexity
+(number of parameters), convergence, likelihood, and prediction quality
+(root mean square error of prediction RMSEP):
 
 \begin{equation}
-  P_{rotten} = logit^{-1}(\beta_0 + \beta_1*dbh) = \frac{e^{\beta_0 + \beta_1*dbh}}{1 + e^{\beta_0 + \beta_1*dbh}}
+  \begin{array}{c} 
+    probbed~rotten \sim \mathcal{B}(P(probbed~rotten)) \\
+    P(probbed~rotten) = logit^{-1}(\beta_0 + \beta_1*dbh) = \frac{e^{\beta_0 + \beta_1*dbh}}{1 + e^{\beta_0 + \beta_1*dbh}}
+  \end{array}
   \label{eq:rotten}
 \end{equation}
 
-(see \protect\hyperlink{appendix-3-rotten-tree-model}{Appendix 3: Rotten
-tree model} for more details)
+Tree \(probbed~rotten\) follows a \(Bernoulli\) law of probability
+\(P(probbed~rotten)\). The odds for a tree to be probbed as rotten are
+calculated with the sum of a base odd to be rotten \(\beta_0\) and a
+diameter dependent odd calculated with \(\beta_1\). The probability for
+a tree to be probbed as rotten \(P(probbed~rotten)\) is finally
+calculated by taking the inverse logit \(logit^{-1}\) of the odd (see
+\protect\hyperlink{appendix-3-rotten-tree-model}{Appendix 3: Rotten tree
+model} for more details).
 
 \subsubsection{Harvesting}\label{harvesting}
 
@@ -449,32 +465,29 @@ Most of models account long term damages due to selective logging with a
 10 years increased mortality \citep{Huth2004, Khler2004, Ruger2008}. We
 decided to model explicitly long term logging damages because of their
 localised nature through a gap damages model. We gathered data from
-Paracou dataset \textbf{Cite} in cenususes between 1988 and 1992 on
+Paracou dataset \citep{Guehl2004} in cenususes between 1988 and 1992 on
 Paracou harvested plots. Individuals were categorized between alive,
 dead, or recruited during the period. We measured each individual
 distance to the closest gap. We then used a bayesian approach to test
 the link between tree death in the four years following the log event
-and distance to the closest gap. We adapted the model from \textbf{Cite
-Herault} based on a disturbance index into.
+and distance to the closest gap. We adapted the model from
+\citet{Herault2010} based on a disturbance index into:
 
 \begin{equation}
   \begin{array}{c} 
-    Death_i \sim \mathcal{B}(P(Death_i)) \\
-    P(Death_i) = logit^{-1}(\theta + \beta*e^{\alpha*d_{gaps}}) = \frac{e^{\theta + \beta*e^{\alpha*d_{gaps}}}}{1 + e^{\theta + \beta*e^{\alpha*d_{gaps}}}}
+    Death \sim \mathcal{B}(P(Death)) \\
+    P(Death) = logit^{-1}(\theta + \beta*e^{\alpha*d_{gaps}}) = \frac{e^{\theta + \beta*e^{\alpha*d_{gaps}}}}{1 + e^{\theta + \beta*e^{\alpha*d_{gaps}}}}
   \end{array}
   \label{eq:death}
 \end{equation}
 
-\(Death\) of a tree \(i\) follows a \(\mathcal{Bernoulli}\) law of
-probability \(P(Death_i)\). The odds for a tree \(i\) to die
-\(O(Death_i)\) is calculated by the sum of the natural tree death odd
-\(\theta\) and a perturbation index \(\beta*e^{\alpha*d_{gaps}}\). The
-perturbation index depend on the distance \(d_{gaps}\) of the tree \(i\)
-to the closest logging gap. The probability for a tree \(i\) to die
-\(P(Death_i)\) is finally calculated by taking the inverse logit of the
-odd \(logit^{-1}[O(Death_i)]\) (see
-\protect\hyperlink{appendix-4-gap-damages-model}{Appendix 4: Gap damages
-model} for more details).
+\(Death\) of a tree follows a \(\mathcal{Bernoulli}\) law of probability
+\(P(Death)\). The odds for a tree to die are calculated with the sum of
+the natural tree death odd \(\theta\) and a perturbation index
+\(\beta*e^{\alpha*d_{gaps}}\). The perturbation index depend on the
+distance \(d_{gaps}\) of the tree \(i\) to the closest logging gap. The
+probability for a tree to die \(P(Death)\) is finally calculated by
+taking the inverse logit \(logit^{-1}\) of the odd.
 
 \section{Material and Methods}\label{material-and-methods}
 
@@ -1097,26 +1110,28 @@ convergence, likelihood, and prediction quality (root mean sqaure error
 of prediciton \(RMSEP\)). We finally tested the new allometry obtained
 with the selected model with TROLL simulations.
 
-\begin{table}
-
-\caption{\label{tab:A2traits}Functional traits gathered with TRY.}
-\centering
-\begin{tabular}[t]{l|l|l|r}
-\hline
-Name & Trait & Unit & TRYcode\\
-\hline
-LL & Leaf lifespan (longevity) & month & 12\\
-\hline
-SLA & Leaf area per leaf dry mass (specific leaf area, SLA) & \$m\textasciicircum{}2.kg\textasciicircum{}\{-1\}\$ & 11\\
-\hline
-N & Leaf nitrogen (N) content per leaf dry mass & \$mg.g\textasciicircum{}\{-1\}\$ & 15\\
-\hline
-P & Leaf phosphorus (P) content per leaf dry mass & \$mg.g\textasciicircum{}\{-1\}\$ & 14\\
-\hline
-wsg & Stem dry mass per stem fresh volume (stem specific density) & \$mg.mm\textasciicircum{}\{-3\}\$ & 4\\
-\hline
-\end{tabular}
-\end{table}
+\begin{longtable}[]{@{}lllr@{}}
+\caption{\label{tab:A2traits}Functional traits gathered with
+TRY.}\tabularnewline
+\toprule
+Name & Trait & Unit & TRYcode\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Name & Trait & Unit & TRYcode\tabularnewline
+\midrule
+\endhead
+LL & Leaf lifespan (longevity) & month & 12\tabularnewline
+SLA & Leaf area per leaf dry mass (specific leaf area, SLA) &
+\(m^2.kg^{-1}\) & 11\tabularnewline
+N & Leaf nitrogen (N) content per leaf dry mass & \(mg.g^{-1}\) &
+15\tabularnewline
+P & Leaf phosphorus (P) content per leaf dry mass & \(mg.g^{-1}\) &
+14\tabularnewline
+wsg & Stem dry mass per stem fresh volume (stem specific density) &
+\(mg.mm^{-3}\) & 4\tabularnewline
+\bottomrule
+\end{longtable}
 
 \subsection{Results}\label{results-1}
 
@@ -1191,8 +1206,113 @@ and age distribution inside the final population.
 \hypertarget{appendix-3-rotten-tree-model}{\section{Appendix 3: Rotten
 tree model}\label{appendix-3-rotten-tree-model}}
 
-\hypertarget{appendix-4-gap-damages-model}{\section{Appendix 4: Gap
-damages model}\label{appendix-4-gap-damages-model}}
+In order to simulate sylviculture with TROLL we need to implement a new
+sylviculture module inside TROLL model code. A first litterature review
+was completed by an interview with Laurent Descroix of the Office
+Nationale des Forêts. We discovered that rotten trees were not random
+and seemed to depend both on tree species and diameter. This document
+presents modelling of relation between rotten trees and their species
+and diameter.
+
+In fact we have two different questions:
+
+\begin{itemize}
+\tightlist
+\item
+  Predict if a tree will be probed as rotten (models \textbf{M})
+\item
+  Predict how much of tree volume is rotten (models \textbf{N})
+\end{itemize}
+
+First all \textbf{M} model can be written as follow:
+\[Rotten_n \sim \mathcal{B}(\theta_n), ~~n \in [1,N_{=3816}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]\]
+Secondly, all \textbf{N} models depend on a latent variable being the
+percentage of rotten wood \(Pt_r\). We can assume that all trees are
+growing depending on species \(s\) and plot \(p\) fertility and are
+supposed to have a full healthy volume \(V_h\) for a given diameter
+\(dbh\). We obtain following model:
+
+\[V_f \sim \mathcal{logN}(V_h*Pt_r, \sigma), ~~n \in [1,N_{=3268}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]\]
+
+We retained following models :
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:A3models}Models summary.}\tabularnewline
+\toprule
+M & Model\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+M & Model\tabularnewline
+\midrule
+\endhead
+\(M_{s,p}\) &
+\({P_{rotten}}_n \sim \mathcal{B}(inv_{logit}(\beta_0 + \beta_1*dbh_n + {\beta_2}_p + {\beta_3}_s))\)\tabularnewline
+\(N_{s,p} + L_{s,p}\) &
+\(Volume_{of~wood} \sim \mathcal{logN} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsection{Probed rotten (M)}\label{probed-rotten-m}
+
+Based on complexity (number of parameters), convergence and likelihood
+we selected model \(M_{p,s}\):
+
+\(M_{s,p}\):
+\({P_{rotten}}_n \sim \mathcal{B}(inv_{logit}(\beta_0 + \beta_1*dbh_n + {\beta_2}_p + {\beta_3}_s))\)
+
+\includegraphics{master-thesis_files/figure-latex/A3Mpred-1.pdf}
+
+\begin{longtable}[]{@{}lrrrrrrrrrrrrrrrrr@{}}
+\caption{\label{tab:A3Mtab}Models prediction. Probability to be probed as
+rotten (P in \%) for a given dbh (cm).}\tabularnewline
+\toprule
+& 45 & 50 & 55 & 60 & 65 & 70 & 75 & 80 & 85 & 90 & 95 & 100 & 105 & 110
+& 115 & 120 & 125\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+& 45 & 50 & 55 & 60 & 65 & 70 & 75 & 80 & 85 & 90 & 95 & 100 & 105 & 110
+& 115 & 120 & 125\tabularnewline
+\midrule
+\endhead
+P & 4 & 4 & 5 & 7 & 8 & 10 & 12 & 14 & 17 & 20 & 24 & 28 & 32 & 37 & 42
+& 47 & 52\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsection{Rotten volume (N)}\label{rotten-volume-n}
+
+Based on complexity (number of parameters), convergence and likelihood
+we selected model \(N_{p,s}\) associated to hyperparameter \(\rho\) with
+model \(L_{p,s}\):
+
+\(N_{s,p} + L_{s,p}\):
+\(Volume_{of~wood} \sim \mathcal{logN} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)
+
+\includegraphics{master-thesis_files/figure-latex/A3Npred-1.pdf}
+
+\begin{longtable}[]{@{}lrrrrrrrrrrrrrrrrr@{}}
+\caption{\label{tab:A3Ntab}Models prediction. Final volume of wood (\(V_f\)
+in \(m^3\)) and percent of rotten wood (\(V_p\) in \%) for a given dbh
+(cm) if the tree was probed rotten.}\tabularnewline
+\toprule
+& 45 & 50 & 55 & 60 & 65 & 70 & 75 & 80 & 85 & 90 & 95 & 100 & 105 & 110
+& 115 & 120 & 125\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+& 45 & 50 & 55 & 60 & 65 & 70 & 75 & 80 & 85 & 90 & 95 & 100 & 105 & 110
+& 115 & 120 & 125\tabularnewline
+\midrule
+\endhead
+Vf & 1.66 & 2.02 & 2.39 & 2.78 & 3.18 & 3.58 & 3.98 & 4.37 & 4.74 & 5.09
+& 5.41 & 5.68 & 5.9 & 6.06 & 6.15 & 6.16 & 6.08\tabularnewline
+Vp & 7.00 & 9.00 & 11.00 & 13.00 & 15.00 & 18.00 & 20.00 & 23.00 & 26.00
+& 29.00 & 32.00 & 36.00 & 40.0 & 43.00 & 47.00 & 52.00 &
+56.00\tabularnewline
+\bottomrule
+\end{longtable}
 
 \addcontentsline{toc}{section}{References}
 \bibliography{/home/sylvain/Documents/Bibliography/library.bib}

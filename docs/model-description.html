@@ -112,8 +112,10 @@
 <li class="chapter" data-level="B.1" data-path="appendix-2-leaf-lifespan-model.html"><a href="appendix-2-leaf-lifespan-model.html#material-and-methods-1"><i class="fa fa-check"></i><b>B.1</b> Material and methods</a></li>
 <li class="chapter" data-level="B.2" data-path="appendix-2-leaf-lifespan-model.html"><a href="appendix-2-leaf-lifespan-model.html#results-1"><i class="fa fa-check"></i><b>B.2</b> Results</a></li>
 </ul></li>
-<li class="chapter" data-level="C" data-path="appendix-3-rotten-tree-model.html"><a href="appendix-3-rotten-tree-model.html"><i class="fa fa-check"></i><b>C</b> Appendix 3: Rotten tree model</a></li>
-<li class="chapter" data-level="D" data-path="appendix-4-gap-damages-model.html"><a href="appendix-4-gap-damages-model.html"><i class="fa fa-check"></i><b>D</b> Appendix 4: Gap damages model</a></li>
+<li class="chapter" data-level="C" data-path="appendix-3-rotten-tree-model.html"><a href="appendix-3-rotten-tree-model.html"><i class="fa fa-check"></i><b>C</b> Appendix 3: Rotten tree model</a><ul>
+<li class="chapter" data-level="C.1" data-path="appendix-3-rotten-tree-model.html"><a href="appendix-3-rotten-tree-model.html#probed-rotten-m"><i class="fa fa-check"></i><b>C.1</b> Probed rotten (M)</a></li>
+<li class="chapter" data-level="C.2" data-path="appendix-3-rotten-tree-model.html"><a href="appendix-3-rotten-tree-model.html#rotten-volume-n"><i class="fa fa-check"></i><b>C.2</b> Rotten volume (N)</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/sylvainschmitt/master-thesis" target="blank">work in progress</a></li>
@@ -220,13 +222,15 @@ Figure 1.1: Individuals tree inside TROLL explicit spatial grid from <span class
 </div>
 <div id="rotten-trees" class="section level3">
 <h3><span class="header-section-number">1.4.2</span> Rotten trees</h3>
-<p>20 to 30 % of designated trees are considered as rotten once probed by the lumberman. Rotten trees are not random and depends both on tree species and diameter.</p>
-<p><strong>Explain rotten bayesian model</strong></p>
+<p>20 to 30 % of designated trees are considered as rotten once probed by the lumberman, and thus not harvested. Rotten trees are not random and depends both on tree species and diameter. We gathered data from the forest office (ONF, Laurent Descroix, personnal communication) inventories precising if tree were probbed as rotten and their corresponding species and diameter. In addition, tree plots and sawed volume was informed. We then used a bayesian approach to model the link between tree species and diameter and their risk to be probbed as rotten by the lumberman. We test different models with growing level of complexity and kept the model with the best tradeoff between complexity (number of parameters), convergence, likelihood, and prediction quality (root mean square error of prediction RMSEP):</p>
 <span class="math display" id="eq:rotten">\[\begin{equation}
-  P_{rotten} = logit^{-1}(\beta_0 + \beta_1*dbh) = \frac{e^{\beta_0 + \beta_1*dbh}}{1 + e^{\beta_0 + \beta_1*dbh}}
+  \begin{array}{c} 
+    probbed~rotten \sim \mathcal{B}(P(probbed~rotten)) \\
+    P(probbed~rotten) = logit^{-1}(\beta_0 + \beta_1*dbh) = \frac{e^{\beta_0 + \beta_1*dbh}}{1 + e^{\beta_0 + \beta_1*dbh}}
+  \end{array}
   \tag{1.2}
 \end{equation}\]</span>
-<p>(see <a href="appendix-3-rotten-tree-model.html#appendix-3-rotten-tree-model">Appendix 3: Rotten tree model</a> for more details)</p>
+<p>Tree <span class="math inline">\(probbed~rotten\)</span> follows a <span class="math inline">\(Bernoulli\)</span> law of probability <span class="math inline">\(P(probbed~rotten)\)</span>. The odds for a tree to be probbed as rotten are calculated with the sum of a base odd to be rotten <span class="math inline">\(\beta_0\)</span> and a diameter dependent odd calculated with <span class="math inline">\(\beta_1\)</span>. The probability for a tree to be probbed as rotten <span class="math inline">\(P(probbed~rotten)\)</span> is finally calculated by taking the inverse logit <span class="math inline">\(logit^{-1}\)</span> of the odd (see <a href="appendix-3-rotten-tree-model.html#appendix-3-rotten-tree-model">Appendix 3: Rotten tree model</a> for more details).</p>
 </div>
 <div id="harvesting" class="section level3">
 <h3><span class="header-section-number">1.4.3</span> Harvesting</h3>
@@ -235,15 +239,15 @@ Figure 1.1: Individuals tree inside TROLL explicit spatial grid from <span class
 </div>
 <div id="gap-damages" class="section level3">
 <h3><span class="header-section-number">1.4.4</span> Gap damages</h3>
-<p>Most of models account long term damages due to selective logging with a 10 years increased mortality <span class="citation">(Huth <em>et al.</em> <a href="#ref-Huth2004">2004</a>; Köhler &amp; Huth <a href="#ref-Khler2004">2004</a>; Rüger <em>et al.</em> <a href="#ref-Ruger2008">2008</a>)</span>. We decided to model explicitly long term logging damages because of their localised nature through a gap damages model. We gathered data from Paracou dataset <strong>Cite</strong> in cenususes between 1988 and 1992 on Paracou harvested plots. Individuals were categorized between alive, dead, or recruited during the period. We measured each individual distance to the closest gap. We then used a bayesian approach to test the link between tree death in the four years following the log event and distance to the closest gap. We adapted the model from <strong>Cite Herault</strong> based on a disturbance index into.</p>
+<p>Most of models account long term damages due to selective logging with a 10 years increased mortality <span class="citation">(Huth <em>et al.</em> <a href="#ref-Huth2004">2004</a>; Köhler &amp; Huth <a href="#ref-Khler2004">2004</a>; Rüger <em>et al.</em> <a href="#ref-Ruger2008">2008</a>)</span>. We decided to model explicitly long term logging damages because of their localised nature through a gap damages model. We gathered data from Paracou dataset <span class="citation">(Guehl <em>et al.</em> <a href="#ref-Guehl2004">2004</a>)</span> in cenususes between 1988 and 1992 on Paracou harvested plots. Individuals were categorized between alive, dead, or recruited during the period. We measured each individual distance to the closest gap. We then used a bayesian approach to test the link between tree death in the four years following the log event and distance to the closest gap. We adapted the model from <span class="citation">Herault <em>et al.</em> (<a href="#ref-Herault2010">2010</a>)</span> based on a disturbance index into:</p>
 <span class="math display" id="eq:death">\[\begin{equation}
   \begin{array}{c} 
-    Death_i \sim \mathcal{B}(P(Death_i)) \\
-    P(Death_i) = logit^{-1}(\theta + \beta*e^{\alpha*d_{gaps}}) = \frac{e^{\theta + \beta*e^{\alpha*d_{gaps}}}}{1 + e^{\theta + \beta*e^{\alpha*d_{gaps}}}}
+    Death \sim \mathcal{B}(P(Death)) \\
+    P(Death) = logit^{-1}(\theta + \beta*e^{\alpha*d_{gaps}}) = \frac{e^{\theta + \beta*e^{\alpha*d_{gaps}}}}{1 + e^{\theta + \beta*e^{\alpha*d_{gaps}}}}
   \end{array}
   \tag{1.3}
 \end{equation}\]</span>
-<p><span class="math inline">\(Death\)</span> of a tree <span class="math inline">\(i\)</span> follows a <span class="math inline">\(\mathcal{Bernoulli}\)</span> law of probability <span class="math inline">\(P(Death_i)\)</span>. The odds for a tree <span class="math inline">\(i\)</span> to die <span class="math inline">\(O(Death_i)\)</span> is calculated by the sum of the natural tree death odd <span class="math inline">\(\theta\)</span> and a perturbation index <span class="math inline">\(\beta*e^{\alpha*d_{gaps}}\)</span>. The perturbation index depend on the distance <span class="math inline">\(d_{gaps}\)</span> of the tree <span class="math inline">\(i\)</span> to the closest logging gap. The probability for a tree <span class="math inline">\(i\)</span> to die <span class="math inline">\(P(Death_i)\)</span> is finally calculated by taking the inverse logit of the odd <span class="math inline">\(logit^{-1}[O(Death_i)]\)</span> (see <a href="appendix-4-gap-damages-model.html#appendix-4-gap-damages-model">Appendix 4: Gap damages model</a> for more details).</p>
+<p><span class="math inline">\(Death\)</span> of a tree follows a <span class="math inline">\(\mathcal{Bernoulli}\)</span> law of probability <span class="math inline">\(P(Death)\)</span>. The odds for a tree to die are calculated with the sum of the natural tree death odd <span class="math inline">\(\theta\)</span> and a perturbation index <span class="math inline">\(\beta*e^{\alpha*d_{gaps}}\)</span>. The perturbation index depend on the distance <span class="math inline">\(d_{gaps}\)</span> of the tree <span class="math inline">\(i\)</span> to the closest logging gap. The probability for a tree to die <span class="math inline">\(P(Death)\)</span> is finally calculated by taking the inverse logit <span class="math inline">\(logit^{-1}\)</span> of the odd.</p>
 
 </div>
 </div>
@@ -285,6 +289,12 @@ Figure 1.1: Individuals tree inside TROLL explicit spatial grid from <span class
 </div>
 <div id="ref-Ruger2008">
 <p>Rüger, N., Williams-Linera, G., Kissling, W.D. &amp; Huth, A. (2008). Long-Term Impacts of Fuelwood Extraction on a Tropical Montane Cloud Forest. <em>Ecosystems</em>, <strong>11</strong>, 868–881.</p>
+</div>
+<div id="ref-Guehl2004">
+<p>Guehl, J.-M., Bonal, D., Ferhi, A., Barigah, T.S., Farquhar, G., Granier, a B.T.E. &amp; Neotropical Rainforest, M. of a. (2004). <em>Ecology and Management of a Neotropical Rainforest</em>. Elsevier.</p>
+</div>
+<div id="ref-Herault2010">
+<p>Herault, B., Ouallet, J., Blanc, L., Wagner, F. &amp; Baraloto, C. (2010). Growth responses of neotropical trees to logging gaps. <em>Journal of Applied Ecology</em>, <strong>47</strong>, 821–831.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>

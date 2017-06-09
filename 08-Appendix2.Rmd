@@ -16,7 +16,7 @@ knitr::kable(data.frame(
             'Stem dry mass per stem fresh volume (stem specific density)'),
   Unit = c('month',' $m^2.kg^{-1}$', '$mg.g^{-1}$', '$mg.g^{-1}$', '$mg.mm^{-3}$'),
   TRYcode = c(12, 11, 15, 14, 4)),
-  caption = 'Functional traits gathered with TRY.')
+  caption = 'Functional traits gathered with TRY.', format = 'pandoc')
 ```
 
 ```{r A2data, include=FALSE, echo=FALSE, cache=TRUE}
@@ -92,7 +92,7 @@ The selected model had a maximum likelihood of 13.6 and a RMSEP of 12 months:
 
 Leaf lifespan $LL$ follows a lognormal law with location infered from leaf lifespan $LMA$, nitrogen content $N$ and wood specific gravity $wsg$ and a scale $\sigma$. Each ${\beta_i}_d$ is following a normal law located on $\beta_i$ with a scale of $\sigma_i$. All $\beta_i$, $\sigma_i$, and $\sigma$ are assumed without presemption following a gamma law. $d$ represents the dataset random effects and encompass environmental and protocol variations.
 
-```{r A2LLpred, echo=FALSE, fig.cap='Leaflifespan predictions for the selected model with leaf mass per area (LMA), leaf nitrogen content (Nmass), wood specific gravity (wsg) and predicted versus observed values. Leaf lifespan (LL) is predicted with model M10 fit. Leaf mass per area (LMA) and leaf nitrogen content (Nmass), and wood specific gravity (wsg) are taken in a composite dataset of GLOPNET, TRY and DRYAD  datasets.Warning LMA (resp. Nmass and wsg) is not constant and depend on the closest point value for right (resp. center and left) graph.', fig.height=12, fig.width=12}
+```{r A2LLpred, echo=FALSE, fig.cap='Leaflifespan predictions for the selected model with leaf mass per area (LMA), leaf nitrogen content (Nmass), wood specific gravity (wsg) and predicted versus observed values. Leaf lifespan (LL) is predicted with model M10 fit. Leaf mass per area (LMA) and leaf nitrogen content (Nmass), and wood specific gravity (wsg) are taken in a composite dataset of GLOPNET, TRY and DRYAD  datasets.Warning LMA (resp. Nmass and wsg) is not constant and depend on the closest point value for right (resp. center and left) graph.', cahce=TRUE, fig.height=12, fig.width=12}
 library(ggplot2)
 load("~/Documents/ECOFOG/TROLL/inst/doc/LL_models/M11.LL.Rdata")
 fit <- fit$full
