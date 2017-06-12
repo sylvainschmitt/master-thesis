@@ -237,7 +237,7 @@ But TROLL is not considering seed directly through a seedbank, instead seed migh
   (\#eq:next)
 \end{equation}
 
-N_{tot} is the external seedrain per hectare (number of reproduction opportunities). $f_{reg}$ is the species regional frequency. $n_{ha}$ is the simulated plot size in $ha$.
+$N_{tot}$ is the external seedrain per hectare (number of reproduction opportunities). $f_{reg}$ is the species regional frequency. $n_{ha}$ is the simulated plot size in $ha$.
 
 Finally, a bank of seedlings to be recruited is defined for each pixel. If the ground-level light reaches a species light compensation point $LCP$ the species will be recruited:
 

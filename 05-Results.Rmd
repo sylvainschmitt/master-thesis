@@ -39,7 +39,7 @@ names(Ieq)[3:4] <- paste0('Ieq.', names(Ieq)[3:4])
 
 We transformed all ecosystem outputs from the 240 disturbance simulations in resilience metrics normalizing the treatment values by their corresponding control (Figure \@ref(fig:datatrans) A et B). We then gathered ecosystem outputs by main ecosystem functions (forest dynamic, forest production and forest diversity) to compute ecosystem distance to equilibrium (Figure \@ref(fig:datatrans) C). Finally, we integrated distance to equilibrium in a cummulative sum over time (Figure \@ref(fig:datatrans) D). 
 
-```{r datatrans, echo=FALSE, fig.cap='Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate resilience (**B**); resilience of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance ot equilibirum is integrated over time in a cummulative sum (**D**). ', cache=TRUE, fig.height=8, fig.width=12}
+```{r datatrans, echo=FALSE, fig.cap='Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate resilience (**B**); resilience of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance ot equilibirum is integrated over time in a cummulative sum (**D**). ', cache=TRUE, fig.height=8, fig.width=12, message=FALSE}
 library(dplyr)
 g_agb <- ecosystem %>% 
   left_join(., doe, by = 'sim') %>%
