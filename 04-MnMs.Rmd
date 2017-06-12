@@ -35,7 +35,7 @@ rm(fd, species, datal)
 g <- ggplot(data, aes(x = FDis, y = richness, 
                       label = sim, color = agb/1000)) + 
   geom_point(size = 3) + 
-  geom_text_repel() +
+  ggrepel::geom_text_repel() +
   scale_color_continuous("Aboveground\nBiomass\n(AGB, ton C/ha)") +
   xlab("Functional dispersion (FDis)") +
   ylab("Species richness (SR)")

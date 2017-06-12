@@ -25,7 +25,7 @@
 <meta name="author" content="Sylvain SCHMITT">
 
 
-<meta name="date" content="2017-06-09">
+<meta name="date" content="2017-06-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -119,7 +119,19 @@
 <li class="chapter" data-level="C.1" data-path="appendix-3-rotten-tree-model.html"><a href="appendix-3-rotten-tree-model.html#probed-rotten-m"><i class="fa fa-check"></i><b>C.1</b> Probed rotten (M)</a></li>
 <li class="chapter" data-level="C.2" data-path="appendix-3-rotten-tree-model.html"><a href="appendix-3-rotten-tree-model.html#rotten-volume-n"><i class="fa fa-check"></i><b>C.2</b> Rotten volume (N)</a></li>
 </ul></li>
-<li class="chapter" data-level="D" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html"><i class="fa fa-check"></i><b>D</b> Appendix 4: Sensitivity analysis</a></li>
+<li class="chapter" data-level="D" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html"><i class="fa fa-check"></i><b>D</b> Appendix 4: Sensitivity analysis</a><ul>
+<li class="chapter" data-level="D.1" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#material-and-methods-2"><i class="fa fa-check"></i><b>D.1</b> Material and methods</a></li>
+<li class="chapter" data-level="D.2" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#results-2"><i class="fa fa-check"></i><b>D.2</b> Results</a><ul>
+<li class="chapter" data-level="D.2.1" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#control"><i class="fa fa-check"></i><b>D.2.1</b> Control</a></li>
+<li class="chapter" data-level="D.2.2" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#functional-traits"><i class="fa fa-check"></i><b>D.2.2</b> Functional traits</a></li>
+<li class="chapter" data-level="D.2.3" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#seed-rain"><i class="fa fa-check"></i><b>D.2.3</b> Seed rain</a></li>
+</ul></li>
+<li class="chapter" data-level="D.3" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#discussion-1"><i class="fa fa-check"></i><b>D.3</b> Discussion</a><ul>
+<li class="chapter" data-level="D.3.1" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#disturbance-simulation"><i class="fa fa-check"></i><b>D.3.1</b> Disturbance simulation</a></li>
+<li class="chapter" data-level="D.3.2" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#functional-traits-selection"><i class="fa fa-check"></i><b>D.3.2</b> Functional traits selection</a></li>
+<li class="chapter" data-level="D.3.3" data-path="appendix-4-sensitivity-analysis.html"><a href="appendix-4-sensitivity-analysis.html#seed-rain-constant-influence"><i class="fa fa-check"></i><b>D.3.3</b> Seed rain constant influence</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="E" data-path="appendix-5-disturbance-simulations.html"><a href="appendix-5-disturbance-simulations.html"><i class="fa fa-check"></i><b>E</b> Appendix 5: Disturbance simulations</a><ul>
 <li class="chapter" data-level="E.1" data-path="appendix-5-disturbance-simulations.html"><a href="appendix-5-disturbance-simulations.html#ecosystem-functions-2"><i class="fa fa-check"></i><b>E.1</b> Ecosystem functions</a></li>
 <li class="chapter" data-level="E.2" data-path="appendix-5-disturbance-simulations.html"><a href="appendix-5-disturbance-simulations.html#biodiversity-effect-2"><i class="fa fa-check"></i><b>E.2</b> Biodiversity effect</a></li>
@@ -155,6 +167,14 @@
 <div id="ecosystem-functions-1" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Ecosystem functions</h3>
 <p>We transformed all ecosystem outputs from the 240 disturbance simulations in resilience metrics normalizing the treatment values by their corresponding control (Figure <a href="results.html#fig:datatrans">3.1</a> A et B). We then gathered ecosystem outputs by main ecosystem functions (forest dynamic, forest production and forest diversity) to compute ecosystem distance to equilibrium (Figure <a href="results.html#fig:datatrans">3.1</a> C). Finally, we integrated distance to equilibrium in a cummulative sum over time (Figure <a href="results.html#fig:datatrans">3.1</a> D).</p>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
 <div class="figure"><span id="fig:datatrans"></span>
 <img src="master-thesis_files/figure-html/datatrans-1.png" alt="Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate resilience (**B**); resilience of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance ot equilibirum is integrated over time in a cummulative sum (**D**). " width="1152" />
 <p class="caption">
