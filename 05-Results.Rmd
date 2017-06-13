@@ -2,6 +2,29 @@
 
 ## Sensitivity
 
+Most of functional traits had a significant long term influence on ecosystem outputs (figure \@ref(fig:ftVar)). On the other hand, few functional traits influenced final ecosystem structure. Only specific maximum diameter **dmax** add higher diversity for greater orders implying better eveness in species distributions. Regarding functional composition, traits fixed to mean did not change other functional traits density distribution. Moreover, seedrain did not seem to affect aboveground biomass and final ecosystem height and diameter structure. Seedrain constant fixed to 2 or 20 seed per hectare seemed to have a similar effect. Lower seedrain implied faster decrease of stem above 10 cm dbh and higher number of stem above 30 cm dbh after ecosystem resilience to disturbance (approximately 50 years). Lower seedrain than default decreased basal area over time. In addition, lower seedrain than default decreased equitability by increasing abundance of abundant species and decreasing abundance of less abundant species. See [Appendix 4: Sensitivity analysis] for further details.
+
+```{r ftVar, echo=FALSE, fig.cap='Functional traits effect on simulation ecosystem variations over time. Number of trees with dbh above 10 cm (N10) and 30 cm (N30), above ground biomass (AGB) and basal area (BA). Grey area represents the interval of control replicates whereas black line represents the mean of control replicates.', cache=TRUE, warning=FALSE}
+path <- '~/Documents/ECOFOG/Results/sensitivity/control'
+load(file.path(path, 'control.Rdata'))
+path <- '~/Documents/ECOFOG/Results/sensitivity/traits'
+load(file.path(path, 'traits.Rdata'))
+n10 <- plot(traits, control, what = 'abu10', ggplot2 = T) +
+  scale_color_discrete('Trait fixed\nto mean') +
+  ylab('Number of stem above\n10 cm diameter\nat breast height')
+n30 <- plot(traits, control, what = 'abu30', ggplot2 = T) +
+  scale_color_discrete('Trait fixed\nto mean') +
+  ylab('Number of stem above\n30 cm diameter\nat breast height')
+agb <- plot(traits, control, what = 'agb', ggplot2 = T) +
+  scale_color_discrete('Trait fixed\nto mean') +
+  ylab('Aboveground biomass (kgC/ha)')
+ba <- plot(traits, control, what = 'ba', ggplot2 = T) +
+  scale_color_discrete('Trait fixed\nto mean') +
+  ylab('Basal area (m2/ha')
+cowplot::plot_grid(n10, n30, agb, ba, labels = c('N10', 'N30', 'AGB', 'BA'), nrow = 2, ncol = 2)
+rm(list = ls()) ; invisible(gc())
+```
+
 ## Disturbance
 
 ### Ecosystem functions
