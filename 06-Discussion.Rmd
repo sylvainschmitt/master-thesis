@@ -1,1 +1,32 @@
 # Discussion
+
+**Take home messages:**
+
+## "Model limits"
+
+Discuss limits of the model with sensitivity analysis (insist in seed rain constant importance).
+
+## Diversity and tropical forest ecosystem resilience
+
+* Diversity have a strong role in ecosystem resilience
+* Increasing functional diversity results in increased resilience
+* Species and functional richnesses is not directly increasing resilience
+* But increased species and functional richnesses will increase chance for high functional diversity
+* Functional dispersion decreased resilience when functional eveness increased resilience
+* Effectively high functional diversity needs eveness in order to better answer disturbance, if not the diversity is masked by ecosystem dominant species
+
+## Biodiversity role in tropical forest ecosystem resilience
+
+* Biodiversity net effect is almost always positive for ecosystems functions
+* Biodiversity effects answer to disturbance is split in two parts
+* First complementarity effects answer disturbance in first decades whereas the disturbance almost removed selection effect
+* Then complementarity effect will diminish toward extinction when selection effect is *prendre le relais* to ensure biodiversity net effect
+* This patterns are even stronger for higher disturbances
+* In the case of selective logging the complementarity effect will thus be the only one playing between two *rotations*
+* High forest diversity with important species complementarity through increased functional diversity is thus an advantage for forest restoration between two rotation in order to maintain both productive ecosystem and sustainable management
+
+## Sylviculture ?
+
+## Selective logging vs. monoculture stand ?
+
+Results advocates for **sustainable** selective logging against monoculture stand: high diversity will increase forest resilience and thus improve logging *turn-overs*. Even if monoculture stand are *irrégularisé* they will not reach mature forest diversity, and consequently they will not reach its natural high resilience. But on the other hand selective logging in tropical forest needs to be sustainable, if not the diversity will slowly decrease after each turn-overs degrading forest ecosystem functions, and resilience will become slower and slower in a *cercle vicieux*. Return toward @Zimmerman2012  discussion.
