@@ -25,7 +25,7 @@
 <meta name="author" content="Sylvain SCHMITT">
 
 
-<meta name="date" content="2017-06-14">
+<meta name="date" content="2017-07-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -95,13 +95,12 @@
 <li class="chapter" data-level="3.2.1" data-path="results.html"><a href="results.html#ecosystem-functions-1"><i class="fa fa-check"></i><b>3.2.1</b> Ecosystem functions</a></li>
 <li class="chapter" data-level="3.2.2" data-path="results.html"><a href="results.html#biodiversity-effect-1"><i class="fa fa-check"></i><b>3.2.2</b> Biodiversity effect</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="results.html"><a href="results.html#sylviculture-1"><i class="fa fa-check"></i><b>3.3</b> Sylviculture</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a><ul>
 <li class="chapter" data-level="4.1" data-path="discussion.html"><a href="discussion.html#model-limits"><i class="fa fa-check"></i><b>4.1</b> “Model limits”</a></li>
 <li class="chapter" data-level="4.2" data-path="discussion.html"><a href="discussion.html#diversity-and-tropical-forest-ecosystem-resilience"><i class="fa fa-check"></i><b>4.2</b> Diversity and tropical forest ecosystem resilience</a></li>
 <li class="chapter" data-level="4.3" data-path="discussion.html"><a href="discussion.html#biodiversity-role-in-tropical-forest-ecosystem-resilience"><i class="fa fa-check"></i><b>4.3</b> Biodiversity role in tropical forest ecosystem resilience</a></li>
-<li class="chapter" data-level="4.4" data-path="discussion.html"><a href="discussion.html#sylviculture-2"><i class="fa fa-check"></i><b>4.4</b> Sylviculture ?</a></li>
+<li class="chapter" data-level="4.4" data-path="discussion.html"><a href="discussion.html#sylviculture-1"><i class="fa fa-check"></i><b>4.4</b> Sylviculture ?</a></li>
 <li class="chapter" data-level="4.5" data-path="discussion.html"><a href="discussion.html#selective-logging-vs.monoculture-stand"><i class="fa fa-check"></i><b>4.5</b> Selective logging vs. monoculture stand ?</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -173,7 +172,7 @@
 </div>
 <div id="design-of-experiment" class="section level2">
 <h2><span class="header-section-number">2.2</span> Design of experiment</h2>
-<p>In order to assess the role of biodiversity in ecosystem answer to both disturbance and sylviculture, we needed to create a space of experiments encompassing both variation of disturbance, biodiversity and time. Disturbance was represented by percentage of basal area loss (0%, 25%, 50% and 75%), or as a selective logging simulation. Biodiversity was integrated with two components of its components: taxonomic and functional diversities. We used species richness <span class="math inline">\(SR\)</span> to represents taxonomic diversity (5, 25, and 125 species). Functional diversity can be related to numerous components, and <span class="citation">Perrone <em>et al.</em> (<a href="#ref-Borgy2017">2017</a>)</span> argued for 5: richness, divergence, regularity, overlap and mean. Because mature forest were created from a bare soil with TROLL simulations, we could not control a priori divergence, regularity and overlap but only assess theim before diturbance. Consequently, we focused on functional richness with convex hull volume <span class="math inline">\(CHV\)</span> and functional mean with community weighted mean <span class="math inline">\(CWM\)</span>. For each level of species richness <span class="math inline">\(SR\)</span>, we selected 20 communities with growing convex hull volume <span class="math inline">\(CHV\)</span> but with a community weighted means close to the regional species pool community weighted means. Effectivelly, we did not wanted drastic change in community means that could have more effect than functional richness itself. This design of experiments resulted in 60 communities (<span class="math inline">\(5~SR*20~CHV\)</span>) and 240 simulations (<span class="math inline">\(60 ~communities*4~levels~of~disturbance\)</span>) over 600 years (maturity being assumed after 500 years of regeneration <span class="citation">(Maréchaux &amp; Chave)</span>). Figure <a href="material-and-methods.html#fig:DOE">2.1</a> presents the design of experiment for communities biodiversity after the mature forest were simulated, and thus before disturbance. We obtained a broad range of both functionl dispersion <span class="math inline">\(FDis\)</span> and aboveground biomass <span class="math inline">\(AGB\)</span> for simulated forest ecosystems before disturbance.</p>
+<p>In order to assess the role of biodiversity in ecosystem answer to both disturbance and sylviculture, we needed to create a space of experiments encompassing both variation of disturbance, biodiversity and time. Disturbance was represented by percentage of basal area loss (0%, 25%, 50% and 75%), or as a selective logging simulation using default parameters. Biodiversity was integrated with two components of its components: taxonomic and functional diversities. We used species richness <span class="math inline">\(SR\)</span> to represents taxonomic diversity (5, 25, and 125 species). Functional diversity can be related to numerous components, and <span class="citation">Perrone <em>et al.</em> (<a href="#ref-Borgy2017">2017</a>)</span> argued for 5: richness, divergence, regularity, overlap and mean. Because mature forest were created from a bare soil with TROLL simulations, we could not control a priori divergence, regularity and overlap but only assess theim before diturbance. Consequently, we focused on functional richness with convex hull volume <span class="math inline">\(CHV\)</span> and functional mean with community weighted mean <span class="math inline">\(CWM\)</span>. For each level of species richness <span class="math inline">\(SR\)</span>, we selected 20 communities with growing convex hull volume <span class="math inline">\(CHV\)</span> but with a community weighted means close to the regional species pool community weighted means. Effectivelly, we did not wanted drastic change in community means that could have more effect than functional richness itself. This design of experiments resulted in 60 communities (<span class="math inline">\(5~SR*20~CHV\)</span>) and 240 simulations (<span class="math inline">\(60 ~communities*4~levels~of~disturbance\)</span>) over 600 years (maturity being assumed after 500 years of regeneration <span class="citation">(Maréchaux &amp; Chave)</span>). Figure <a href="material-and-methods.html#fig:DOE">2.1</a> presents the design of experiment for communities biodiversity after the mature forest were simulated, and thus before disturbance. We obtained a broad range of both functionl dispersion <span class="math inline">\(FDis\)</span> and aboveground biomass <span class="math inline">\(AGB\)</span> for simulated forest ecosystems before disturbance.</p>
 <div class="figure"><span id="fig:DOE"></span>
 <img src="master-thesis_files/figure-html/DOE-1.png" alt="Experimental design before disturbance. Communities are implemented along a gradient of species richness (SR) and functional dispersion (FDis) resulting in a broad range of aboveground biomass (AGB). FDis was caluclated based on 4 functional traits (leaf mass per area, wood specific gravity, maximum diameter, and maximum height)." width="672" />
 <p class="caption">
@@ -195,7 +194,7 @@ Figure 2.1: Experimental design before disturbance. Communities are implemented 
 </div>
 <div id="biodiversity-effect" class="section level3">
 <h3><span class="header-section-number">2.3.2</span> Biodiversity effect</h3>
-<p>Biodiversity is not only a facet of the experimental design and an ecosystem output through forest diversity, but also interact on ecosystem functioning and consequently on its answer to disturbance. Biodiversity ecosystem functioning relation can be split in complementarity and selection effect with <span class="citation">Loreau &amp; Hector (<a href="#ref-Loreau2001">2001</a>)</span> partitioning:</p>
+<p>Biodiversity is not only a facet of the experimental design and an ecosystem output through forest diversity, but also interact on ecosystem functioning and consequently on its answer to disturbance. Biodiversity ecosystem functioning relation can be split in complementarity and selection effect with <span class="citation">Loreau &amp; Hector (<a href="#ref-Loreau2001">2001</a><a href="#ref-Loreau2001">b</a>)</span> partitioning:</p>
 <span class="math display" id="eq:BiodivPart">\[\begin{equation}
   \begin{array}{c}
     NE = X_O - X_E = CE + SE \\
@@ -228,7 +227,7 @@ Figure 2.1: Experimental design before disturbance. Communities are implemented 
 <p>Henry, D. &amp; Emmanuel Ramirez-Marquez, J. (2012). Generic metrics and quantitative approaches for system resilience as a function of time. <em>Reliability Engineering and System Safety</em>, <strong>99</strong>, 114–122.</p>
 </div>
 <div id="ref-Loreau2001">
-<p>Loreau, M. &amp; Hector, a. (2001). Partitioning selection and complementarity in biodiversity experiments. <em>Nature</em>, <strong>412</strong>, 72–6.</p>
+<p>Loreau, M. &amp; Hector, a. (2001b). Partitioning selection and complementarity in biodiversity experiments. <em>Nature</em>, <strong>412</strong>, 72–6.</p>
 </div>
 <div id="ref-Tobner2016">
 <p>Tobner, C.M., Paquette, A., Gravel, D., Reich, P.B., Williams, L.J. &amp; Messier, C. (2016). Functional identity is the main driver of diversity effects in young tree communities (F. He, Ed.). <strong>19</strong>, 638–647.</p>

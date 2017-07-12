@@ -36,7 +36,7 @@ Leaf lifespan $LL$ follows a lognormal law with location infered from leaf lifes
 
 ## Disturbance
 
-Disturbance module was designed in the simplest way in order to relate the ecosystem answer to volume lost without any individuals nor species targetting. For a given iteration $disturb_{iter}$, individuals are picked randomly with a uniform law on the number of trees. Selected individuals are then removed without trigerring a treefall to avoid any side effect. The operation is repeated untill the disturbance result in a defined lost basal area ($disturb_{intensity}$ in % of BA).
+Disturbance module was designed in the simplest way in order to relate the ecosystem answer to volume loss without any individuals nor species targetting. For a given iteration $disturb_{iter}$, individuals are picked randomly with a uniform law on the number of trees. Selected individuals are then removed without trigerring a treefall to avoid any side effect. The operation is repeated untill the disturbance result in a defined lost basal area ($disturb_{intensity}$ in % of BA).
 
 ## Sylviculture
 
