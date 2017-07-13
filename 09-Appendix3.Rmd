@@ -1,8 +1,8 @@
 # Appendix 3: Rotten tree model
 
-In order to simulate sylviculture with TROLL we need to implement a new sylviculture module inside TROLL model code. A first litterature review was completed by an interview with Laurent Descroix of the Office Nationale des Forêts. We discovered that rotten trees were not random and seemed to depend both on tree species and diameter. This document presents modelling of relation between rotten trees and their species and diameter.
+In order to simulate sylviculture with TROLL we needed to implement a new sylviculture module inside TROLL model code. A first litterature review was completed by an interview with Laurent Descroix of the Office Nationale des Forêts. We discovered that rotten trees were not random and seemed to depend both on tree species and diameter. This document presents modelling of relation between rotten trees and their species and diameter.
 
-In fact we have two different questions:
+In fact we have two different objectives:
 
 - Predict if a tree will be probed as rotten (models **M**) 
 - Predict how much of tree volume is rotten (models **N**)
@@ -11,7 +11,7 @@ First all **M** model can be written as follow:
 $$Rotten_n \sim \mathcal{B}(\theta_n), ~~n \in [1,N_{=3816}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]$$
 Secondly, all **N** models depend on a latent variable being the percentage of rotten wood $Pt_r$. We can assume that all trees are growing depending on species $s$ and plot $p$ fertility and are supposed to have a full healthy volume $V_h$ for a given diameter $dbh$. We obtain following model:
 
-$$V_f \sim \mathcal{logN}(V_h*Pt_r, \sigma), ~~n \in [1,N_{=3268}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]$$
+$$V_f \sim log\mathcal{N}(V_h*Pt_r, \sigma), ~~n \in [1,N_{=3268}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]$$
 
 We retained following models :
 
@@ -21,7 +21,7 @@ mtab <- data.frame(
   M = c('$M_{s,p}$', '$N_{s,p} + L_{s,p}$'),
   Model = c(
     "${P_{rotten}}_n \\sim \\mathcal{B}(inv_{logit}(\\beta_0 + \\beta_1*dbh_n + {\\beta_2}_p + {\\beta_3}_s))$",
-    "$Volume_{of~wood} \\sim \\mathcal{logN} (log[((\\beta + \\beta_p + \\beta_s)*dbh^2)*(1 - Pr*((\\theta + \\theta_p + \\theta_s) *dbh^2))], \\sigma)$"
+    "$Volume_{of~wood} \\sim log\\mathcal{N} (log[((\\beta + \\beta_p + \\beta_s)*dbh^2)*(1 - Pr*((\\theta + \\theta_p + \\theta_s) *dbh^2))], \\sigma)$"
     )
   )
 mtab <- apply(mtab, 2, as.character)

@@ -163,14 +163,14 @@
             <section class="normal" id="section-">
 <div id="appendix-3-rotten-tree-model" class="section level1">
 <h1><span class="header-section-number">C</span> Appendix 3: Rotten tree model</h1>
-<p>In order to simulate sylviculture with TROLL we need to implement a new sylviculture module inside TROLL model code. A first litterature review was completed by an interview with Laurent Descroix of the Office Nationale des Forêts. We discovered that rotten trees were not random and seemed to depend both on tree species and diameter. This document presents modelling of relation between rotten trees and their species and diameter.</p>
-<p>In fact we have two different questions:</p>
+<p>In order to simulate sylviculture with TROLL we needed to implement a new sylviculture module inside TROLL model code. A first litterature review was completed by an interview with Laurent Descroix of the Office Nationale des Forêts. We discovered that rotten trees were not random and seemed to depend both on tree species and diameter. This document presents modelling of relation between rotten trees and their species and diameter.</p>
+<p>In fact we have two different objectives:</p>
 <ul>
 <li>Predict if a tree will be probed as rotten (models <strong>M</strong>)</li>
 <li>Predict how much of tree volume is rotten (models <strong>N</strong>)</li>
 </ul>
 <p>First all <strong>M</strong> model can be written as follow: <span class="math display">\[Rotten_n \sim \mathcal{B}(\theta_n), ~~n \in [1,N_{=3816}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]\]</span> Secondly, all <strong>N</strong> models depend on a latent variable being the percentage of rotten wood <span class="math inline">\(Pt_r\)</span>. We can assume that all trees are growing depending on species <span class="math inline">\(s\)</span> and plot <span class="math inline">\(p\)</span> fertility and are supposed to have a full healthy volume <span class="math inline">\(V_h\)</span> for a given diameter <span class="math inline">\(dbh\)</span>. We obtain following model:</p>
-<p><span class="math display">\[V_f \sim \mathcal{logN}(V_h*Pt_r, \sigma), ~~n \in [1,N_{=3268}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]\]</span></p>
+<p><span class="math display">\[V_f \sim log\mathcal{N}(V_h*Pt_r, \sigma), ~~n \in [1,N_{=3268}] ~~ p \in [1, P_{=8}], ~~ s \in [1, S_{=43}]\]</span></p>
 <p>We retained following models :</p>
 <table>
 <caption><span id="tab:A3models">Table C.1: </span>Models summary.</caption>
@@ -187,7 +187,7 @@
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(N_{s,p} + L_{s,p}\)</span></td>
-<td align="left"><span class="math inline">\(Volume_{of~wood} \sim \mathcal{logN} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)</span></td>
+<td align="left"><span class="math inline">\(Volume_{of~wood} \sim log\mathcal{N} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -247,7 +247,7 @@
 <div id="rotten-volume-n" class="section level2">
 <h2><span class="header-section-number">C.2</span> Rotten volume (N)</h2>
 <p>Based on complexity (number of parameters), convergence and likelihood we selected model <span class="math inline">\(N_{p,s}\)</span> associated to hyperparameter <span class="math inline">\(\rho\)</span> with model <span class="math inline">\(L_{p,s}\)</span>:</p>
-<p><span class="math inline">\(N_{s,p} + L_{s,p}\)</span>: <span class="math inline">\(Volume_{of~wood} \sim \mathcal{logN} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)</span></p>
+<p><span class="math inline">\(N_{s,p} + L_{s,p}\)</span>: <span class="math inline">\(Volume_{of~wood} \sim log\mathcal{N} (log[((\beta + \beta_p + \beta_s)*dbh^2)*(1 - Pr*((\theta + \theta_p + \theta_s) *dbh^2))], \sigma)\)</span></p>
 <p><img src="master-thesis_files/figure-html/A3Npred-1.png" width="672" /></p>
 <table>
 <caption><span id="tab:A3Ntab">Table C.3: </span>Models prediction. Final volume of wood (<span class="math inline">\(V_f\)</span> in <span class="math inline">\(m^3\)</span>) and percent of rotten wood (<span class="math inline">\(V_p\)</span> in %) for a given dbh (cm) if the tree was probed rotten.</caption>

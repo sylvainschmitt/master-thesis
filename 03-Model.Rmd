@@ -4,7 +4,7 @@
 
 TROLL model each tree indivdually in a located environment. Thus TROLL model, alongside with SORTIE  [@Pacala1996; @Uriarte2009] and FORMIND [@Fischer2016; @Kohler1998], can be defined as an individual-based and spatially explicit forest growth model. TROLL simulates the life cycle of individual trees from recruitment, with a diameter at breast height (dbh) above 1 cm, to death with growth and seed production. Trees are growing in a located light environment explicitly computed witin voxels of 1 $m^3$. Each tree is consistently defined by its age, diameter at brest height (dbh), height (h), crown radius (CR), crown depth (CD) and leaf area (LA) (see figure \@ref(fig:TROLLtree)). Tree geometry is calculated with allometric equations but leaf area vary dinamically within each crown following carbon allocations. Voxels resolution of 1 $m^3$ allow the establishment of maximum one tree by 1x1 m pixels. Each tree is flagged with a species label inherited from the parent tree through the seedling recruitment. A species label is associated to a number of species specific parameters (see table \@ref(tab:traits)) related to functional trait values which can be sampled on the field.
 
-```{r TROLLtree, echo=FALSE, fig.cap='Individuals tree inside TROLL explicit spatial grid from @Li. Tree geometry (crown radius CR, crown depth CD, height h, diameter at breast height dbh) is updated at each timestep following allometric relationship with assimilated carbon allocated to growth. Each tree is flagged with a species label linking to its species-specific attributes. Light is compputed explicitly at each timestep for each voxel.'}
+```{r TROLLtree, echo=FALSE, fig.cap='Individuals tree inside TROLL explicit spatial grid from @Li. Tree geometry (crown radius CR, crown depth CD, height h, diameter at breast height dbh) is updated at each timestep following allometric relationship with assimilated carbon allocated to growth. Each tree is flagged with a species label linking to its species-specific attributes. Light is computed explicitly at each timestep for each voxel.'}
 knitr::include_graphics('images/TROLLtree.png', dpi = NA)
 ```
 
@@ -40,7 +40,7 @@ Disturbance module was designed in the simplest way in order to relate the ecosy
 
 ## Sylviculture
 
-In french guiana context sylviculture can be narrow to selective logging, which can be split in two steps: selection and harvesting. Selection encompass choice of the havrestable area, tree designation by the forest office, tree selection by the harvester, and removal off tree probbed as rotten by the lumber. Harvesting encompass tree felling, tracks opening, and long term damages (simplified in gap damages in current TROLL implementation).
+In french guiana context, sylviculture can be narrow to selective logging, which can be split in two steps: selection and harvesting. Selection encompass choice of the havrestable area, tree designation by the forest office, tree selection by the harvester, and removal off tree probbed as rotten by the lumber. Harvesting encompass tree felling, tracks opening, and long term damages (simplified in gap damages in current TROLL implementation).
 
 ### Designation and selection
 
@@ -66,7 +66,7 @@ Tree $probbed~rotten$ follows a $Bernoulli$ law of probability $P(probbed~rotten
 
 Due to crown aspects, treefall from logs are often random (whereas difficult to manage, treefall can still be oriented, Laurent Descroix, ONF, personnal communication). Consequently, TROLL consider treefall from log as random like current natural treefall implementation inside TROLL (see code [Appendix 1]).
 
-Tree harvesting roads are split in three classes: truck roads, main tractor track, and secondary track. Because TROLL assumes a flat environment, the main track is opened starting from the middle of one side of the simulated forest and untill it reaches the center with a width of 6 meters. In most cases, secondary tracks are opened once trees have been designated and the geolocation taken at a maximum distance of 30 meters from designated trees (Laurent Descroix, ONF, personnal communication). To simulate secondary tracks, TROLL uses a loads map, measuring every trees at a distance of 30 meters for each pixel, and  a track proximity maps of the closest existing track. Next, the model select the pixel with the highest load and closest track, find the closest existing track and join it by removing tree in the way with a width of 5 meters. The operations are repeated untill no felt trees are left.
+Tree harvesting roads are split in three classes: truck roads, main tractor track, and secondary track. Because TROLL assumes a flat environment, the main track is opened starting from the midle of one side of the simulated forest and untill it reaches the center with a width of 6 meters. In most cases, secondary tracks are opened once trees have been designated and the geolocation taken at a maximum distance of 30 meters from designated trees (Laurent Descroix, ONF, personnal communication). To simulate secondary tracks, TROLL uses a loads map, measuring every trees at a distance of 30 meters for each pixel, and  a track proximity maps of the closest existing track. Next, the model select the pixel with the highest load and closest track, find the closest existing track and join it by removing tree in the way with a width of 5 meters. The operations are repeated untill no felt trees are left.
 
 ### Gap damages
 
@@ -80,4 +80,4 @@ Most of models account long term damages due to selective logging with a 10 year
   (\#eq:death)
 \end{equation} 
 
-$Death$ of a tree follows a $\mathcal{Bernoulli}$ law of probability $P(Death)$. The odds for a tree to die are calculated with the sum of the natural tree death odd $\theta$ and a perturbation index $\beta*e^{\alpha*d_{gaps}}$. The perturbation index depend on the distance $d_{gaps}$ of the tree $i$ to the closest logging gap. The probability for a tree to die $P(Death)$ is finally calculated by taking the inverse logit $logit^{-1}$ of the odd.
+$Death$ of a tree follows a $\mathcal{B}ernoulli$ law of probability $P(Death)$. The odds for a tree to die are calculated with the sum of the natural tree death odd $\theta$ and a perturbation index $\beta*e^{\alpha*d_{gaps}}$. The perturbation index depend on the distance $d_{gaps}$ of the tree $i$ to the closest logging gap. The probability for a tree to die $P(Death)$ is finally calculated by taking the inverse logit $logit^{-1}$ of the odd.
