@@ -747,19 +747,18 @@ each species indivdually representing 652 simulations of monoculture.
 
 Most of functional traits had a significant long term influence on
 ecosystem outputs (figure \ref{fig:ftVar}). Only specific maximum
-diameter \textbf{dmax} add higher diversity for greater orders implying
-better evenness in species distributions. Regarding functional
-composition, traits fixed to mean did not change other functional traits
-density distribution. Moreover, seedrain did not seem to affect
-aboveground biomass and final ecosystem height and diameter structure.
-Seedrain constant fixed to 2 or 20 seed per hectare seemed to have a
-similar effect. Lower seedrain implied faster decrease of stem above 10
-cm dbh and higher number of stem above 30 cm diameter at breast height
-after ecosystem resilience to disturbance (approximately 50 years).
-Lower seedrain than default decreased basal area over time. In addition,
-lower seedrain than default decreased equitability by increasing
-abundance of abundant species and decreasing abundance of less abundant
-species. See
+diameter dmax add higher diversity for greater orders implying better
+evenness in species distributions. Regarding functional composition,
+traits fixed to mean did not change other functional traits density
+distribution. Moreover, seedrain did not seem to affect aboveground
+biomass and final ecosystem height and diameter structure. Seedrain
+constant fixed to 2 or 20 seed per hectare seemed to have a similar
+effect. Lower seedrain implied faster decrease of stem above 10 cm dbh
+and higher number of stem above 30 cm diameter at breast height after
+ecosystem resilience to disturbance (approximately 50 years). Lower
+seedrain than default decreased basal area over time. In addition, lower
+seedrain than default decreased equitability by increasing abundance of
+abundant species and decreasing abundance of less abundant species. See
 \protect\hyperlink{appendix-4-sensitivity-analysis}{Appendix 4:
 Sensitivity analysis} for further details.
 
@@ -806,15 +805,14 @@ ecosystem resilience. We compared cummulative integral after 600 years
 to communities taxonomic and functional diversity for each leavel of
 disturbance (see Figure \ref{fig:gIeq}). We found that increased
 functional diversity \citep[FDiv,][]{villeger_new_2008} was reducing
-cummulative integral from ecosystem distance to forest dynamic
+cummulative integral from ecosystem distance to forest structure
 equilibrium after 600 years (\(Ieq_{600}\)). In addition, functional
 evenness was complementary reducing \(Ieq_{600}\). Finally species
 richness was not directly link to \(Ieq_{600}\). Effectivelly, low
 species richness could result in variant \(Ieq_{600}\), but increased
 species richness resulted in increased functional diversity and
 consequently lower \(Ieq_{600}\). We found similar results for all
-disturbance levels and other ecosystem functions (forest production and
-forest diversity, see
+disturbance levels and forest functionning (see
 \protect\hyperlink{appendix-5-disturbance-simulations}{Appendix 5:
 Disturbance simulations}).
 
@@ -823,7 +821,7 @@ Disturbance simulations}).
 \includegraphics{master-thesis_files/figure-latex/gIeq-1.pdf}
 \caption{\label{fig:gIeq}Ecosystem resilience after 600 years with taxonomic
 and functional diversity for different levels of disturbance.
-Cummulative integral from ecosystem distance to forest dynamic
+Cummulative integral from ecosystem distance to forest structure
 equilibrium after 600 years was represented against functional diversity
 \citep[FDiv,][]{villeger_new_2008} for different level of disturbance
 (25, 50 and 75\% of total basal area); dot shapes represents the species
@@ -897,6 +895,46 @@ Complementarity effect (CE) and selection effect (SE) where normalized
 by control net effect (NEc), thus measuring their resilience over time.}
 \end{figure}
 
+\subsection{Sylviculture}\label{sylviculture-1}
+
+We repeated design of experiments and simulations used for the
+disturbance simulations with the sylviculture module. But only 37
+simulations included harvestable species. Moreover most of simulations
+included low harvestable volume resulting in a small disturbance from
+0.5 to 2.0 \(m^2.ha^{-1}\) (see Figure \ref{fig:gIeqSylv}). Consequently
+most of disturbed volume was due to primary and secondary tracks and was
+not related to logged trees. Thus sylviculture module resulted in
+aggregated localized gaps but not in species selective disturbance. We
+found that, contrarily to previous results, functional richness was
+significantly (\(p<0.01\)) decreasing forest resilience see Figure
+\ref{fig:gIeqSylv}). But the range of variation from resilience was
+really low (\(2 < I_{eq_{600}} < 10\)). And resilience was mainly due to
+the density of \emph{Bocoa prouacensis} in the simulated mature forests.
+Effectively \emph{Bocoa prouacensis} was often the main harvested
+species and possessed additionnally a quick recovery inside the model
+due to unrealisticaly advantageous parameters. Still we found that
+functional dispersion was decreasing resilience but not significantly
+(see \protect\hyperlink{appendix-6-sylviculture-simulations}{Appendix 6:
+Sylviculture simulations}). Finally, biodiversity net effect is almost
+undisturbed due to the low disturbance intensity from the sylviculture
+module and results did not show complementarity or selection effect in
+forest resilience (see
+\protect\hyperlink{appendix-6-sylviculture-simulations}{Appendix 6:
+Sylviculture simulations}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/gIeqSylv-1.pdf}
+\caption{\label{fig:gIeqSylv}Ecosystem resilience after 600 years with
+taxonomic and functional diversity. Cummulative integral from ecosystem
+distance to forest structure equilibrium after 600 years normalized by
+disturbed basal area was represented against functional richness
+\citep[FRic,][]{villeger_new_2008}. Dot color represents the species
+richness (nb) whereas dot size represents the disturbed basal area
+(m2/ha). Grey line represents the linear regression and grey area the
+confidence interval.}
+\end{figure}
+
 \section{Discussion}\label{discussion}
 
 In the limit of the model, we were able to show that diversity improved
@@ -929,6 +967,19 @@ time with longer species diversity transitions. In order to study the
 role of diversity in forest resilience we decided to remove the seed
 rain constant to get a closed system and look at the role of diversity
 when it maintains itself through feedbacks and not with immigration.
+
+Finally, sylviculture module implemented inside TROLL showed lacks of
+ability to reproduce selective logging with current design of
+experiments. Results did not seem to be usable and will not be
+discussed. The main issues was the ability of the model to simulate
+mature forest with correct abundancy of mature trees from commonly
+harvested species. Two solutions might be possible in the tunning of the
+model. First, forest inventories could be used to initialize the model
+instead of a bare soil resulting in realistic species abundances,
+especially for harvested species. Secondly, selective logging could
+focus on guilds of species meeting peculiar values of functional traits
+\citep[as wood density, see][]{Huth2004, Khler2004, Ruger2008} allowing
+the model to harvest more volume in order to meet reality.
 
 \subsection{Diversity improve tropical forest
 resilience}\label{diversity-improve-tropical-forest-resilience}
@@ -1853,8 +1904,8 @@ This appendix presents ecosystem resilience after 600 years with
 taxonomic and functional diversity for different levels of disturbance.
 It encompass all functionnal diversity components \citep[FRIC, FEve,
 FDiv, and FDis,][]{villeger_new_2008}. And it presents results for both
-forest dynamic (Figure \ref{fig:A5IeqStructureAll}) and forest
-production (Figure \ref{fig:A5IeqProductionAll}).
+forest structure (Figure \ref{fig:A5IeqStructureAll}) and forest
+functionning (Figure \ref{fig:A5IeqProductionAll}).
 
 \begin{figure}[htbp]
 \centering
@@ -1862,7 +1913,7 @@ production (Figure \ref{fig:A5IeqProductionAll}).
 \caption{\label{fig:A5IeqStructureAll}Ecosystem resilience after 600 years
 with taxonomic and functional diversity for different levels of
 disturbance. Cummulative integral from ecosystem distance to forest
-dynamic equilibrium after 600 years was represented against functional
+structure equilibrium after 600 years was represented against functional
 diversity \citep[FRIC, FEve, FDiv, and FDis,][]{villeger_new_2008} for
 different level of disturbance (25, 50 and 75\% of total basal area);
 dot shapes represents the species richness.}
@@ -1874,7 +1925,7 @@ dot shapes represents the species richness.}
 \caption{\label{fig:A5IeqProductionAll}Ecosystem resilience after 600 years
 with taxonomic and functional diversity for different levels of
 disturbance. Cummulative integral from ecosystem distance to forest
-production equilibrium after 600 years was represented against
+functionning equilibrium after 600 years was represented against
 functional diversity \citep[FRIC, FEve, FDiv, and
 FDis,][]{villeger_new_2008} for different level of disturbance (25, 50
 and 75\% of total basal area); dot shapes represents the species
@@ -1891,6 +1942,61 @@ NPP).
 \centering
 \includegraphics{master-thesis_files/figure-latex/A5allBE-1.pdf}
 \caption{\label{fig:A5allBE}Resilience of complementarity and selection
+effects. Complementarity effect (CE) and selection effect (SE) where
+normalized by control net effect (NEc), thus measuring their resilience
+over time for different ecosystem variables (AGB, BA, N, GPP).}
+\end{figure}
+
+\hypertarget{appendix-6-sylviculture-simulations}{\section{Appendix 6:
+Sylviculture simulations}\label{appendix-6-sylviculture-simulations}}
+
+\subsection{Ecosystem functions}\label{ecosystem-functions-3}
+
+This appendix presents ecosystem resilience after 600 years with
+taxonomic and functional diversity after selective logging. It encompass
+all functionnal diversity components \citep[FRIC, FEve, FDiv, and
+FDis,][]{villeger_new_2008}. And it presents results for both forest
+structure (Figure \ref{fig:A6IeqStructureAll}) and forest functionning
+(Figure \ref{fig:A6IeqProductionAll}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/A6IeqStructureAll-1.pdf}
+\caption{\label{fig:A6IeqStructureAll}Ecosystem resilience after 600 years
+with taxonomic and functional diversity. Cummulative integral from
+ecosystem distance to forest structure equilibrium after 600 years
+normalized by disturbed basal area was represented against functional
+functional diversity \citep[FRIC, FEve, FDiv, and
+FDis,][]{villeger_new_2008}. Dot color represents the species richness
+(nb) whereas dot size represents the disturbed basal area (m2/ha). Grey
+line represents the linear regression and grey area the confidence
+interval.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/A6IeqProductionAll-1.pdf}
+\caption{\label{fig:A6IeqProductionAll}Ecosystem resilience after 600 years
+with taxonomic and functional diversity. Cummulative integral from
+ecosystem distance to forest functionning equilibrium after 600 years
+normalized by disturbed basal area was represented against functional
+functional diversity \citep[FRIC, FEve, FDiv, and
+FDis,][]{villeger_new_2008}. Dot color represents the species richness
+(nb) whereas dot size represents the disturbed basal area (m2/ha). Grey
+line represents the linear regression and grey area the confidence
+interval.}
+\end{figure}
+
+\subsection{Biodiversity effect}\label{biodiversity-effect-3}
+
+Figure \ref{fig:A6allBE} presents the resilience of complementarity and
+selection effects for different ecosystem metrics (AGB, BA, N, GPP and
+NPP).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{master-thesis_files/figure-latex/A6allBE-1.pdf}
+\caption{\label{fig:A6allBE}Resilience of complementarity and selection
 effects. Complementarity effect (CE) and selection effect (SE) where
 normalized by control net effect (NEc), thus measuring their resilience
 over time for different ecosystem variables (AGB, BA, N, GPP).}

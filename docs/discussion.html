@@ -95,6 +95,7 @@
 <li class="chapter" data-level="3.2.1" data-path="results.html"><a href="results.html#ecosystem-functions-1"><i class="fa fa-check"></i><b>3.2.1</b> Ecosystem functions</a></li>
 <li class="chapter" data-level="3.2.2" data-path="results.html"><a href="results.html#biodiversity-effect-1"><i class="fa fa-check"></i><b>3.2.2</b> Biodiversity effect</a></li>
 </ul></li>
+<li class="chapter" data-level="3.3" data-path="results.html"><a href="results.html#sylviculture-1"><i class="fa fa-check"></i><b>3.3</b> Sylviculture</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="discussion.html"><a href="discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a><ul>
 <li class="chapter" data-level="4.1" data-path="discussion.html"><a href="discussion.html#troll-limits"><i class="fa fa-check"></i><b>4.1</b> TROLL limits</a></li>
@@ -140,6 +141,10 @@
 <li class="chapter" data-level="E.1" data-path="appendix-5-disturbance-simulations.html"><a href="appendix-5-disturbance-simulations.html#ecosystem-functions-2"><i class="fa fa-check"></i><b>E.1</b> Ecosystem functions</a></li>
 <li class="chapter" data-level="E.2" data-path="appendix-5-disturbance-simulations.html"><a href="appendix-5-disturbance-simulations.html#biodiversity-effect-2"><i class="fa fa-check"></i><b>E.2</b> Biodiversity effect</a></li>
 </ul></li>
+<li class="chapter" data-level="F" data-path="appendix-6-sylviculture-simulations.html"><a href="appendix-6-sylviculture-simulations.html"><i class="fa fa-check"></i><b>F</b> Appendix 6: Sylviculture simulations</a><ul>
+<li class="chapter" data-level="F.1" data-path="appendix-6-sylviculture-simulations.html"><a href="appendix-6-sylviculture-simulations.html#ecosystem-functions-3"><i class="fa fa-check"></i><b>F.1</b> Ecosystem functions</a></li>
+<li class="chapter" data-level="F.2" data-path="appendix-6-sylviculture-simulations.html"><a href="appendix-6-sylviculture-simulations.html#biodiversity-effect-3"><i class="fa fa-check"></i><b>F.2</b> Biodiversity effect</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/sylvainschmitt/master-thesis" target="blank">work in progress</a></li>
@@ -167,6 +172,7 @@
 <div id="troll-limits" class="section level2">
 <h2><span class="header-section-number">4.1</span> TROLL limits</h2>
 <p>Belowground processes, herbaceaous plants, epyphytes and lianas are not simulated in TROLL but they not reprensent the only limit of the model. Other processes are simulated but simplified, and we used sensitivity analysis to assess their relative importance. We found that few functional traits were influencing whole forest structure and dynamic. In addition, we found that the seed rain constant had an important effect on species functional composition and diversity. High external seed rain resulted in a quick recovery of the system toward an equilibrium close to the regional species frequency levied by the seed rain. On the contrary, low seed rain let the simulated forest works as a closed system with more system feedback but a lower stability through time with longer species diversity transitions. In order to study the role of diversity in forest resilience we decided to remove the seed rain constant to get a closed system and look at the role of diversity when it maintains itself through feedbacks and not with immigration.</p>
+<p>Finally, sylviculture module implemented inside TROLL showed lacks of ability to reproduce selective logging with current design of experiments. Results did not seem to be usable and will not be discussed. The main issues was the ability of the model to simulate mature forest with correct abundancy of mature trees from commonly harvested species. Two solutions might be possible in the tunning of the model. First, forest inventories could be used to initialize the model instead of a bare soil resulting in realistic species abundances, especially for harvested species. Secondly, selective logging could focus on guilds of species meeting peculiar values of functional traits <span class="citation">(as wood density, see Huth <em>et al.</em> <a href="#ref-Huth2004">2004</a>; Köhler &amp; Huth <a href="#ref-Khler2004">2004</a>; Rüger <em>et al.</em> <a href="#ref-Ruger2008">2008</a>)</span> allowing the model to harvest more volume in order to meet reality.</p>
 </div>
 <div id="diversity-improve-tropical-forest-resilience" class="section level2">
 <h2><span class="header-section-number">4.2</span> Diversity improve tropical forest resilience</h2>
@@ -189,6 +195,15 @@
 <div id="refs" class="references">
 <div id="ref-Zimmerman2012">
 <p>Zimmerman, B.L. &amp; Kormos, C.F. (2012). Prospects for Sustainable Logging in Tropical Forests. <em>BioScience</em>, <strong>62</strong>, 479–487.</p>
+</div>
+<div id="ref-Huth2004">
+<p>Huth, A., Drechsler, M. &amp; Köhler, P. (2004). Multicriteria evaluation of simulated logging scenarios in a tropical rain forest. <em>Journal of Environmental Management</em>, <strong>71</strong>, 321–333.</p>
+</div>
+<div id="ref-Khler2004">
+<p>Köhler, P. &amp; Huth, A. (2004). Simulating growth dynamics in a South-East Asian rainforest threatened by recruitment shortage and tree harvesting. <em>Climatic Change</em>, <strong>67</strong>, 95–117.</p>
+</div>
+<div id="ref-Ruger2008">
+<p>Rüger, N., Williams-Linera, G., Kissling, W.D. &amp; Huth, A. (2008). Long-Term Impacts of Fuelwood Extraction on a Tropical Montane Cloud Forest. <em>Ecosystems</em>, <strong>11</strong>, 868–881.</p>
 </div>
 <div id="ref-Diaz2001">
 <p>Díaz, S. &amp; Cabido, M. (2001). Vive la différence: Plant functional diversity matters to ecosystem processes. <strong>16</strong>, 646–655.</p>

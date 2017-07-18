@@ -2,7 +2,7 @@
 
 ## Sensitivity
 
-Most of functional traits had a significant long term influence on ecosystem outputs (figure \@ref(fig:ftVar)). Only specific maximum diameter **dmax** add higher diversity for greater orders implying better evenness in species distributions. Regarding functional composition, traits fixed to mean did not change other functional traits density distribution. Moreover, seedrain did not seem to affect aboveground biomass and final ecosystem height and diameter structure. Seedrain constant fixed to 2 or 20 seed per hectare seemed to have a similar effect. Lower seedrain implied faster decrease of stem above 10 cm dbh and higher number of stem above 30 cm diameter at breast height after ecosystem resilience to disturbance (approximately 50 years). Lower seedrain than default decreased basal area over time. In addition, lower seedrain than default decreased equitability by increasing abundance of abundant species and decreasing abundance of less abundant species. See [Appendix 4: Sensitivity analysis] for further details.
+Most of functional traits had a significant long term influence on ecosystem outputs (figure \@ref(fig:ftVar)). Only specific maximum diameter dmax add higher diversity for greater orders implying better evenness in species distributions. Regarding functional composition, traits fixed to mean did not change other functional traits density distribution. Moreover, seedrain did not seem to affect aboveground biomass and final ecosystem height and diameter structure. Seedrain constant fixed to 2 or 20 seed per hectare seemed to have a similar effect. Lower seedrain implied faster decrease of stem above 10 cm dbh and higher number of stem above 30 cm diameter at breast height after ecosystem resilience to disturbance (approximately 50 years). Lower seedrain than default decreased basal area over time. In addition, lower seedrain than default decreased equitability by increasing abundance of abundant species and decreasing abundance of less abundant species. See [Appendix 4: Sensitivity analysis] for further details.
 
 ```{r ftVar, echo=FALSE, fig.cap='Functional traits effect on simulation ecosystem variations over time. Number of trees with dbh above 10 cm (N10) and 30 cm (N30), above ground biomass (AGB) and basal area (BA). Sensitivity of model to functional traits was performed  by fixing species trait values to their mean. Grey area represents the interval of control replicates whereas black line represents the mean of control replicates, thus if ecosystems outputs are outside of grey area values the studied parameter is considered to have a significant influence on the model.', cache=TRUE, warning=FALSE}
 path <- '~/Documents/ECOFOG/Results/sensitivity/control'
@@ -91,7 +91,7 @@ g_deq <- deq %>%
   geom_hline(yintercept = 0, col = 'red') +
   geom_point() +
   xlab('Time (years)') +
-  ylab('Distance to forest dynamic equilibrium\n(AGB, BA, N, N10 and N30)') +
+  ylab('Distance to forest structure equilibrium\n(AGB, BA, N, N10 and N30)') +
   scale_color_discrete('Disturbance\nintensity\n(% of BA)')
 g_Ieq <- Ieq %>% 
   left_join(., doe, by = 'sim') %>%
@@ -100,14 +100,14 @@ g_Ieq <- Ieq %>%
   ggplot(aes(x = time, y = Ieq.structure, color = disturbance)) +
   geom_point() +
   xlab('Time (years)') +
-  ylab('Cummulative integral of\ndistance to forest dynamic equilibrium\n(AGB, BA, N, N10 and N30)') +
+  ylab('Cummulative integral of\ndistance to forest structure equilibrium\n(AGB, BA, N, N10 and N30)') +
   scale_color_discrete('Disturbance\nintensity\n(% of BA)')
 cowplot::plot_grid(g_agb, g_resilience, g_deq, g_Ieq, labels = LETTERS[1:4])
 ```
 
-The ranking was stable over time for the 240 simulations. So we used the cummulative integral after 600 years $Ieq_{600}$ as a measurement of ecosystem resilience. We compared cummulative integral after 600 years to communities taxonomic and functional diversity for each leavel of disturbance (see Figure \@ref(fig:gIeq)). We found that increased functional diversity [FDiv, @villeger_new_2008] was reducing cummulative integral from ecosystem distance to forest dynamic equilibrium after 600 years ($Ieq_{600}$). In addition, functional evenness was complementary reducing $Ieq_{600}$. Finally species richness was not directly link to $Ieq_{600}$. Effectivelly, low species richness could result in variant $Ieq_{600}$, but increased species richness resulted in increased functional diversity and consequently lower $Ieq_{600}$. We found similar results for all disturbance levels and other ecosystem functions (forest production and forest diversity, see [Appendix 5: Disturbance simulations]).
+The ranking was stable over time for the 240 simulations. So we used the cummulative integral after 600 years $Ieq_{600}$ as a measurement of ecosystem resilience. We compared cummulative integral after 600 years to communities taxonomic and functional diversity for each leavel of disturbance (see Figure \@ref(fig:gIeq)). We found that increased functional diversity [FDiv, @villeger_new_2008] was reducing cummulative integral from ecosystem distance to forest structure equilibrium after 600 years ($Ieq_{600}$). In addition, functional evenness was complementary reducing $Ieq_{600}$. Finally species richness was not directly link to $Ieq_{600}$. Effectivelly, low species richness could result in variant $Ieq_{600}$, but increased species richness resulted in increased functional diversity and consequently lower $Ieq_{600}$. We found similar results for all disturbance levels and forest functionning (see [Appendix 5: Disturbance simulations]).
 
-```{r gIeq, echo=FALSE, fig.cap='Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest dynamic equilibrium after 600 years was represented against functional diversity [FDiv, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness whereas dot color represents functional evenness [FEve, @villeger_new_2008].', cache=TRUE, fig.width=12}
+```{r gIeq, echo=FALSE, fig.cap='Ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. Cummulative integral from ecosystem distance to forest structure equilibrium after 600 years was represented against functional diversity [FDiv, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness whereas dot color represents functional evenness [FEve, @villeger_new_2008].', cache=TRUE, fig.width=12}
 Ieq %>% 
   left_join(., doe, by = 'sim') %>% 
   filter(time == 600) %>% 
@@ -117,7 +117,7 @@ Ieq %>%
   facet_wrap(~disturbance, scales = "free", labeller = 'label_both') + 
   xlab('Functional diversity (FDiv)') +
   ylab('Cummulative integral from ecosystem 
-       distance to forest dynamic equilibrium after 600 years') +
+       distance to forest structure equilibrium after 600 years') +
   scale_shape_discrete('Species\nrichness\n(SR)') +
   scale_color_continuous('Functional\nevenness\n(FEve)')
 ```
@@ -174,3 +174,48 @@ BEresilience %>%
   xlab('Time (years)') +
   ylab('Recovery of aboveground biomass net effect')
 ```
+
+## Sylviculture
+
+```{r sylviculture, echo=FALSE, message=FALSE}
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+path <- '~/Documents/ECOFOG/Results/disturbance/sylviculture/data/'
+load(file.path(path, 'DOE.Rdata'))
+load(file.path(path, 'resilience.Rdata'))
+load(file.path(path, 'BErecovery.Rdata'))
+deq <- data.frame(
+  time = resilience$time,
+  sim = resilience$sim,
+  structure = apply(resilience[c('agb', 'ba', 'n', 'n10', 'n30')], 1, 
+                  function(x) sqrt(sum((rep(1, length(x)) - x)^2))),
+  production = apply(resilience[c('gpp', 'npp', 'Rday', 'Rnight')], 1, 
+                  function(x) sqrt(sum((rep(1, length(x)) - x)^2)))
+)
+sim <- unique(resilience$sim)
+Ieq <- sapply(sim, function(s){
+  data_s <- subset(deq, sim ==s)
+  return(cbind(data_s[c(1,2)], cumsum(data_s[-c(1,2)])))
+}, simplify = F) ; rm(sim)
+Ieq <- data.frame(do.call('rbind', Ieq))
+names(Ieq)[3:4] <- paste0('Ieq.', names(Ieq)[3:4])
+```
+
+We repeated design of experiments and simulations used for the disturbance simulations with the sylviculture module. But only 37 simulations included harvestable species. Moreover most of simulations included low harvestable volume resulting in a small disturbance from 0.5 to 2.0 $m^2.ha^{-1}$ (see Figure \@ref(fig:gIeqSylv)). Consequently most of disturbed volume was due to primary and secondary tracks and was not related to logged trees. Thus sylviculture module resulted in aggregated localized gaps but not in species selective disturbance. We found that, contrarily to previous results, functional richness was significantly ($p<0.01$) decreasing forest resilience see Figure \@ref(fig:gIeqSylv)). But the range of variation from resilience was really low ($2 < I_{eq_{600}} < 10$). And resilience was mainly due to the density of *Bocoa prouacensis* in the simulated mature forests. Effectively *Bocoa prouacensis* was often the main harvested species and possessed additionnally a quick recovery inside the model due to unrealisticaly advantageous parameters. Still we found that functional dispersion was decreasing resilience but not significantly (see [Appendix 6: Sylviculture simulations]). Finally, biodiversity net effect is almost undisturbed due to the low disturbance intensity from the sylviculture module and results did not show complementarity or selection effect in forest resilience (see [Appendix 6: Sylviculture simulations]).
+
+```{r gIeqSylv, echo=FALSE, warning=FALSE, fig.cap='Ecosystem resilience after 600 years with taxonomic and functional diversity. Cummulative integral from ecosystem distance to forest structure equilibrium after 600 years normalized by disturbed basal area was represented against functional richness [FRic, @villeger_new_2008]. Dot color represents the species richness (nb) whereas dot size represents the disturbed basal area (m2/ha). Grey line represents the linear regression and grey area the confidence interval.', cache=TRUE}
+Ieq %>% 
+  left_join(., doe, by = 'sim') %>% 
+  filter(time == 600) %>% 
+  ggplot(aes(x = FRic, y = Ieq.structure/ba, label = sim)) + 
+  geom_smooth(method = 'lm', alpha = 0.3, colour= 'grey') +
+  geom_point(aes(color = richness, size = ba/16)) +
+  xlab('Functional richness (FRic)') +
+  ylab('Cummulative integral from ecosystem 
+       distance to forest dynamic equilibrium after 600 years') +
+  scale_color_discrete('Species\nrichness\n(SR)') +
+  scale_size_continuous('Basla\narea\ndisturbed\n(m2/ha)')
+```
+
+
