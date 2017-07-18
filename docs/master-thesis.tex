@@ -198,15 +198,19 @@ Besides deforestation has been rightly the focus of worldwide attention,
 degradation has been less studied and quantified through tropics.
 Degradation from forest has been estimated to represents 10 time
 deforestation \citep{Herold2011} and represents 20\% of greenhouse gas
-emissions in the brazilian Amazon \citep{Asner2005}.
+emissions in the brazilian Amazon \citep{Asner2005}. Degradation has met
+numerous definitions \citep{Simula2009}, but can be defined as the
+result from a disturbance event that induced a modification of the
+forest ecosystem reducing ecosystem services while keeping the ecosystem
+as a forest, contrary to deforestation.
 
 Sutainable forest management in the tropics (i.e.~managed selective
 harvesting of timber) has been widely promoted internationnaly to combat
 tropical deforestation and degradation \citep{Zimmerman2012}. Currently
-tropical logging accounts for one eight of global timber production
-\citep{Blaser2011} and is still increasing. Most tropical timber
-production originates from selective logging, the targeted harvesting of
-timber from commercial species in a single cutting cycle
+logging from tropical forests accounts for one eight of global timber
+production \citep{Blaser2011} and is still increasing. Most tropical
+timber production originates from selective logging, the targeted
+harvesting of timber from commercial species in a single cutting cycle
 \citep{Martin2015}.
 
 On the other hand, tropical rainforests have fascinated ecologists due
@@ -234,8 +238,8 @@ biodiversity will be both a factor and a result of forest ecosystem
 response to logging disturbance. And forest ecosystem response to
 logging disturbance will directly modify ecosystem functionning in both
 short and long term. Consequently assessing selective logging effect on
-tropical forest linking biodiversity and ecosystem seems an obvious and
-promising way \citep{Loreau2010}.
+tropical forest linking diversity and ecosystem functionning seems an
+obvious and promising way \citep{Loreau2010}.
 
 Negative short term impacts of selective logging have been assessed
 \citetext{\citealp{Carreno-Rocabado2012}; \citealp{DeAvila2015}; \citealp[but
@@ -246,18 +250,18 @@ completed by the use of forest simulators
 \citep{Huth2004, Khler2004, Ruger2008, Tietjen2006}. Individual-based
 models of forest dynamics present the perfect framework to develop such
 joint biodiversity-ecosystem approaches \citep{Li}. Individual-based
-models describe forest `patches' accumulating carbon through time,
-assessing tree growth within the patch, or releasing carbon through gap
-opening \citep{Bugmann2001}. Up to several dozens of different Plant
-Functional Types (PFTs) are generally defined and models can sometimes
-be fully spatially explicit \citep{Pacala1996}. Recently, the forest
-growth simulator TROLL \citep{Chave1999}, an individual-based and
-spatially explicit forest model, was developped to introduce recent
-advances in plant physiological community. TROLL model relates
-physiological processes to species-specific functional traits
-\citep{Li}. Consequently, TROLL model allow to simulate fully a
-neotropical forest biodiversity to study biodiversity-ecosystem
-functionning link response to logging disturbance.
+models describe forest accumulating carbon through time, assessing tree
+growth, or releasing carbon through gap opening \citep{Bugmann2001}. Up
+to several dozens of different Plant Functional Types (PFTs) are
+generally defined and models can sometimes be fully spatially explicit
+\citep{Pacala1996}. Recently, the forest growth simulator TROLL
+\citep{Chave1999}, an individual-based and spatially explicit forest
+model, was developped to introduce recent advances in plant
+physiological community. TROLL model relates physiological processes to
+species-specific functional traits \citep{Li}. Consequently, TROLL model
+allow to simulate fully a neotropical forest biodiversity to study
+biodiversity-ecosystem functionning link response to logging
+disturbance.
 
 We decided to use the forest model TROLL to study the role of
 biodiversity in forest ecosystem answer to disturbance highlighting
@@ -311,7 +315,7 @@ model, alongside with SORTIE \citep{Pacala1996, Uriarte2009} and FORMIND
 and spatially explicit forest growth model. TROLL simulates the life
 cycle of individual trees from recruitment, with a diameter at breast
 height (dbh) above 1 cm, to death with growth and seed production. Trees
-are growing in a located light environment explicitly computed witin
+are growing in a spatialized light environment explicitly computed witin
 voxels of 1 \(m^3\). Each tree is consistently defined by its age,
 diameter at brest height (dbh), height (h), crown radius (CR), crown
 depth (CD) and leaf area (LA) (see figure \ref{fig:TROLLtree}). Tree
@@ -436,11 +440,11 @@ a defined lost basal area (\(disturb_{intensity}\) in \% of BA).
 
 In french guiana context, sylviculture can be narrow to selective
 logging, which can be split in two steps: selection and harvesting.
-Selection encompass choice of the havrestable area, tree designation by
-the forest office, tree selection by the harvester, and removal off tree
-probbed as rotten by the lumber. Harvesting encompass tree felling,
-tracks opening, and long term damages (simplified in gap damages in
-current TROLL implementation).
+Selection encompass choice of the havrestable area, harvestable tree
+designation by the forest office, harvested tree selection by the
+harvester, and removal off tree probbed as rotten by the lumber.
+Harvesting encompass tree felling, tracks opening, and long term damages
+(simplified in gap damages in current TROLL implementation).
 
 \subsubsection{Designation and
 selection}\label{designation-and-selection}
@@ -605,15 +609,16 @@ diversity can be related to numerous components, and \citet{Borgy2017}
 argued for 5: richness, divergence, regularity, overlap and mean.
 Because mature forest were created from a bare soil with TROLL
 simulations, we could not control a priori divergence, regularity and
-overlap but only assess theim before diturbance. Consequently, we
-focused on functional richness with convex hull volume \(CHV\) and
-functional mean with community weighted mean \(CWM\). For each level of
-species richness \(SR\), we selected 20 communities with growing convex
-hull volume \(CHV\) but with a community weighted means close to the
-regional species pool community weighted means. Effectivelly, we did not
-wanted drastic change in community means that could have more effect
-than functional richness itself. This design of experiments resulted in
-60 communities (\(5~SR*20~CHV\)) and 240 simulations
+overlap but only assess them after running the simulations, i.e.~before
+applying the diturbance. Consequently, we focused on functional richness
+with convex hull volume \(CHV\) and functional mean with community
+weighted mean \(CWM\). For each level of species richness \(SR\), we
+selected 20 communities with growing convex hull volume \(CHV\) but with
+a community weighted means close to the regional species pool community
+weighted means. Effectivelly, we did not wanted drastic change in
+community means that could have more effect than functional richness
+itself. This design of experiments resulted in 60 communities
+(\(5~SR*20~CHV\)) and 240 simulations
 (\(60 ~communities*4~levels~of~disturbance\)) over 600 years (maturity
 being assumed after 500 years of regeneration \citep{Li}). Figure
 \ref{fig:DOE} presents the design of experiment for communities
@@ -632,18 +637,19 @@ dispersion (FDis) resulting in a broad range of aboveground biomass
 area, wood specific gravity, maximum diameter, and maximum height).}
 \end{figure}
 
-\subsection{Ecosystem answer analysis}\label{ecosystem-answer-analysis}
+\subsection{Ecosystem response
+analysis}\label{ecosystem-response-analysis}
 
 \subsubsection{Ecosystem functions}\label{ecosystem-functions}
 
 Tropical forest ecosystems provides numerous ecosystem services linked
 to several ecosystem functions. We decided to describe simiulated
-tropical forests in two major functions: forest dynamic and forest
-production. Forest dynamic was represented by aboveground biomass
+tropical forests in two major functions: forest structure and forest
+functionning. Forest structure was represented by aboveground biomass
 (\(AGB\) in \(ton~C.ha^{-1}\)), basal area (\(BA\) in \(m^2.ha^{-1}\)),
 total number of stem (\(N\)), number of stem above \(10~cm\) diameter
 (\(N10\)), and number of stem above \(30~cm\) diameter (\(N30\)). Forest
-production was represented by growth pimary productivity (\(GPP\) in
+functionning was represented by growth pimary productivity (\(GPP\) in
 \(MgC.ha^{-1}\)), net pimary productivity (\(NPP\) in \(MgC.ha^{-1}\)),
 tree autotrophic respiration in day (\(Rday\) in \(MgC.ha^{-1}\)) and
 tree autotrophic respiration in night (\(Rnight\) in \(MgC.ha^{-1}\)).
@@ -672,9 +678,9 @@ reaching the equilibrium value. Consequently we can calculate an
 euclidean distance to equilibrium \(d_{eq}(t)\) as
 \(d_{eq}(t) = \sqrt{(R_{eq} - R(t))^2}\). Ecosystem euclidean distance
 to equilibrium was calculated in a multi-dimensional space for the two
-functions described above: forest dynamic (AGB, BA, N, N10, and N30) and
-forest production (GPP, NPP, Rday, and Rnight). We then used cummulative
-integral over time of eulcidean distance to equilibrium to assess
+functions described above: forest strcuture (AGB, BA, N, N10, and N30)
+and forest functionning (GPP, NPP, Rday, and Rnight). We then used
+integrated eulcidean distance to equilibrium over time to assess
 simulations resilience.
 
 \subsubsection{Biodiversity effect}\label{biodiversity-effect}
@@ -719,9 +725,9 @@ positives). Whereas \(SE\) become positive when dominant species
 outperform theimselves in mixture than in monoculture, and negative when
 less dominant species outperform theimselves in mixture than in
 monoculture \citep{Tobner2016}. But similarly to resilience measurement,
-biodiversity net effect \(NE\) can be in a dynamic equilibrium and vary
-over time without disturbance. So in order to correctly assess selection
-and complementarity effect in answer to disturbance, we normalized it by
+biodiversity net effect \(NE\) is a dynamic equilibrium and vary over
+time without disturbance. So in order to correctly assess selection and
+complementarity effect in answer to disturbance, we normalized it by
 undisturbed control ecosystem net effect \(NE_C\) to measure treatments
 net effect resilience \(R(NE_T)\):
 
@@ -740,10 +746,9 @@ each species indivdually representing 652 simulations of monoculture.
 \subsection{Sensitivity}\label{sensitivity}
 
 Most of functional traits had a significant long term influence on
-ecosystem outputs (figure \ref{fig:ftVar}). On the other hand, few
-functional traits influenced final ecosystem structure. Only specific
-maximum diameter \textbf{dmax} add higher diversity for greater orders
-implying better evenness in species distributions. Regarding functional
+ecosystem outputs (figure \ref{fig:ftVar}). Only specific maximum
+diameter \textbf{dmax} add higher diversity for greater orders implying
+better evenness in species distributions. Regarding functional
 composition, traits fixed to mean did not change other functional traits
 density distribution. Moreover, seedrain did not seem to affect
 aboveground biomass and final ecosystem height and diameter structure.
@@ -763,9 +768,12 @@ Sensitivity analysis} for further details.
 \includegraphics{master-thesis_files/figure-latex/ftVar-1.pdf}
 \caption{\label{fig:ftVar}Functional traits effect on simulation ecosystem
 variations over time. Number of trees with dbh above 10 cm (N10) and 30
-cm (N30), above ground biomass (AGB) and basal area (BA). Grey area
-represents the interval of control replicates whereas black line
-represents the mean of control replicates.}
+cm (N30), above ground biomass (AGB) and basal area (BA). Sensitivity of
+model to functional traits was performed by fixing species trait values
+to their mean. Grey area represents the interval of control replicates
+whereas black line represents the mean of control replicates, thus if
+ecosystems outputs are outside of grey area values the studied parameter
+is considered to have a significant influence on the model.}
 \end{figure}
 
 \subsection{Disturbance}\label{disturbance-1}
@@ -828,21 +836,24 @@ richness whereas dot color represents functional evenness
 We measured all ecosystem outputs biodiversity net effect in disturbance
 simulations by comparing theim to their species corresponding
 monoculture simulations. The net effect was then partition between
-selection and complementarity effect. We normalized treatments effect by
-control net effect (see Table \ref{tab:tNE}) to measure their
-aboveground biomass resilience to disturbance (see Figure
-\ref{fig:gBE}). We found that complementarity effect was recovering net
-effect in the first decades untill it diminished after a century. On the
-contrary selection effect was reduced or even removed by the
-disturbance. It increased during the whole simulation and was greater
-than complementarity effect only after decades. The time lag for which
-complementarity effect was greater than selection effect was increasing
-with disturbance intensity. Finally 600 years after the disturbance
-event biodiversity net effect was still not recovered for a disturbance
-intensity greater than 25\% of basal area. We obtained those results for
-aboveground biomass. We found similar results but with an amlified
-signal for basal area (\(BA\)) and stem abundance (\(N\) but with an
-inverted signal because of the forest self thinning) (see
+selection and complementarity effect. We normalized complementarity and
+selection effect of disturbed simulations by biodiversity net effect of
+undisturbed control simulation (see Table \ref{tab:tNE}) to measure the
+resilience to disturbance of their aboveground biomass (see Figure
+\ref{fig:gBE}). We found that complementarity effect was recovering
+biodiversity net effect and was stronger than selection effect in the
+first decades. But after few decades the complementarity effect
+diminsihed toward a low value. On the contrary selection effect was
+reduced or even removed by the disturbance. It increased during the
+whole simulation and was greater than complementarity effect only after
+decades. The time lag for which complementarity effect was greater than
+selection effect was increasing with disturbance intensity. Finally 600
+years after the disturbance event biodiversity net effect was still not
+recovered for a disturbance intensity greater than 25\% of basal area.
+We obtained those results for aboveground biomass. We found similar
+results but with an aplified signal for basal area (\(BA\)) and stem
+abundance (\(N\) but with an inverted signal because of the forest self
+thinning) (see
 \protect\hyperlink{appendix-5-disturbance-simulations}{Appendix 5:
 Disturbance simulations}). Finally, forest growth primary productivity
 (\(GPP\)) recovered in few years (proportionnaly to disturbance), and
@@ -912,8 +923,8 @@ In addition, we found that the seed rain constant had an important
 effect on species functional composition and diversity. High external
 seed rain resulted in a quick recovery of the system toward an
 equilibrium close to the regional species frequency levied by the seed
-rain. On the contrary, low seed rain let the simulated forest works has
-a closed system with more system feedback but a lower stability through
+rain. On the contrary, low seed rain let the simulated forest works as a
+closed system with more system feedback but a lower stability through
 time with longer species diversity transitions. In order to study the
 role of diversity in forest resilience we decided to remove the seed
 rain constant to get a closed system and look at the role of diversity
@@ -926,15 +937,15 @@ Our results validated the hypothesis of a significative relationship
 between forest resilience and functional diversity and evenness
 (\(p < 0.01\) and \(p < 0.05\) respectivelly). Thus we were able to show
 that diversity improve forest resilience. More particularly, functional
-diversity seems a major aspect of resilience if its enforced by a high
-functional evenness. Effectively high functional diversity needs
+diversity seems a major aspect of resilience if its strengthened by a
+high functional evenness. Effectively high functional diversity needs
 evenness in order to better answer disturbance, if not the diversity is
 masked by ecosystem dominant species. Those results confirms the review
 of \citet{Diaz2001} advocating for underevaluated importance of plant
 functional diversity in ecosystem processes. Additionally, the role of
 evenness confirm the review of \citet{Zhang2012} who highlighted the
 role of evenness in productivity and thus resilience following our
-hypothesis. Finally, species and functional richnesses is not directly
+hypothesis. Finally, species and functional richnesses are not directly
 increasing resilience. But increased species and functional richnesses
 will increase chance for high functional diversity through the sampling
 effect \citep{Loreau1998}. An higher sampling of regional species pool
@@ -947,13 +958,14 @@ We found that complementary effect was insuring forest resilience in the
 beginning of forest successions. We interpreted this results as the
 consequence of facilitation processes. As the only ressource simulated
 by TROLL is the light, the main facilitation will be light shading of
-post-pioneer species by pioneer species in disturbance gaps. But the
-complementarity effect is reducing through time, to let the selection
-effect insure forest resilience due to an inforced dominance of more
-productive species. The diminishing of complementarity effect is due to
-competitive selection though time in gaps succession. But the study
-scale matters as shwon by \citet{Chisholm2013}. Here we look at
-processes to a 16 ha scale. We do not have topography reducing
+post-pioneer species by pioneer species in disturbance gaps. We found
+similar results to \citet{Morin2011} regarding complementarity and light
+facilitation. But the complementarity effect is reducing through time,
+to let the selection effect insure forest resilience due to an inforced
+dominance of more productive species. The diminishing of complementarity
+effect is due to competitive selection though time in gaps succession.
+But the study scale matters as shwon by \citet{Chisholm2013}. Here we
+look at processes to a 16 ha scale. We do not have topography reducing
 micro-environment effects, but \citet{Chisholm2013} results suggest that
 complementarity will be stronger at smaller scale and could explain its
 low value after forest recovery. Finally, our findings confirm results
@@ -972,20 +984,21 @@ maintain both productive ecosystem and sustainable management.
 We used closed forest system simulated with TROLL forest model to
 evaluate the role and mechanisms of biodiversity in tropical forest
 resilience to disturbance. We found that diversity improved forest
-resilience. Additionally we found that complementarity between species
-was insuring forest recovery in forest succession start with
-facilitation, before more productive species dominate the forest and
-insure forest recovery. Our results advocate for sustainable selective
-logging against monoculture stand: high diversity will increase forest
-resilience and thus improve logging cycles. Even if monoculture stand
-are naturalized they will not reach mature forest diversity, and
-consequently they will not reach its natural high resilience. But on the
-other hand selective logging in tropical forest needs to be sustainable,
-if not the diversity will slowly decrease after each cycles degrading
-forest ecosystem functions, and resilience will decrease due to negative
-feedbacks. \citet{Zimmerman2012} criticized the state of sylviculture in
-tropics, suggesting that ``we have not been able to reconcile these
-opposing biological and economic forces''. Still, they advocates for a
+resilience together with productivity \citep{Liang2016}. Additionally we
+found that complementarity between species was insuring forest recovery
+in forest succession start with facilitation, before more productive
+species dominate the forest and insure forest recovery. Our results
+advocate for sustainable selective logging against monoculture stand:
+high diversity will increase forest resilience and thus improve logging
+cycles. Even if monoculture stand are naturalized they will not reach
+mature forest diversity, and consequently they will not reach its
+natural high resilience. But on the other hand selective logging in
+tropical forest needs to be sustainable, if not the diversity will
+slowly decrease after each cycles degrading forest ecosystem functions,
+and resilience will decrease due to negative feedbacks.
+\citet{Zimmerman2012} criticized the state of sylviculture in tropics,
+suggesting that ``we have not been able to reconcile these opposing
+biological and economic forces''. Still, they advocates for a
 possibility of sustainable tropical logging, already existing in
 small-scale, that will need proper funding from the internationnal
 communtiy. This view correspond to the high resilience of tropical
