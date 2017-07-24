@@ -344,12 +344,12 @@ selection effects \citep{Loreau2001}. If we take a species pool with
 different productivity in monoculture. Their assemblage will allow theim
 an overall higher productivity due to a better ressources acquisition
 through ressources partitionning and niche differentiation.
-Additionally, some species will individually have an higher productivity
-in the assemblage than in monoculture due to facilitation from other
-species present in the assemblage. Complementarity effect is the
-addition of the better ressource acquisition and the facilitation. Now
-if we look at the evolution of the species assemblage over time, more
-competitive species will progressively dominate through competitive
+Additionnally, some species will individually have an higher
+productivity in the assemblage than in monoculture due to facilitation
+from other species present in the assemblage. Complementarity effect is
+the addition of the better ressource acquisition and the facilitation.
+Now if we look at the evolution of the species assemblage over time,
+more competitive species will progressively dominate through competitive
 selection. And if competitive species are more productive, they will
 increase assemblage overall productivity. This ressources preemption by
 more competitive species is the selection effect. Moreover, we expect
@@ -369,11 +369,6 @@ time are inferior to a tree life time, (2) experimental network include
 scarcely disturbed plot, and (3) correlative approach does not explain
 mechanisms involved in the relationship.
 
-In the present study, we focused on mechanisms involved in the
-relationship between biodiversity and forest ecosystem resilience. We
-used a simulation approach using TROLL model to assess long term
-processes.
-
 \section{Model description}\label{model-description}
 
 \subsection{Overview}\label{overview}
@@ -389,7 +384,7 @@ voxels of 1 \(m^3\). Each tree is consistently defined by its age,
 diameter at brest height (dbh), height (h), crown radius (CR), crown
 depth (CD) and leaf area (LA) (see figure \ref{fig:TROLLtree}). Tree
 geometry is calculated with allometric equations but leaf area vary
-dinamically within each crown following carbon allocations. Voxels
+dynamically within each crown following carbon allocations. Voxels
 resolution of 1 \(m^3\) allow the establishment of maximum one tree by
 1x1 m pixels. Each tree is flagged with a species label inherited from
 the parent tree through the seedling recruitment. A species label is
@@ -472,7 +467,7 @@ early death from carbon starvation. We gathered data from
 TRY\citep{Kattge2011}, DRYAD \citep{chave_towards_2009} and GLOPNET
 \citep{wright_worldwide_2004} datasets. We used an out of the bag method
 applied on a random forest to select variables with highest importance
-to explain leaf lifespan. We thus selected leaf mass per are \(LMA\),
+to explain leaf lifespan. We thus selected leaf mass per area \(LMA\),
 leaf nitrogen content \(N\) and wood specific gravity \(wsg\). We then
 used a bayesian approach to test different models with growing level of
 complexity. The model with the best tradeoff between complexity (number
@@ -689,7 +684,9 @@ community means that could have more effect than functional richness
 itself. This design of experiments resulted in 60 communities
 (\(5~SR*20~CHV\)) and 240 simulations
 (\(60 ~communities*4~levels~of~disturbance\)) over 600 years (maturity
-being assumed after 500 years of regeneration \citep{Li}). Figure
+being assumed after 500 years of regeneration \citep{Li}). Functional
+diversities of mature forests were assessed with
+\citet{villeger_new_2008} indices (FRIC, FEve, FDiv, and FDis). Figure
 \ref{fig:DOE} presents the design of experiment for communities
 biodiversity after the mature forest were simulated, and thus before
 disturbance. We obtained a broad range of both functionl dispersion
@@ -712,14 +709,14 @@ analysis}\label{ecosystem-response-analysis}
 \subsubsection{Ecosystem functions}\label{ecosystem-functions}
 
 Tropical forest ecosystems provides numerous ecosystem services linked
-to several ecosystem functions. We decided to describe simiulated
+to several ecosystem functions. We decided to describe simulated
 tropical forests in two major functions: forest structure and forest
 functionning. Forest structure was represented by aboveground biomass
 (\(AGB\) in \(ton~C.ha^{-1}\)), basal area (\(BA\) in \(m^2.ha^{-1}\)),
 total number of stem (\(N\)), number of stem above \(10~cm\) diameter
 (\(N10\)), and number of stem above \(30~cm\) diameter (\(N30\)). Forest
-functionning was represented by growth pimary productivity (\(GPP\) in
-\(MgC.ha^{-1}\)), net pimary productivity (\(NPP\) in \(MgC.ha^{-1}\)),
+functionning was represented by growth primary productivity (\(GPP\) in
+\(MgC.ha^{-1}\)), net primary productivity (\(NPP\) in \(MgC.ha^{-1}\)),
 tree autotrophic respiration in day (\(Rday\) in \(MgC.ha^{-1}\)) and
 tree autotrophic respiration in night (\(Rnight\) in \(MgC.ha^{-1}\)).
 
@@ -776,9 +773,10 @@ mixture of species and its expected value \(X_E\) if species performance
 were equal to their performance in monocultures. This effect can be
 partitioned between complementarity effect \(CE\), representing niche
 partitionning, positive interactions, and resource supply, and selectvie
-effect \(SE\) due to dominant species pool driving the ecosystem. Both
-metrics depend on the variation of relative ecosystem variable
-\(\Delta RX\):
+effect \(SE\) due to dominant species pool driving the ecosystem. \(N\)
+represents the total number of species, and \(M\) the vector of
+monocultures performance. Both metrics depend on the variation of
+relative ecosystem variable \(\Delta RX\):
 
 \begin{equation}
   \Delta RX_{sp} = \frac{X_{sp}(mixture)}{X_{sp}(monoculture)} - P_{sp}
@@ -791,8 +789,8 @@ mixture \(X_{sp}(mixture)\) or in monoculture \(X_{sp}(monoculture)\).
 by species relative abundance. Consequently, \(CE\) averages diversity
 effects of all species presents in the mixture (both negatives and
 positives). Whereas \(SE\) become positive when dominant species
-outperform theimselves in mixture than in monoculture, and negative when
-less dominant species outperform theimselves in mixture than in
+outperform themselves in mixture than in monoculture, and negative when
+less dominant species outperform themselves in mixture than in
 monoculture \citep{Tobner2016}. But similarly to resilience measurement,
 biodiversity net effect \(NE\) is a dynamic equilibrium and vary over
 time without disturbance. So in order to correctly assess selection and
@@ -901,10 +899,10 @@ richness whereas dot color represents functional evenness
 \subsubsection{Biodiversity effect}\label{biodiversity-effect-1}
 
 We measured all ecosystem outputs biodiversity net effect in disturbance
-simulations by comparing theim to their species corresponding
-monoculture simulations. The net effect was then partition between
-selection and complementarity effect. We normalized complementarity and
-selection effect of disturbed simulations by biodiversity net effect of
+simulations by comparing them to their species corresponding monoculture
+simulations. The net effect was then partition between selection and
+complementarity effect. We normalized complementarity and selection
+effect of disturbed simulations by biodiversity net effect of
 undisturbed control simulation (see Table \ref{tab:tNE}) to measure the
 resilience to disturbance of their aboveground biomass (see Figure
 \ref{fig:gBE}). We found that complementarity effect was recovering
@@ -918,7 +916,7 @@ selection effect was increasing with disturbance intensity. Finally 600
 years after the disturbance event biodiversity net effect was still not
 recovered for a disturbance intensity greater than 25\% of basal area.
 We obtained those results for aboveground biomass. We found similar
-results but with an aplified signal for basal area (\(BA\)) and stem
+results but with an amplified signal for basal area (\(BA\)) and stem
 abundance (\(N\) but with an inverted signal because of the forest self
 thinning) (see
 \protect\hyperlink{appendix-5-disturbance-simulations}{Appendix 5:
@@ -1085,7 +1083,7 @@ But the complementarity effect is reducing through time, to let the
 selection effect insure forest resilience due to an inforced dominance
 of more productive species. The diminishing of complementarity effect is
 due to competitive selection though time in gaps succession. But the
-study scale matters as shwon by \citet{Chisholm2013}. Here we look at
+study scale matters as shown by \citet{Chisholm2013}. Here we look at
 processes to a 16 ha scale. We do not have topography reducing
 micro-environment effects, but \citet{Chisholm2013} results suggest that
 complementarity will be stronger at smaller scale and could explain its
