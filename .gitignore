@@ -1,9 +1,5 @@
-.Rproj.user
-.Rhistory
-.RData
-_publish.R
-_book
-_bookdown_files
-rsconnect
-vert.txt
-*main.pdf
+.R*
+*_cache/
+*_files/
+*.pdf
+*.html

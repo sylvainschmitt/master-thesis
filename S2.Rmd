@@ -1,4 +1,27 @@
-# Appendix 5: Disturbance simulations
+---
+title: "Supplementary material S2: Disturbance simulations"
+date: '`r Sys.Date()`'
+output:
+  bookdown::pdf_document2:
+    number_sections: false
+    toc: false
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float: yes
+csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
+
+```{r config, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls()); invisible(gc())
+library(knitr)
+library(ggplot2)
+opts_chunk$set( echo = F, message = F, warning = F, 
+                fig.height = 8, fig.width = 8,
+                cache = T, cache.lazy = F)
+```
 
 ```{r A5data, echo=FALSE, cache=TRUE}
 rich <- c(5,25,125)
@@ -25,7 +48,7 @@ load(file.path(path, 'disturbanceBE.Rdata'))
 load(file.path(path, 'disturbanceBErecovery.Rdata'))
 ```
 
-## Ecosystem functions
+# Ecosystem functions
 
 This appendix presents ecosystem resilience after 600 years with taxonomic and functional diversity for different levels of disturbance. It encompass all functionnal diversity components [FRIC, FEve, FDiv, and FDis, @villeger_new_2008]. And it presents results for both forest structure (Figure \@ref(fig:A5IeqStructureAll)) and forest functionning (Figure \@ref(fig:A5IeqProductionAll)).
 
@@ -63,7 +86,7 @@ Ieq %>%
   scale_shape_discrete('Species\nrichness\n(SR)')
 ```
 
-## Biodiversity effect
+# Biodiversity effect
 
 Figure \@ref(fig:A5allBE) presents the resilience of complementarity and selection effects for different ecosystem metrics (AGB, BA, N, GPP and NPP).
 
@@ -88,3 +111,5 @@ BEresilience %>%
   ylab('Recovery of variable net effect') + 
   ylim(-2.5,2.5)
 ```
+
+# References

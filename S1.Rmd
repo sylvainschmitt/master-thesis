@@ -1,8 +1,22 @@
-# Appendix 2: Leaf lifespan model
+---
+title: "Supplementary material S1: Leaf lifespan model"
+date: '`r Sys.Date()`'
+output:
+  bookdown::pdf_document2:
+    number_sections: false
+    toc: false
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float: yes
+csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
 
 TROLL model previous implementation encompass Reich's 1991 and 1997 and Wright's 2004 allometries to estimate leaf lifespan with  [@Reich1991a; @Reich1997; @wright_worldwide_2004]. But we have shown that Reich's allometries are underestimating leaf lifespan for low LMA species. Moreover simulations estimated unrealistically low aboveground biomass for low LMA species. We assumed Reich's allometries underestimation of leaf lifespan for low LMA species being the source of unrealistically low aboveground biomass inside TROLL simulations. We decided to find a better allometry with @wright_worldwide_2004 GLOPNET dataset.
 
-## Material and methods
+# Material and methods
 
 We compiled functional traits from GLOPNET [@wright_worldwide_2004], TRY [@Kattge2011], and DRYAD [@chave_towards_2009] databases (see \@ref(tab:A2traits)). We kept dataset given by GLOPNET as origin dataset for observations. Dataset defined as origin corresponded to leaf lifespan ($LL$) and most of the time to leaf mass per area ($LMA$) and leaf nitrogen content per leaf dry mass ($Nmass$). We measured variable importance in functionnal traits to explain leaf lifespan with an out-of the bag method applied on a random forest. Then, we used a bayesian apporach to test different models with growing level of complexity. We retained the model with the best tradeoff between model complexity (number of parameters $K$), convergence, likelihood, and prediction quality (root mean sqaure error of prediciton $RMSEP$). We finally tested the new allometry obtained with the selected model with TROLL simulations.
 
@@ -71,7 +85,7 @@ LMAmax <- max(data$LMA) ; Nmax <- max(data$Nm) ; wsgmax <- max(data$wsg)
 data$Dataset <- as.factor(data$Dataset)
 ```
 
-## Results
+# Results
 
 Out of the bag method applied on a random forest highlighted the importance of leaf nitrogen content per leaf dry mass ($N_m$) to model leaf lifespan (see \@ref(tab:A2OOB)). $N_m$ importance was higher than leaf mass per area (158 against 96 percent of mean square error increase) which was used as a proxy for leaf lifespan in previous models. Finally, wood specific gravity ($wsg$) add also a significant importance in leaf lifespan estimation.
 
@@ -165,3 +179,6 @@ cowplot::plot_grid(lma, nm, wsg, predvsobs, labels = c('LMA', 'Nmass', 'wsg', 'P
 ```
 
 Simulations are validating that this new allometry resolve the issue of unrealistically low aboveground biomass for low LMA species due to an early death of individuals inside simulations. For instance with this allometry Symphonia sp 1 (a low LMA species) is now reaching a realistic aboveground biomass above 400 $tonC.ha^{-1}$ and realistic diameter and age distribution inside the final population.
+
+# References
+
