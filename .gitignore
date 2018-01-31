@@ -3,3 +3,4 @@
 *_files/
 *.pdf
 *.html
+.Rproj.user
