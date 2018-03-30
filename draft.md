@@ -1,6 +1,6 @@
 Functional diversity improves tropical forest resilience to disturbance
 ================
-Sylvain Schmitt, Bruno Hérault, et al
+Sylvain Schmitt, Jerome Chave, Fabien Fischer, Isabelle Maréchaux, Camille Piponiot, Stéphane Traissac & Bruno Hérault
 2018-03-30
 
 Abstract
