@@ -2,6 +2,7 @@
 title: "Supplementary material S2: Disturbance simulations"
 date: '`r Sys.Date()`'
 output:
+  github_document: default
   bookdown::pdf_document2:
     number_sections: false
     toc: false

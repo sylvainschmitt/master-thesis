@@ -3,16 +3,19 @@ title: Functional diversity improves tropical forest resilience to disturbance
 author: "Sylvain Schmitt, Bruno Hérault, et al"
 date: '`r Sys.Date()`'
 output:
+  github_document: default
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float: yes
+  bookdown::word_document2: default
   bookdown::pdf_document2:
     includes:
       before_body: ./template/doc_prefix.tex
       in_header: ./template/preamble.tex
     number_sections: false
     toc: false
-  bookdown::html_document2:
-    number_sections: false
-    toc: true
-    toc_float: yes
+    keep_tex: true
 linestretch: 1.5
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib

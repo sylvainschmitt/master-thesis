@@ -1,6 +1,10 @@
 .R*
 *_cache/
-*_files/
+*_files/figures-docx
+*_files/figures-html
+*_files/figures-latex
 *.pdf
 *.html
 .Rproj.user
+*.docx
+*.tex
