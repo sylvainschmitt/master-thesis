@@ -1,6 +1,6 @@
 ---
 title: Functional diversity improves tropical forest resilience to disturbance
-author: "Sylvain Schmitt, Bruno Hérault, et al"
+author: "Sylvain Schmitt, Jerome Chave, Fabien Fischer, Isabelle Maréchaux, Camille Piponiot, Stéphane Traissac & Bruno Hérault"
 date: '`r Sys.Date()`'
 output:
   github_document: default
