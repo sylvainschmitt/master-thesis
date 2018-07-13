@@ -2,14 +2,13 @@
 title: "Supplementary material S2: Disturbance simulations"
 date: '`r Sys.Date()`'
 output:
-  github_document: default
-  bookdown::pdf_document2:
-    number_sections: false
-    toc: false
   bookdown::html_document2:
     number_sections: false
     toc: true
     toc_float: yes
+  bookdown::pdf_document2:
+    number_sections: false
+    toc: false
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes

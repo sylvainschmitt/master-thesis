@@ -1,0 +1,334 @@
+---
+title: "Supplementary material S2: Biodiversity net effect and resilience"
+date: '`r Sys.Date()`'
+output:
+  bookdown::html_document2:
+    number_sections: true
+    toc: true
+    toc_float: yes
+  bookdown::pdf_document2:
+    number_sections: false
+    toc: false
+csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
+
+```{r config, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls()); invisible(gc())
+library(knitr)
+library(tidyverse)
+theme_set(bayesplot::theme_default())
+opts_chunk$set( echo = F, message = F, warning = F, 
+                fig.height = 8, fig.width = 8,
+                cache = T, cache.lazy = F)
+```
+
+We want to merge two functions to analyse the output of ecosystem after disturbance: (i) the biodiversity net effect (NE) and its partitionning in complementarity (CE) and selection (SE) effects, and (ii) the resilience function of the ecosystem. More particularly we computed $R[NE(X)]$, and we want to know if $R[NE(X)]=NE[R(X)]$. In order to do that we will proceed in three times. First we need to define all mathematic functions. Then we will use a simulation approach to test for the equality (easy way to reject it). Finally if the simulation did not rejected the equality we will try to prove it mathematically.
+
+# Mathematic definitions
+
+We first need to define the resilience function, the biodiversity net effect functions, and their composed functions for any variable $X$ from the ecosystem.
+
+## Resilience
+
+Resilience has been defined by us as:
+
+\begin{equation}
+  R(t) = \frac{X_T(t)}{X_C(t)}
+  (\#eq:R)
+\end{equation}
+
+where $X_T(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the disturbed simulation and in the undisturbed control simulation.
+
+## Biodiversity net effect
+
+The net effect of biodiversity on ecosystem recovery (NE) is defined as the difference between the ecosystem recovery of the mixed-species community and the one expected under the null hypothesis that there is no effect of biodiversity, i.e. ecosystem recovery for the mixed-species community equals the abundance-weighted sum of that in monoculture [@Loreau2001]. We then split this net biodiversity effect in complementarity and selection effect using @Loreau2001 partitioning:
+
+\begin{equation}
+  \begin{array}{c}
+    NE = X_O - X_E = CE + SE \\
+    CE(X) = N* \overline{\Delta _RX} \overline{M}\\
+    SE(X) = N*cov(\Delta _RX,M) \\
+    \Delta _R(X_{sp}) = \frac{X_{sp}(mixture)}{X_{sp}(monoculture)} - P_{sp}
+  \end{array}
+  (\#eq:NE)
+\end{equation}
+
+where $N$ represents the total number of species, and $M$ the vector of monoculture performance. Both metrics depend on the variation of relative ecosystem variable $\Delta _R(X)$. $X_{sp}$ is the ecosystem variable value for one species either in mixture $X_{sp}(mixture)$ or in monoculture $X_{sp}(monoculture)$. $P_{sp}$ is the proportion of the species in the mixture represented by species relative abundance. 
+
+## Resilience of the biodiversity net effect $R[NE(X)]$
+
+Using equations \@ref(eq:R) and \@ref(eq:NE) we can easily define resilience of the biodiversity net effect as:
+
+\begin{equation}
+  \begin{array}{c}
+    R[NE(X)]=\frac{NE_T(X)}{NE_C(X)} \\
+    R[NE(X)]=\frac{CE_T(X)}{NE_C(X)} + \frac{SE_T(X)}{NE_C(X)} \\
+    CE(X) = N* \overline{\Delta _R(X)} \overline{M}\\
+    SE(X) = N*cov(\Delta _R(X),M) \\
+    \Delta _RX_{sp} = \frac{X_{sp}(mixture)}{X_{sp}(monoculture)} - P_{sp}
+  \end{array}
+  (\#eq:RNE)
+\end{equation}
+
+## Biodiversity net effect of the resilience $NE[R(X)]$
+
+Using equations \@ref(eq:R) and \@ref(eq:NE) definition of the biodiversity net effect of resilience is less straightforward. We first need to define the variation of relative ecosystem resilience $\Delta _R[R(X)]$ used to define both complementarity and selection effects. For that we need mathematic properties on $\Delta _R(X)$. We know that if the biodiversity net effect is null, it might corresponds to the case where each species yield as much in mixture than in monoculture:
+
+\begin{equation}
+  \begin{array}{c}
+    NE = 0 \\
+    \sum_{sp} \Delta _R(X)_{sp}=0  ~|~ \forall sp,  \Delta _R(X)_{sp}=0 \\
+    \frac{X_{sp}(mixture)}{X_{sp}(monoculture)} = P_{sp} \\
+    X_{sp}(mixture) = P_{sp}*X_{sp}(monoculture)
+  \end{array}
+  (\#eq:DeltaNull)
+\end{equation}
+
+So this property must be respected when defining $\Delta _R[R(X)]$.
+
+\begin{equation}
+  \begin{array}{c}
+    \Delta _R[R(X)]_{sp} = \frac{R(X)_{sp}(mixture)}{R(X)_{sp}(monoculture)} - P_{sp} \\
+    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{       \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
+    R(M_{sp})= \frac{{M_{sp}}_T}{{M_{sp}}_C} \\
+    CE[R(X)] = N* \overline{\Delta _R[R(X)]} \overline{R(M)}\\
+    SE[R(X)] = N*cov(\Delta _R[R(X)],R(M)) \\
+    NE[R(X)] = CE[R(X)] + SE[R(X)]  
+  \end{array}
+  (\#eq:NER)
+\end{equation}
+
+# Simulation test of the equality
+
+Let's imagine a mixture ($C_T$) of three species $sp1$, $sp2$ and $sp3$ with an ecosystem variable $X$ evolving after a disturbance event, the corresponding three monoculture (${M_{sp1}}_T$, ${M_{sp2}}_T$, ${M_{sp3}}_T$) which encountered the same disturbance, and the corresponding control mixture ($C_C$) and three control monoculture (${M_{sp1}}_C$, ${M_{sp2}}_C$, ${M_{sp3}}_C$) which did not encoutered any disturbance.
+
+## Generation of fake data
+ 
+Let's first imagine the three species without disturbance in monoculture and let's assume their value is constant through time. We will use a time length of 100 steps. Let's imagine their value in the mixture to be increased by a factor $1.2$ (assuming this is the same for each species, which is obviously wrong). The mixture in control will be simply the sum of each weighted by their abundance, that we will define as 0.7, 0.2, and 0.1. And finally let's assume the value of the ecosyustem after disturbance to be a function of time $f(x) = {{\frac{x_0}{2}+\frac{x}{2}*(\frac{t}{100}})^2}$.
+ 
+```{r data, echo=T}
+data <- data.frame(
+  t = 1:100,
+  M.sp1.control = rep(100, 100),
+  M.sp2.control = rep(150, 100),
+  M.sp3.control = rep(50, 100)
+) %>% 
+  mutate(C.sp1.control = M.sp1.control*1.2,
+         C.sp2.control = M.sp2.control*1.2,
+         C.sp3.control = M.sp3.control*1.2) %>% 
+  mutate(C.control = 0.7*C.sp1.control + 0.2*C.sp2.control + 0.1*C.sp3.control) %>% 
+  mutate(M.sp1.treatment = first(M.sp1.control)/2 + (M.sp1.control/2)*(t/100)^2,
+         M.sp2.treatment = first(M.sp2.control)/2 + (M.sp2.control/2)*(t/100)^2,
+         M.sp3.treatment = first(M.sp3.control)/2 + (M.sp3.control/2)*(t/100)^2,
+         C.sp1.treatment = first(C.sp1.control)/2 + (C.sp1.control/2)*(t/100)^2,
+         C.sp2.treatment = first(C.sp2.control)/2 + (C.sp2.control/2)*(t/100)^2,
+         C.sp3.treatment = first(C.sp3.control)/2 + (C.sp3.control/2)*(t/100)^2,
+         C.treatment = 0.7*C.sp1.treatment + 0.2*C.sp2.treatment + 0.1*C.sp3.treatment)
+```
+
+```{r gData, fig.cap="Ecosystems through time.", fig.height=4}
+data %>% 
+  reshape2::melt(id.vars = "t",
+                 variable.name = "ecosystem",
+                 value.name = "X") %>% 
+  ggplot(aes(t, X, color = ecosystem)) +
+  geom_line() +
+  ylim(0,NA)
+```
+
+## Defining functions in R
+
+We define all the previous functions for simulations.
+
+```{r functions, echo=T}
+R <- function(Xt, Xc) Xt / Xc
+NE <- function(CE, SE) CE + SE
+CE <- function(DeltaR, M) length(M) * mean(DeltaR) * mean(M)
+SE <-  function(DeltaR, M) length(M) * cov(DeltaR, M)
+DeltaR <- function(Xmixture, Xmonoculture, Psp) Xmixture/Xmonoculture - Psp
+```
+
+## Simulations
+
+### R[NE(X)]
+
+```{r RNE, echo=T}
+RNE <- data %>% 
+  group_by(t) %>% 
+  mutate(DeltaR.sp1.control = DeltaR(C.sp1.control, M.sp1.control, 0.7),
+         DeltaR.sp2.control = DeltaR(C.sp2.control, M.sp2.control, 0.2),
+         DeltaR.sp3.control = DeltaR(C.sp3.control, M.sp3.control, 0.1),
+         DeltaR.sp1.treatment = DeltaR(C.sp1.treatment, M.sp1.treatment, 0.7),
+         DeltaR.sp2.treatment = DeltaR(C.sp2.treatment, M.sp2.treatment, 0.2),
+         DeltaR.sp3.treatment = DeltaR(C.sp3.treatment, M.sp3.treatment, 0.1)) %>% 
+  mutate(CE.control = CE(c(DeltaR.sp1.control, DeltaR.sp2.control, DeltaR.sp3.control),
+                         c(M.sp1.control, M.sp2.control, M.sp3.control)),
+         CE.treatment = CE(c(DeltaR.sp1.treatment, DeltaR.sp2.treatment, DeltaR.sp3.treatment),
+                         c(M.sp1.treatment, M.sp2.treatment, M.sp3.treatment))) %>% 
+  mutate(SE.control = SE(c(DeltaR.sp1.control, DeltaR.sp2.control, DeltaR.sp3.control),
+                         c(M.sp1.control, M.sp2.control, M.sp3.control)),
+         SE.treatment = SE(c(DeltaR.sp1.treatment, DeltaR.sp2.treatment, DeltaR.sp3.treatment),
+                           c(M.sp1.treatment, M.sp2.treatment, M.sp3.treatment))) %>% 
+  mutate(NE.control = NE(CE.control, SE.control),
+         NE.treatment = NE(CE.treatment, SE.treatment)) %>%
+  mutate(RNE = R(NE.treatment, NE.control))
+```
+
+### NE[R(X)]
+
+```{r NER, echo=T}
+NER <- data %>% 
+  group_by(t) %>% 
+  mutate(C.sp1 = R(C.sp1.treatment, C.sp1.control),
+         C.sp2 = R(C.sp2.treatment, C.sp2.control),
+         C.sp3 = R(C.sp3.treatment, C.sp3.control),
+         M.sp1 = R(M.sp1.treatment, M.sp1.control),
+         M.sp2 = R(M.sp2.treatment, M.sp2.control),
+         M.sp3 = R(M.sp3.treatment, M.sp3.control)) %>%
+  mutate(DeltaR.sp1 = DeltaR(C.sp1, M.sp1, 0.7),
+         DeltaR.sp2 = DeltaR(C.sp2, M.sp2, 0.2),
+         DeltaR.sp3 = DeltaR(C.sp3, M.sp3, 0.1)) %>% 
+  mutate(CE = CE(c(DeltaR.sp1, DeltaR.sp2, DeltaR.sp3),
+                         c(M.sp1, M.sp2, M.sp3))) %>% 
+  mutate(SE = SE(c(DeltaR.sp1, DeltaR.sp2, DeltaR.sp3),
+                         c(M.sp1, M.sp2, M.sp3))) %>% 
+  mutate(NER = NE(CE, SE))
+```
+
+## Result
+
+Strangely simulations (see figure \@ref(fig:gNE)) were able to show that $R[NE(X)] \neq NE[R(X)]$ but that:
+
+\begin{equation}
+  R[NE(X)] = \frac{NE[R(X)]}{2}
+  (\#eq:sim)
+\end{equation}
+
+This result (equation \@ref(eq:sim)) was not expected and should be shwon mathematically.
+
+```{r gNE, fig.cap="Resilience and Biodiversity net effect combination."}
+RNE %>% 
+  left_join(NER, by = "t") %>% 
+  select(t, RNE, NER) %>% 
+  mutate(R = NER/RNE) %>% 
+  rename_("NE[R(X)]" = "NER",
+          "NE[R(X)]/R[NE(X)]" = "R",
+          "R[NE(X)]" = "RNE") %>% 
+  reshape2::melt(id.vars = "t") %>% 
+  ggplot(aes(t, value, color = variable)) +
+  geom_line() +
+  ylim(0,NA) + facet_wrap(~variable, ncol = 1)
+```
+
+# Mathematic resolution of the equality
+
+## Variation of relative ecosystem resilience $\Delta _R[R(X)]$
+
+In the simplest case where $\Delta _R[R(X)]_{sp} = 0$:
+
+\begin{equation}
+  \begin{array}{c}
+    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
+    \Delta _R[R(X)]_{sp} = 0 \\
+    \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } = P_{sp} \\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} = P_{sp} * \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)}*\frac{1}{{X_{sp}}_C(mixture)} = P_{sp} * \frac{1}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} = P_{sp} * \frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} + P_{sp} - P_{sp} = P_{sp} * (\frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)} + P_{sp} - P_{sp})\\
+    {\Delta _R(X)_{sp}}_T + P_{sp} = P_{sp} * ({\Delta _R(X)_{sp}}_C + P_{sp}) \\
+    {\Delta _R(X)_{sp}}_T + 1 = {\Delta _R(X)_{sp}}_C + P_{sp}, \forall P_{sp} \neq 0\\
+    {\Delta _R(X)_{sp}}_T = {\Delta _R(X)_{sp}}_C + P_{sp} - 1 \\
+    R[\Delta _R(X)_{sp}] = 1 + \frac{ P_{sp} - 1 }{ {\Delta _R(X)_{sp}}_C }, \forall {\Delta _R(X)_{sp}}_C \neq 0
+  \end{array}
+  (\#eq:DeltaR0)
+\end{equation}
+
+If we note $\Delta _R[R(X)]_{sp} = a, \forall a in \mathcal R$:
+
+\begin{equation}
+  \begin{array}{c}
+    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
+    \Delta _R[R(X)]_{sp} = a \\
+    \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } = (P_{sp} + a) \\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} = (P_{sp} + a) * \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)}*\frac{1}{{X_{sp}}_C(mixture)} = (P_{sp} + a) * \frac{1}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} = (P_{sp} + a) * \frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} + P_{sp} - P_{sp} = (P_{sp} + a) * (\frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)} + P_{sp} - P_{sp})\\
+    {\Delta _R(X)_{sp}}_T + P_{sp} = (P_{sp} + a) * ({\Delta _R(X)_{sp}}_C + P_{sp}) \\
+    {\Delta _R(X)_{sp}}_T = (P_{sp} + a)*{\Delta _R(X)_{sp}}_C + (P_{sp} + a)*P_{sp} - P_{sp} \\
+    {\Delta _R(X)_{sp}}_T = (P_{sp} + a)*{\Delta _R(X)_{sp}}_C + P_{sp}*(P_{sp} + a - 1)\\
+    R[\Delta _R(X)_{sp}] = P_{sp} + a + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0 \\
+    R[\Delta _R(X)_{sp}] = \Delta _R[R(X)]_{sp} + P_{sp} + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0
+  \end{array}
+  (\#eq:DeltaRa)
+\end{equation}
+
+## Monoculture of resilience $M[R(X)]$
+
+This one is straightforward, it only depends on the order of the indices.
+\begin{equation}
+  M[R(X)] = \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
+  (\#eq:M)
+\end{equation}
+
+## Complementarity effect of resilience $CE[R(X)]$
+
+Using equations \@ref(eq:NE), \@ref(eq:DeltaRa) and \@ref(eq:M), we have:
+
+\begin{equation}
+  \begin{array}{c}
+    CE[R(X)] = N* \overline{\Delta _R[R(X)]} \overline{R(M)}\\
+    R[\Delta _R(X)_{sp}] = \Delta _R[R(X)]_{sp} + P_{sp} + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0 \\
+    M[R(X)] = \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
+  \end{array}
+  (\#eq:CER1)
+\end{equation}
+
+where $N$ stays $N$ and $\overline{R(M)} = \overline{M(R))}$ (equation \@ref(eq:M)). So we need only to calculate $\overline{\Delta _R[R(X)]}$:
+
+\begin{equation}
+  \begin{array}{c}
+    \overline{\Delta _R[R(X)]} = \sum _{sp} \frac{\Delta _R[R(X)]_{sp}}{N} \\
+    \overline{\Delta _R[R(X)]} = \sum _{sp} \frac{ R[\Delta _R(X)_{sp}] - P_{sp} - \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C }  }{N} \\
+    \overline{\Delta _R[R(X)]} = R(\overline{\Delta _R(X)}) -\frac{1}{N}(1 + \sum _{sp} \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C }) \\
+  \end{array}
+  (\#eq:CER2)
+\end{equation}
+
+## Selection effect of resilience $SE[R(X)]$
+
+Using equations \@ref(eq:NE), \@ref(eq:DeltaRa) and \@ref(eq:M), we have:
+
+\begin{equation}
+  \begin{array}{c}
+    SE[R(X)] = N*cov(\Delta _R[R(X)],M[R(X)]) \\
+    R[\Delta _R(X)_{sp}] = \Delta _R[R(X)]_{sp} + P_{sp} + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0 \\
+    M[R(X)] = \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
+  \end{array}
+  (\#eq:SER1)
+\end{equation}
+
+We can develop covariance with following formula:
+
+\begin{equation}
+  cov(X,Y) = \frac{\sum _{i=1} ^N (X_i - \overline{X})(Y_i - \overline{Y})}{n-1}
+  (\#eq:cov)
+\end{equation}
+
+
+## Biodiversity net effect of resilience $NE[R(X)]$
+
+Using equations \@ref(eq:CER2) and \@ref(eq:SER1), we have:
+
+\begin{equation}
+  NE[R(X)] = CE[R(X)] + SE[R(X)]
+  (\#eq:NER1)
+\end{equation}
+
+# Conclusion
+
+I did not managed to solve mathematically the issue. Still simulations seems to show that $NE[R(X)]$ and $R[NE(X)]$ are mathematically linked through a factor $2$ (tested for several parameters not shown here).
+
+# References
