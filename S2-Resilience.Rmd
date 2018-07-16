@@ -1,0 +1,167 @@
+---
+title: "Supplementary material S2: Resilience indice"
+date: '`r Sys.Date()`'
+output:
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float: yes
+  bookdown::pdf_document2:
+    number_sections: false
+    toc: false
+csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
+
+```{r config, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls()); invisible(gc())
+library(knitr)
+library(kableExtra)
+if(knitr:::is_html_output()) options(knitr.table.format = "html") 
+if(knitr:::is_latex_output()) options(knitr.table.format = "latex") 
+library(tidyverse)
+library(broom)
+theme_set(bayesplot::theme_default())
+opts_chunk$set( echo = F, message = F, warning = F, 
+                fig.height = 8, fig.width = 8,
+                cache = T, cache.lazy = F)
+```
+
+```{r resilience, echo=FALSE}
+rich <- c(5,25,125)
+cvh <- 1:20
+dist <- c(0,25,50,75)
+path <- '~/Documents/ECOFOG/Results/disturbance/disturbance/data'
+load(file.path(path, 'disturbanceDOE.Rdata'))
+doe <- rename(doe, SR = richness)
+load(file.path(path, 'disturbanceData.Rdata'))
+load(file.path(path, 'disturbanceResilience.Rdata'))
+load(file.path('~/Documents/ECOFOG/Results/disturbance/maturity', 'matureData.Rdata'))
+mature <- datal$time %>% mutate(time = time - 600) ; rm(datal)
+```
+
+```{r Deq, cache=TRUE, echo=FALSE}
+Deq <- resilience %>% 
+  group_by(time, sim) %>% 
+  mutate_all(funs((1-.)^2)) %>% 
+  mutate(structure = sqrt(sum(agb, ba, n, n10, n30))) %>% 
+  mutate(production = sqrt(sum(gpp, npp, Rday, Rnight)))
+```
+
+```{r Ir, cache=TRUE, echo=FALSE}
+Ir <- Deq %>% 
+  group_by(sim) %>% 
+  arrange(time) %>% 
+  mutate_at(vars(-time), cumsum) %>% 
+  filter(time == 600)
+```
+
+```{r IrGraph, eval=F, include=F}
+mature %>% 
+  select(time, sim, agb) %>% 
+  separate(sim, c("SR", "CVH"), remove = F) %>% 
+  mutate(disturbance = 50) %>% 
+  rbind(ecosystem %>% 
+          select(time, sim, agb) %>% 
+          separate(sim, c("SR", "CVH", "disturbance"), remove = F)) %>% 
+  filter(SR == 25, CVH == 4, disturbance %in% c(0, 50)) %>% 
+  reshape2::dcast(time ~ disturbance, value.var = "agb") %>% 
+  rename(control = `0`, treatment = `50`) %>% 
+  ggplot(aes(x = time)) +
+  geom_line(aes(y = control, color = "control")) +
+  geom_line(aes(y = treatment, color = "disturbed")) +
+  geom_ribbon(aes(ymax = control, ymin = treatment), 
+              fill = "lightgrey", col = NA, alpha = 0.5) +
+  xlab("Time (years)") +
+  ylab("Aboveground biomass (tonC/ha)") +
+  scale_color_discrete("Simulation")
+```
+
+This document introduce and explain the recovery function $R(X)$ and the resilience indice $I_R$ definitions (figure \@ref(fig:IrGraphFinal)).
+
+```{r IrGraphFinal, fig.cap="Definition of recovery function and resilience indice shown on aboveground biomass dynamics of a control and disturbed ecosystem before and after the disturbance event."}
+knitr::include_graphics("images/final.png")
+```
+
+# Recovery
+
+The recovery of the simulated forest ecosystem at a time $t$, $R(t)$ regarding a given properties $X$ was defined ad follows:
+
+\begin{equation}
+  R[X(t)] = \frac{X_D(t)}{X_C(t)}
+  (\#eq:Recovery)
+\end{equation}
+
+where $X_D(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the disturbed simulation ($disturb_{intensity} = 25\%, 50\%, 75\%$) and in the undisturbed control simulation ($disturb_{intensity} = 0\%$).
+
+# Resilience
+
+When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$. Because the intensity of disturbance was the same for all simulations, our analysis did not include any ecosystem resistance. Consequently, we can use the cummulated recovery as an indice of ecosystem resilience, further defined as $I_R$:
+
+\begin{equation}
+  I_R(X) = \int _{t=0} ^{t=600} \frac{X_D(t)}{X_C(t)}.dt
+  (\#eq:Resilience)
+\end{equation}
+
+Ecosystem euclidean distance to equilibrium distance was calculated in a multi-dimensional space for the two following forest functions : (i) forest structure (AGB, BA, N, N10, and N30) and (ii) forest functioning (GPP, NPP, Rday, and Rnight). We then integrated the euclidean distances over time to get our ecosystem resilience indice. (Figure \@ref(fig:datatrans)). We used the cumulative integral after 600 years defined as $I_R$ as a measurement of ecosystem resilience. A high value of $I_R$ indicating a slow recovery.
+
+```{r datatrans, echo=FALSE, fig.cap='Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate recovery (**B**); recovery of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance at equilibrium is integrated over time in a cumulative sum (**D**). ', cache=TRUE, fig.height=8, fig.width=12, message=FALSE}
+cols <- RColorBrewer::brewer.pal(3, "YlOrRd")
+g_agb <- ecosystem %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(SR == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = agb/1000, color = disturbance)) +
+  geom_point() +
+  xlab('Time (years)') +
+  ylab('Aboveground biomass (tonC/ha)') +
+  scale_color_manual('Disturbance\nintensity\n(% of BA)',
+                       values=c("#999999", cols))
+g_resilience <- resilience %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(SR == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = agb, color = disturbance)) +
+  geom_hline(yintercept = 1, col = 'red') +
+  geom_point() +
+  xlab('Time (years)') +
+  ylab('Resilience of aboveground biomass') +
+  scale_color_manual('Disturbance\nintensity\n(% of BA)',
+                     values = cols)
+g_deq <- Deq %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(SR == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = structure, 
+             color = disturbance, fill = disturbance)) +
+  geom_hline(yintercept = 0, col = 'red') +
+  geom_point() +
+  geom_area(alpha = 0.2) +
+  xlab('Time (years)') +
+  ylab('Distance to forest structure equilibrium\n(AGB, BA, N, N10 and N30)') +
+  scale_color_manual('Disturbance\nintensity\n(% of BA)',
+                     values = cols) +
+  scale_fill_manual('Disturbance\nintensity\n(% of BA)',
+                     values = cols)
+g_Ieq <- Deq %>% 
+  group_by(sim) %>% 
+  arrange(time) %>% 
+  mutate_at(vars(-time), cumsum) %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(SR == 125) %>% 
+  filter(cvh == 1) %>% 
+  ggplot(aes(x = time, y = structure, color = disturbance)) +
+  geom_point() +
+  xlab('Time (years)') +
+  ylab('Cummulative integral of\ndistance to forest structure equilibrium\n(AGB, BA, N, N10 and N30)') +
+  scale_color_manual('Disturbance\nintensity\n(% of BA)',
+                     values = cols)
+cowplot::plot_grid(g_agb, g_resilience, g_deq, g_Ieq, labels = LETTERS[1:4])
+```
+
+
+```{r}
+
+```
+

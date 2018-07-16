@@ -1,5 +1,5 @@
 ---
-title: "Supplementary material S3: Linear models"
+title: "Supplementary material S4: Linear models"
 date: '`r Sys.Date()`'
 output:
   bookdown::html_document2:
@@ -248,7 +248,7 @@ We developped here two linear models to explore the result of our simulations an
 
 First, I think that based on the hysteresis issue we can justify and use the aggregated variables $structure$ and $production$ to summarize all ecosystem variables. And I prefer to show and interpret those general ones, even if they are more abstrait, instead of picking one as an example.
 
-Secondly tfor $structure$ and $production$ variables models \@ref(eq:m1) and \@ref(eq:m2) gives similar results, at the exception of the effect of $FDis.LMA$ in $production$ resilience. So I think we can keep only model \@ref(eq:m2) keeping in mind the effect of $FDis.LMA$ on $production$.
+Secondly, for $structure$ and $production$ variables models \@ref(eq:m1) and \@ref(eq:m2) gives similar results, at the exception of the effect of $FDis.LMA$ in $production$ resilience. So I think we can keep only model \@ref(eq:m2) keeping in mind the effect of $FDis.LMA$ on $production$.
 
 Consequently results can be summarized as follow. Functional diversity $FDiv$ have shown a significant strong negative effect increasing with disturbance intensity both on forest $structure$ and $production$. In addition, functional eveness $FEve$ have shown a significant strong negative effect increasing with disturbance intensity for forest $production$ and a significant negative effect on forest $structure$ only for the strongest level of disturbance (75%). Finally a species richness of 25 decreased the resilience indice of forest $structure$ and $production$ and $FDis.LMA$ have also shown a sinificant negative effect on forest $production$ only for model \@ref(eq:m2).
 

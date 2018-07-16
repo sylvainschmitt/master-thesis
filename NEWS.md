@@ -1,3 +1,6 @@
+# Draft 0.1.9006
+* Supplementary: Resilience indice, Linear models, Biodiversity results
+
 # Draft 0.1.9005
 * Supplementary: RNE & LM
 
