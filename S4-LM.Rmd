@@ -9,6 +9,7 @@ output:
   bookdown::pdf_document2:
     number_sections: false
     toc: false
+  bookdown::word_document2: default
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes
@@ -51,15 +52,15 @@ Deq <- resilience %>%
 Ir <- Deq %>% 
   group_by(sim) %>% 
   arrange(time) %>% 
-  mutate_at(vars(-time), cumsum) %>% 
+  mutate_at(vars(-time, -sim), cumsum) %>% 
   filter(time == 600)
 ```
 
-This supplementary materials is here check the validity of the linear model and to give additional ouptuts of the results not shown in the manuscript. It will be separated in three parts, (i) linear models, (ii) variables multicolinearity, (iii) validation of linear models, and (iii) results of linear models. 
+This supplementary material is here to check the validity of the linear model and to give additional ouptuts of the results not shown in the manuscript. It will be separated in four parts, (i) linear models, (ii) variables multicolinearity, (iii) validation of linear models, and (iv) results of linear models. 
 
 # Linear models
 
-We want to test the effect of diversity on the resilience indice $I_R$. For that we will two models, one including only multi-trait diversity indices (model \@ref(eq:m1)) and one including single-trait diversity indices (model \@ref(eq:m2)):
+We want to test the effect of diversity on the resilience indice $I_R$. For that we will test two models, one including only multi-trait diversity indices (model \@ref(eq:m1)) and one including single-trait diversity indices (model \@ref(eq:m2)):
 
 \begin{equation}
     I_R = \beta_0 + \beta_{SR=5} + \beta_{SR=25} + \beta_{FDiv}*FDiv + beta_{FEve}*FEve + \epsilon \\
@@ -77,13 +78,13 @@ We want to test the effect of diversity on the resilience indice $I_R$. For that
 
 The resilience indices is built either on multiple ecosystem variables as for forest structure (aboveground biomass ($AGB$ in $ton~C.ha^{-1}$), basal area ($BA$ in $m^2.ha^{-1}$), total number of stem ($N$), number of stem above $10~cm$ diameter ($N10$), and number of stem above $30~cm$ diameter ($N30$)) and for forest functioning (growth primary productivity ($GPP$ in $MgC.ha^{-1}$), net primary productivity ($NPP$ in $MgC.ha^{-1}$), tree autotrophic respiration in day ($Rday$ in $MgC.ha^{-1}$) and tree autotrophic respiration in night ($Rnight$ in $MgC.ha^{-1}$)), or for each variable independantly.
 
-This results in 2 models multiplied by 11 $I_R$ indices giving 22 regressions.
+This results in two models multiplied by 11 $I_R$ indices giving 22 regressions.
 
 # Variables multicolinearity
 
-We tested multicolinearity for all variables from the two models, and none of theim have shown multicolinearity issues (see figure \@ref(fig:multicolinearity)).
+We tested multicolinearity for all independent variables of the two models, and none of theim have shown multicolinearity issues (all Pearson's and/or Spearman's correlation coefficients below 0.6, see figure \@ref(fig:multicolinearity)).
 
-```{r multicolinearity, fig.cap="Pairs plot and multicolinearity between diversity indices."}
+```{r multicolinearity, fig.cap="Pairs plot and multicolinearity between diversity indices. Subplots lower the diagonal shows scatterplots between continuous variables or boxplot when a discrete variable is implied. Subplots on the diagonal show density plot for continuous variables and barplot for discrete variables. Subplots upper the diagonal indicates the Pearson's correlation coefficient between variables."}
 doe %>% 
   select(SR, FEve, FDiv, FDis.LMA, FDis.wsg, FDis.hmax) %>% 
   GGally::ggpairs()
@@ -91,13 +92,13 @@ doe %>%
 
 # Models validation
 
-We validated the 66 regressions with diagnostic plots (qqplot and Cook's leverage). Figures \@ref(fig:diag1Str), \@ref(fig:diag1Prod), \@ref(fig:diag2Str) and \@ref(fig:diag2Prod) shows relations between the $I_R$ indices for several ecosystem outputs and diversity indices. Most of theim did not seems to have issues. Still $n$, $n10$ and $n30$ showed strong outliers for every level of disturbance and disturbance intensity of 75% included those outliers in the $structure$ output. Similarly disturbance intensity of 75% included outliers for $production$, $gpp$, $npp$, $Rday$ and $Rnight$. Those outliers are linked to species with only 5 species strongly disturbed that might derived through an unexpected ecosystem state. Nevertheless those outliers hsould be taken into account in further interpretations.
+We validated the 66 regressions with diagnostic plots (qqplot and Cook's leverage). Figures \@ref(fig:diag1Str), \@ref(fig:diag1Prod), \@ref(fig:diag2Str) and \@ref(fig:diag2Prod) shows relations between the $I_R$ indices computed for several ecosystem outputs, and diversity indices. Most of theim met the model assumptions requirements. Still $n$, $n10$ and $n30$ showed strong outliers for every level of disturbance in the two models. Those outliers echoed in the $structure$ variable only at a disturbance intensity of 75%. Similarly disturbance intensity of 75% included outliers for $production$, $gpp$, $npp$, $Rday$ and $Rnight$. Previously identified outliers corresponded to ecosystem simulations with only 5 species, which seemed to have derived toward an unexpected ecosystem state when strongly disturbed. Nevertheless those outliers should be taken into account in further interpretations.
 
-## Multitrait only
+## Multitrait
 
 ### Structure
 
-```{r diag1Str, fig.cap="Effect of multi-trait diversity indices on resilience index $I_R$ for ecosystem variables linked to structure (AGB, BA, N, N10 and N30)."}
+```{r diag1Str, fig.cap="Effect of multi-trait diversity indices on resilience index $I_R$ for ecosystem variables linked to structure (AGB, BA, N, N10 and N30). To be completed with significativity and regression outputs when the final figure is chosen."}
 Ir %>% 
   left_join(doe, by = "sim") %>% 
   ungroup() %>% 
@@ -127,9 +128,28 @@ Ir %>%
   facet_wrap(disturbance~variable, scales = "free_y", nrow = 3)
 ```
 
-## Multi- and mono-trait
+## Monotrait
 
 ### Structure
+
+#### FM
+
+```{r diag3Str, fig.cap="Effect of mono-trait diversity indices on resilience index $I_R$ for structure ecosystem variables."}
+Ir %>% 
+  left_join(doe, by = "sim") %>% 
+  ungroup() %>% 
+  select(disturbance, 
+         structure,
+         CWM.LMA, CWM.wsg, CWM.hmax) %>% 
+  reshape2::melt(id.vars = c("disturbance", "structure"), 
+                 value.name = "CWM", variable.name = "Trait") %>% 
+  ggplot(aes(CWM, structure, group = NA)) +
+  geom_smooth(method = "lm") +
+  geom_point() +
+  facet_wrap(disturbance~Trait, scales = "free", nrow = 3)
+```
+
+#### FD
 
 ```{r diag2Str, fig.cap="Effect of mono-trait diversity indices on resilience index $I_R$ for structure ecosystem variables."}
 Ir %>% 
@@ -147,6 +167,25 @@ Ir %>%
 ```
 
 ### Production
+
+#### FM
+
+```{r diag3Prod, fig.cap="Effect of mono-trait diversity indices on resilience index $I_R$ for production ecosystem variables."}
+Ir %>% 
+  left_join(doe, by = "sim") %>% 
+  ungroup() %>% 
+  select(disturbance, 
+         production,
+         CWM.LMA, CWM.wsg, CWM.hmax) %>% 
+  reshape2::melt(id.vars = c("disturbance", "production"), 
+                 value.name = "CWM", variable.name = "Trait") %>% 
+  ggplot(aes(CWM, production, group = NA)) +
+  geom_smooth(method = "lm") +
+  geom_point() +
+  facet_wrap(disturbance~Trait, scales = "free", nrow = 3)
+```
+
+#### FD
 
 ```{r diag2Prod, fig.cap="Effect of mono-trait diversity indices on resilience index $I_R$ for production ecosystem variables."}
 Ir %>% 
@@ -169,9 +208,9 @@ Tables \@ref(tab:fit1) and \@ref(tab:fit2) present the result of the 66 regressi
 
 ## Multitrait only
 
-Globally and as expected, $structure$ variables represents well $AGB$, $BA$, $N$, $N10$, with a strong negative effect of functional diversity $FDiv$ increasing with disturbance intensity and a significative effect of functional eveness $FEve$ only for the strongest distruabnce of 75%. $N30$ did not had any significant effect from diversity indices in multitrait. $SR25$ decreased $I_R$ for strong disturbance, only through its significative but low effect on $BA$.
+Globally and as expected, $structure$ variables represented well $AGB$, $BA$, $N$ and $N10$ behavior, with a strong negative effect of functional diversity $FDiv$ on $I_r$ increasing with disturbance intensity and a significative effect of functional eveness $FEve$ only for the strongest distruabnce of 75%. $N30$ did not had any significant effect from diversity indices in multitrait. $SR25$ decreased $I_R$ for strong disturbance, only through its significative but low effect on $BA$.
 
-Similarly, $production$ variable represented well $GPP$, $NPP$, $Rday$ and $Rnight$ with a significant effect of both functional diversity $FDiv$ and eveness $FEve$ increasing with all disturbance levels (except $FDiv$ for a disturbance of 75%). $SR25$ decreased $I_R$ for strong disturbance, only through its significative but low effect on $NPP$.
+Similarly, $production$ variable represented well $GPP$, $NPP$, $Rday$ and $Rnight$ behavior, with a significant effect of both functional diversity $FDiv$ and eveness $FEve$ on $I_r$ increasing with all disturbance levels (except $FDiv$ for a disturbance of 75%). $SR25$ decreased $I_R$ for strong disturbance, only through its significative but low effect on $NPP$.
 
 ```{r fit1}
 Ir %>% 
@@ -207,7 +246,7 @@ Ir %>%
 
 ## Multi- and mono-trait
 
-Globally mono-trait functional dispersion indices did not changed a lot the result due to absent or weak effects. Regarding $structure$, $FDis.hmax$ and $FDis.wsg$ had respectivelly significant small positive and negative effects on $BA$ and $N10$ but not on $structure$ itself, except for $FDis.wsg$ at low disturbance intensity (25%). On the opposite for $production$, $FDis.LMA$ had a significant positive effect increasing with disturbance intensity on $production$, $npp$, $Rday$ and $Rnight$.
+Globally mono-trait functional dispersion indices did not changed a lot the result due to absent or weak effects. Regarding $structure$, $FDis.hmax$ and $FDis.wsg$ had respectivelly significant small positive and negative effects on $BA$ and $N10$ but not on $structure$ itself, except for $FDis.wsg$ at low disturbance intensity (25%). On the opposite for $production$, $FDis.LMA$ had a significant positive effect increasing with disturbance intensity on $production$, $npp$, $Rday$ and $Rnight$. Increased dispersion in LMA traits thus tend to decrease ecosystem resilience of production variables.
 
 ```{r fit2}
 Ir %>% 
@@ -242,13 +281,52 @@ Ir %>%
   collapse_rows(columns = 1:2)
 ```
 
+## Monotrait only
+
+Adding $FM$  as the weighted sum of species traits = $CWM$.
+
+
+```{r fit3}
+Ir %>% 
+  left_join(doe, by = "sim") %>% 
+  ungroup() %>% 
+  select(disturbance, 
+         structure, agb, ba, n, n10, n30,
+         production, gpp, npp, Rday, Rnight,
+         SR, FDis.LMA, FDis.wsg, FDis.hmax,
+         CWM.LMA, CWM.wsg, CWM.hmax) %>% 
+  reshape2::melt(id.vars = c("disturbance", "SR", 
+                             "FDis.LMA", "FDis.wsg", "FDis.hmax",
+                             "CWM.LMA", "CWM.wsg", "CWM.hmax"), value.name = "Ir") %>% 
+  group_by(variable, disturbance) %>%
+  do(fit = lm(Ir ~ SR + CWM.LMA + CWM.wsg + CWM.hmax + FDis.LMA + FDis.wsg + FDis.hmax, data = .)) %>% 
+  tidy(fit) %>% 
+  ungroup() %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(`P-value` = ifelse(p.value < 0.001, "***",
+                       ifelse(p.value < 0.01, "**",
+                              ifelse(p.value < 0.05, "*",
+                                     ifelse(p.value < 0.1, ".", "n.s."))))) %>% 
+  mutate(Coefficient = round(estimate,2)) %>% 
+  mutate(Recovery = variable) %>% 
+  rename(Variable = term, `Disturbance intensity` = disturbance) %>%
+  select(Recovery, `Disturbance intensity`, Variable, Coefficient, `P-value`) %>%
+  mutate(value = paste(Coefficient, `P-value`)) %>% 
+  mutate(value = cell_spec(value, 
+                           bold = ifelse(grepl("*", value, fixed = T), T, F))) %>%
+  reshape2::dcast(Recovery + `Disturbance intensity` ~ Variable, value.var = "value") %>% 
+  kable(caption = "Result of linear regression testing the effect of species richness and functional diversity indices on the recovery index by recovery type and disturbance intensity.", escape = F) %>% 
+  kable_styling(full_width = F) %>% 
+  column_spec(1, bold = T) %>%
+  collapse_rows(columns = 1:2)
+```
+
 # Conclusion
 
-We developped here two linear models to explore the result of our simulations and more particularly the linked between diversity indices and resilience of ecosystem variables. Our main issues is to summarize the global information of the 66 regressions in something more easy to assimilate for the reader.
+We developped here two linear models to explore the result of our simulations and more particularly the links between diversity indices and resilience of ecosystem variables. Our main issues is to summarize the global information of the 66 regressions in something more easy to assimilate for the reader.
 
-First, I think that based on the hysteresis issue we can justify and use the aggregated variables $structure$ and $production$ to summarize all ecosystem variables. And I prefer to show and interpret those general ones, even if they are more abstrait, instead of picking one as an example.
+First, I think that based on the hysteresis issue, the fact that ecosystem variables can reach equilibrium value in a transient state whithout reaching equilibirum, we can justify and use the aggregated variables $structure$ and $production$ to summarize all ecosystem variables. And I prefer to show and interpret those general ones, even if they are more abstrait, instead of picking one as an example.
 
-Secondly, for $structure$ and $production$ variables models \@ref(eq:m1) and \@ref(eq:m2) gives similar results, at the exception of the effect of $FDis.LMA$ in $production$ resilience. So I think we can keep only model \@ref(eq:m2) keeping in mind the effect of $FDis.LMA$ on $production$.
+Secondly, for $structure$ and $production$ variables models \@ref(eq:m1) and \@ref(eq:m2) gives similar results, at the exception of the effect of $FDis.LMA$ in $production$ resilience, meaning that in most of the case monotrait information is not useful. So I think we can keep only model \@ref(eq:m2) keeping in mind the effect of $FDis.LMA$ on $production$.
 
 Consequently results can be summarized as follow. Functional diversity $FDiv$ have shown a significant strong negative effect increasing with disturbance intensity both on forest $structure$ and $production$. In addition, functional eveness $FEve$ have shown a significant strong negative effect increasing with disturbance intensity for forest $production$ and a significant negative effect on forest $structure$ only for the strongest level of disturbance (75%). Finally a species richness of 25 decreased the resilience indice of forest $structure$ and $production$ and $FDis.LMA$ have also shown a sinificant negative effect on forest $production$ only for model \@ref(eq:m2).
-

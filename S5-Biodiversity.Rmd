@@ -9,6 +9,7 @@ output:
   bookdown::pdf_document2:
     number_sections: false
     toc: false
+  bookdown::word_document2: default
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes
@@ -43,14 +44,13 @@ load(file.path(path, '../../maturity', 'matureData.Rdata'))
 mature <- datal$time ; rm(datal)
 ```
 
-This document explore graphically the result of the biodiversity net effect partitionning. More especially we want to look if the representation from figure \@ref(fig:gBE) is correct, with the dynamic biodiversity net effect normalized by the control across ecosystems. In order to do that we will start by looking into the dynamic of a single ecosystem \@ref(fig:gBEsingle), we will then move to all ecosystem not normalized by the control \@ref(fig:gBEunorm), before validating our current representation \@ref(fig:gBE).
+This document explores graphically the result of the biodiversity net effect partitionning. More especially we want to look if the representation from figure \@ref(fig:gBE) is correct, with the dynamic biodiversity net effect normalized by the control across ecosystems. In order to do so, we will start by looking into the dynamics of a single ecosystem \@ref(fig:gBEsingle), we will then move to all ecosystems not normalized by the control \@ref(fig:gBEunorm), before validating our current representation \@ref(fig:gBE).
 
 # Single ecosystem biodiversity dynamic
 
-The net effect of biodiversity on ecosystem recovery was partitioned between selection and complementarity effect. We are thus able for one community to look at aboveground biomass dynamic after and before disturbance in control and disturbed ecosystems and correspondig bioviersity net effect, selection effect and complementarity effect (figure \@ref(fig:gBEsingle)). Similarly to global aboveground biomass from the ecosystem the biodiversity net effect and selection effect decrease following the disturbance, whereas the complementarity effect directly increase following the disturbance. Interestingly, we can see that this pattern of decrease of selection effect after disturbance and recovery after is similar to the effect of succession in forest early stages (first century, sub-figure on left-bottom on figure \@ref(fig:gBEsingle)).
+The net effect of biodiversity on ecosystem recovery was partitioned between selection and complementarity effect. We are thus able for one community to look at aboveground biomass dynamic after and before disturbance in control and disturbed ecosystems and correspondig net biodiversity effect, selection effect and complementarity effect (figure \@ref(fig:gBEsingle)). Similarly to the aboveground biomass of the ecosystem, the net biodiversity effect and selection effect decrease following the disturbance, whereas the complementarity effect directly increases following the disturbance. Interestingly, we can see that this pattern of decrease of selection effect after disturbance and recovery after is similar to the effect of succession in forest early stages, when the new cohort arrives selection effect suddenly decreases and complementarity effect insure a small net effect (first century, sub-figure on left-bottom on figure \@ref(fig:gBEsingle)). Anyway the pattern is stronger after a disturbance, maybe due to an increased diversity allowing a stronger diversity effect.
 
-
-```{r gBEsingle, fig.cap='Dynamic of complementarity and selection effects before and after the disturbance event for one ecosystem including 125 species. Solid lines represents the mean value whereas areas represents the interval of values among simulations.'}
+```{r gBEsingle, fig.cap='Dynamic of complementarity and selection effects before and after the disturbance event for one ecosystem simulation including 125 species. Solid lines represents the mean value whereas areas represents the interval of values among simulations.'}
 g <- BE %>% 
   select(sim, BE, time, agb) %>% 
   separate(sim, c("SR", "CHV", "disturbance"), remove = F) %>% 
@@ -71,7 +71,7 @@ g <- BE %>%
           separate(sim, c("SR", "CHV"), remove = F) %>% 
           mutate(disturbance = "0-75") %>% 
           separate_rows(disturbance, sep = "-", convert = T)) %>% 
-  filter(SR == 125, disturbance %in% c(0,75), CHV == 4) %>% 
+  filter(SR == 125, disturbance %in% c(0,75), CHV == 10) %>% # 10, 3
   reshape2::dcast(SR + CHV + BE + time ~ disturbance, value.var = "agb") %>% 
   rename(control = `0`, disturbed = `75`) %>% 
   ggplot(aes(x = time, col = BE, group = BE)) +
@@ -88,24 +88,23 @@ g0 <- g +
 gdist <- g + 
   geom_line(aes(y = control, linetype = "control"), lwd = 1.4) +
   geom_line(aes(y = disturbed, linetype = "disturbed"), lwd = 1.4) + 
-  xlim(-10,50) + ylim(NA, 60000) +
+  xlim(-10,100) + ylim(-30000, 40000) +
   scale_color_discrete(guide = F) +
   scale_linetype_discrete(guide = F)
 gstart <- g + 
   geom_line(aes(y = control, linetype = "control"), lwd = 1.4) +
   geom_line(aes(y = disturbed, linetype = "disturbed"), lwd = 1.4) + 
-  xlim(-600,-500) + ylim(NA, 50000) +
+  xlim(-600,-500) + ylim(-30000, 40000) +
   scale_color_discrete(guide = F) +
   scale_linetype_discrete(guide = F)
-gridExtra::grid.arrange(g0, gstart, gdist, 
-                        layout_matrix = rbind(c(1, 1), c(2, 3)))
+gridExtra::grid.arrange(g0, gstart, gdist, layout_matrix = rbind(c(1, 1), c(2, 3)))
 ```
 
 # Non-normalized ecosystems biodiversity dynamic
 
-If we aggregate the result of all community with 125 species, we still observe the same pattern (figure \@ref(fig:gBEunorm)). But due to an increase of biodiversity net effect through recovery time, complementarity importance in early recovery is less visible over a long period. Consequently normalizing by control biodiversity net effect can help avoiding this issue.
+If we aggregate the result of all community with 125 species, we still observe the same pattern for all simulations compard to the single previous one (figure \@ref(fig:gBEunorm)). But due to an increase of biodiversity net effect through recovery time, complementarity importance in early recovery is less visible over a long period. Consequently normalizing by control biodiversity net effect can help avoiding this issue.
 
-```{r gBEunorm, fig.cap='Dynamic of complementarity and selection effects for all ecosystems including 125 species. Solid lines represents the mean value whereas areas represents the interval of values among simulations.'}
+```{r gBEunorm, fig.cap='Dynamic of complementarity and selection effects for all ecosystems including 125 species. Solid lines represents the mean value whereas areas represents the range of values among simulations.'}
 BE %>% 
   rbind(mutate(ecosystem, BE = "ecosystem")) %>% 
   left_join(., doe, by = 'sim') %>%
@@ -130,7 +129,7 @@ The net effect of biodiversity on ecosystem recovery was partitioned between sel
 ```{r gBE, echo=FALSE, fig.cap='Recovery of complementarity and selection effects. Complementarity effect (CE) and selection effect (SE) where normalized by control net effect (NEc), thus measuring their recovery over time. Solid lines represents the mean value whereas areas represents the interval of values among simulations.', cache=TRUE}
 BEresilience %>% 
   left_join(., doe, by = 'sim') %>%
-  filter(SR == 125) %>% 
+  filter(SR == 125) %>%
   # filter(BE %in% c('SE', 'CE')) %>%
   group_by(time, BE, disturbance, SR) %>%
   summarise(qt1 =quantile(agb, probs=0.05),

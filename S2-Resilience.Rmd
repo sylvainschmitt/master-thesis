@@ -9,6 +9,7 @@ output:
   bookdown::pdf_document2:
     number_sections: false
     toc: false
+  bookdown::word_document2: default
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes
@@ -75,10 +76,13 @@ mature %>%
               fill = "lightgrey", col = NA, alpha = 0.5) +
   xlab("Time (years)") +
   ylab("Aboveground biomass (tonC/ha)") +
-  scale_color_discrete("Simulation")
+  scale_color_discrete("Simulation") +
+  scale_color_discrete("Disturbance\nintensity\n(% of BA)", 
+                       labels = c("0 (control)", "50 (disturbed)")) + 
+  ggsave(filename = "./images/original.png", width = 20, height = 10, units = "cm")
 ```
 
-This document introduce and explain the recovery function $R(X)$ and the resilience indice $I_R$ definitions (figure \@ref(fig:IrGraphFinal)).
+This document introduces and explains the recovery function $R(X)$ and the resilience indice $I_R$ definitions (figure \@ref(fig:IrGraphFinal)). Resilience concept has met numerous definitions, but resilience in ecology can encompass both ecosystem ability to adsorb and recover from disturbance, resistance and recovery respectively [@Gunderson2010].
 
 ```{r IrGraphFinal, fig.cap="Definition of recovery function and resilience indice shown on aboveground biomass dynamics of a control and disturbed ecosystem before and after the disturbance event."}
 knitr::include_graphics("images/final.png")
@@ -86,7 +90,7 @@ knitr::include_graphics("images/final.png")
 
 # Recovery
 
-The recovery of the simulated forest ecosystem at a time $t$, $R(t)$ regarding a given properties $X$ was defined ad follows:
+The recovery of the simulated forest ecosystem, i.e. the ecosystem capacity to recover from a disturbance event, at a time $t$, $R(t)$ regarding a given property $X$ was defined ad follows:
 
 \begin{equation}
   R[X(t)] = \frac{X_D(t)}{X_C(t)}
@@ -97,14 +101,14 @@ where $X_D(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the d
 
 # Resilience
 
-When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$. Because the intensity of disturbance was the same for all simulations, our analysis did not include any ecosystem resistance. Consequently, we can use the cummulated recovery as an indice of ecosystem resilience, further defined as $I_R$:
+When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$. Because the intensity of disturbance was the same for all simulations, our analysis did not include any ecosystem resistance, i.e. the ecosystem capacity to absorb a disturbance event,. Consequently **in this particular case**, we can use the cummulated recovery as an indice of ecosystem resilience, further defined as $I_R$:
 
 \begin{equation}
   I_R(X) = \int _{t=0} ^{t=600} \frac{X_D(t)}{X_C(t)}.dt
   (\#eq:Resilience)
 \end{equation}
 
-Ecosystem euclidean distance to equilibrium distance was calculated in a multi-dimensional space for the two following forest functions : (i) forest structure (AGB, BA, N, N10, and N30) and (ii) forest functioning (GPP, NPP, Rday, and Rnight). We then integrated the euclidean distances over time to get our ecosystem resilience indice. (Figure \@ref(fig:datatrans)). We used the cumulative integral after 600 years defined as $I_R$ as a measurement of ecosystem resilience. A high value of $I_R$ indicating a slow recovery.
+A high value of $I_R$ indicating a slow recovery. Ecosystem euclidean distance to equilibrium distance was calculated in a multi-dimensional space for the two following forest functions : (i) forest structure (AGB, BA, N, N10, and N30, e.g. figure \@ref(fig:datatrans)) and (ii) forest functioning (GPP, NPP, Rday, and Rnight).
 
 ```{r datatrans, echo=FALSE, fig.cap='Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate recovery (**B**); recovery of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance at equilibrium is integrated over time in a cumulative sum (**D**). ', cache=TRUE, fig.height=8, fig.width=12, message=FALSE}
 cols <- RColorBrewer::brewer.pal(3, "YlOrRd")
@@ -160,8 +164,4 @@ g_Ieq <- Deq %>%
 cowplot::plot_grid(g_agb, g_resilience, g_deq, g_Ieq, labels = LETTERS[1:4])
 ```
 
-
-```{r}
-
-```
-
+# References

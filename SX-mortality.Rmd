@@ -1,0 +1,57 @@
+---
+title: "Nino mortality issue"
+date: '`r Sys.Date()`'
+output:
+  bookdown::pdf_document2:
+    number_sections: false
+    toc: false
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float: yes
+csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
+
+```{r config, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls()); invisible(gc())
+library(knitr)
+library(kableExtra)
+if(knitr:::is_html_output()) options(knitr.table.format = "html") 
+if(knitr:::is_latex_output()) options(knitr.table.format = "latex") 
+library(tidyverse)
+library(broom)
+theme_set(bayesplot::theme_default())
+opts_chunk$set( echo = T, message = F, warning = F, 
+                fig.height = 8, fig.width = 12,
+                cache = T, cache.lazy = F)
+```
+
+
+This document explore if the issue encoutered by Nino of over-mortality in years following the selective logging appeared in my simulations too in TROLL version 2.3.1 with my previous version of the sylviculture module.
+
+```{r data}
+path <- '~/Documents/ECOFOG/Results/disturbance/sylviculture/data/'
+load(file.path(path, 'ecosystem.Rdata'))
+ecosystem <- ecosystem %>% 
+  separate(sim, c("SR", "CHV", "control"), remove = F, extra = "drop") %>% 
+  filter(SR == 125, is.na(control))
+Vkilled <- ecosystem %>% 
+  group_by(sim) %>% 
+  filter(time %in% 1:2) %>% 
+  arrange(time) %>% 
+  summarise(Vkilled = 1-last(agb)/first(agb)) %>% 
+  select(Vkilled) %>% unlist()
+```
+
+```{r plot}
+ggplot(ecosystem, aes(time, agb, color = sim)) +
+  geom_point() +
+  geom_line() +
+  ggtitle(paste("Volume killed:", round(mean(Vkilled*100), 2), 
+            "%", "(+/-", round(sd(Vkilled*100), 2), "%)")) +
+  scale_color_discrete(guide = F) +
+  xlim(0,10)
+```
+

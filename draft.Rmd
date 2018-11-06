@@ -1,14 +1,8 @@
 ---
-title: Functional diversity improves tropical forest recovery from disturbance shifting from complementarity to selection effect (to rework)
+title: Biodiversity improves tropical forest resilience, shifting from complementarity to selection effect
 author: "Sylvain Schmitt, Isabelle Maréchaux, Jerome Chave, Fabian Fischer, Camille Piponiot, Stéphane Traissac & Bruno Hérault"
 date: '`r Sys.Date()`'
 output:
-  bookdown::html_document2:
-    number_sections: false
-    toc: true
-    toc_float: yes
-  bookdown::word_document2: default
-  github_document: default
   bookdown::pdf_document2:
     includes:
       before_body: ./template/doc_prefix.tex
@@ -16,6 +10,12 @@ output:
     number_sections: false
     toc: false
     keep_tex: true
+  bookdown::word_document2: default
+  github_document: default
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float: yes
 linestretch: 1.5
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
@@ -42,29 +42,25 @@ cvh <- 1:20
 dist <- c(0,25,50,75)
 path <- '~/Documents/ECOFOG/Results/disturbance/disturbance/data'
 load(file.path(path, 'disturbanceDOE.Rdata'))
+doe <- rename(doe, SR = richness)
 load(file.path(path, 'disturbanceData.Rdata'))
 load(file.path(path, 'disturbanceResilience.Rdata'))
 ```
 
 ```{r Deq, cache=TRUE, echo=FALSE}
-deq <- data.frame(
-  time = resilience$time,
-  sim = resilience$sim,
-  structure = apply(resilience[c('agb', 'ba', 'n', 'n10', 'n30')], 1, 
-                  function(x) sqrt(sum((rep(1, length(x)) - x)^2))),
-  production = apply(resilience[c('gpp', 'npp', 'Rday', 'Rnight')], 1, 
-                  function(x) sqrt(sum((rep(1, length(x)) - x)^2)))
-)
+Deq <- resilience %>% 
+  group_by(time, sim) %>% 
+  mutate_all(funs((1-.)^2)) %>% 
+  mutate(structure = sqrt(sum(agb, ba, n, n10, n30))) %>% 
+  mutate(production = sqrt(sum(gpp, npp, Rday, Rnight)))
 ```
 
-```{r Ieq, cache=TRUE, echo=FALSE}
-sim <- c(sapply(c(sapply(rich, function(r) paste0(r, '.', cvh))), function(x) paste0(x, '.', dist[-1])))
-Ieq <- sapply(sim, function(s){
-  data_s <- subset(deq, sim ==s)
-  return(cbind(data_s[c(1,2)], cumsum(data_s[-c(1,2)])))
-}, simplify = F) ; rm(sim)
-Ieq <- data.frame(do.call('rbind', Ieq))
-names(Ieq)[3:4] <- paste0('Ieq.', names(Ieq)[3:4])
+```{r Ir, cache=TRUE, echo=FALSE}
+Ir <- Deq %>% 
+  group_by(sim) %>% 
+  arrange(time) %>% 
+  mutate_at(vars(-time, -sim), cumsum) %>% 
+  filter(time == 600)
 ```
 
 # Abstract
@@ -73,23 +69,23 @@ names(Ieq)[3:4] <- paste0('Ieq.', names(Ieq)[3:4])
 
 # Introduction 
 
-Natural disturbances caused by tree death play a major role in tropical forest functioning through gap-phase regeneration [@Veblen1992]. Climate change and direct human activities are currently deeply modifying forest disturbance regimes [@Davidson2012; @Lewis2015]. If deforestation has been rightly the focus of worldwide attention, forest degradation has been less studied and quantified through tropics [@Putz2010; @Simula2009]. However, degraded forests cover areas over ten times larger than deforestation [@Herold2011], a majority of which is being logged for timber production [@Blaser2011]. Forest degradation can trigger severe biodiversity loss [@Burivalova2014] and is estimated to account for 20.7 billion of tons of carbon dioxide emissions per year [@Pearson2017], representing 20% of greenhouse gas emissions in the Brazilian Amazon [@Asner2005]. Understanding the drivers of tropical forest resilience to disturbance is thus critical.
+Natural disturbances caused by tree death play a major role in tropical forest functioning through gap-phase regeneration [@Veblen1992]. Climate change and direct human activities are currently deeply modifying forest disturbance regimes [@Davidson2012; @Lewis2015]. If deforestation has been rightly the focus of worldwide attention, forest degradation has been less studied and quantified through tropics [@Putz2010; @Simula2009]. However, degraded forests cover areas over ten times larger than deforestation [@Herold2011], a majority of which is being logged for timber production [@Blaser2011]. Forest degradation can trigger severe biodiversity loss [@Burivalova2014] and is estimated to account for 20.7 billion of tons of carbon dioxide emissions per year [@Pearson2017], representing 20% of greenhouse gas emissions in the Brazilian Amazon [@Asner2005].  In addition to the direct impact of human on forests, a more insidious disturbance is climate change [@Herault2016]. Understanding the drivers of tropical forest resilience to disturbance is thus critical. Here we explored the role of biodiversity in tropical forests answer to disturbances through a simulation approach.
 
-Resilience concept has met numerous definitions, but resilience in ecology can encompass both ecosystem ability to adsorb and recover from disturbance, resistance and recovery respectively [@Gunderson2010]. Both exogenous (e.g. climate, disturbance features) and endogenous (e.g. forest structure and composition) factors can drive ecosystem recovery after disturbance. Among the former, logging intensity has been reported to strongly control and increase time-to-recovery of post-logging tree carbon, subsequent animal biodiversity loss, and change in tree species composition [@Burivalova2014; @DeAvila2015; @Rutishauser2015]. Among endogenous drivers, forest pre-disturbance composition has been identified as a key driver of forest recovery [@Herault2018], as different species respond differently to perturbations depending on their ecological strategies and functional properties [@herault_functional_2011]. Beyond species identity, tree community diversity may also foster forest resilience to perturbations [@Cadotte2011; @Ives2007; @Loreau2013]. 
+Resilience concept has met numerous definitions, but resilience in ecology can encompass both ecosystem ability to adsorb and recover from disturbance, resistance and recovery respectively [@Gunderson2010]. Both exogenous (e.g. climate, disturbance features) and endogenous (e.g. forest structure and composition) factors can drive ecosystem recovery after disturbance. Among the former, logging intensity has been reported to strongly control and increase time-to-recovery of post-logging tree carbon, subsequent animal biodiversity loss, and change in tree species composition [@Burivalova2014; @DeAvila2015; @Rutishauser2015]. Among endogenous drivers, forest pre-disturbance composition has been identified as a key driver of forest recovery [@Herault2018], as different species respond differently to perturbations depending on their ecological strategies and functional properties [@herault_functional_2011]. Beyond species identity, tree community diversity may also foster forest resilience to perturbations [@Cadotte2011; @Ives2007; @Loreau2013]. Finally, climate change effect on tropical areas results in a significant risk of precipitation decrease [@Davidson2012], whereas intense drought events has been shown to result in huge mortality rates and biomass loss [@Phillips2009].
 
 Two types of mechanisms can underlie an effect of biodiversity on ecosystem properties: complementarity and selection effects [@Loreau2001]. Complementarity effect results from resources partitioning and niche differentiation, and facilitation, leading to a more efficient use of available resources. Selection effect results from a higher probability of more diverse community to include particularly efficient species regarding ecosystem process or stability. Moreover the sampling effect additionally implies redundancy and a lower risk to lose important functional traits, further improving resilience of species rich-forest [@Hooper2005a; @Tilman2001].
 
-The effect of biodiversity on ecosystem functioning has been intensely studied over the last decades, through theoretical work [@Loreau2010], experiments [@Cardinale2009], or observations along natural gradient of biodiversity [@Chisholm2013; @Liang2016; @Paquette2011; @Poorter2017]. However, experiments have mostly been conducted on grasslands [@Hector2005], while studies relying on forest stand inventories often lack repeatability [@Schnitzer2016], rarely include logged forests [@Sist2015], and monitoring temporal coverage remains too low to assess long-term effect as trees are long-lived organisms [@Herault2018]. Forest simulators have thus proven useful to investigate the effect of biodiversity on forest ecosystem functioning through virtual biodiversity experiments [@Morin2011; @Morin2014; @Sakschewski2016], but the problem of biodiversity representation beyond a few plant functional types in models of tropical forests have long been an impediment to apply this approach to this species-rich ecosystem [@Kazmierczak2014; @Kohler1998; @Purves2008].
+The effect of biodiversity on ecosystem functioning has been intensely studied over the last decades, through theoretical work [@Loreau2010], experiments [@Cardinale2009], or observations along natural gradient of biodiversity [@Chisholm2013; @Liang2016; @Paquette2011; @Poorter2017]. However, experiments have mostly been conducted on grasslands [@Hector2005], while studies relying on forest stand inventories often lack repeatability [@Schnitzer2016], rarely include disturbed forests [@Sist2015], and monitoring temporal coverage remains too low to assess long-term effect as trees are long-lived organisms [@Herault2018]. Forest simulators have thus proven useful to investigate the effect of biodiversity on forest ecosystem functioning through virtual biodiversity experiments [@Morin2011; @Morin2014; @Sakschewski2016] However, the problem of biodiversity representation beyond a few plant functional types in models of tropical forests have long been an impediment to apply this approach to this species-rich ecosystem [@Kazmierczak2014; @Kohler1998; @Purves2008].
 
 In the present study, we take advantage of recent developments made in the forest simulator TROLL [@Chave1999], an individual-based and spatially-explicit model of tropical forest, that allow to deal with high diversity levels through a parameterization using plant functional traits [@Marechaux2017]. Consequently, TROLL offers the opportunity to study biodiversity-ecosystem functioning *in silico* in tropical forest communities.
 
-We used a simulation approach to assess the effect of species richness and functional composition on long-term forest recovery from disturbances of different levels. We manipulated species number and identity across a large number of simulations, and measured the biodiversity net effect on simulated forest recovery after disturbance. In order to further investigate the mechanisms underlying such potential effect of biodiversity, we partitioned it into complementarity and selection effects. Based on the general hypothesis of a positive relationships between biodiversity and productivity [@Liang2016], we hypothesized that more diverse forest will recover quicker to a disturbance due to an increased productivity.
+We used a simulation approach to assess the effect of species richness and functional composition on long-term forest recovery from disturbances of different levels. Generally, a disturbance can be characterized by a loss of individuals at a specific time. Individual loss can be more or less targeted on individual characteristics (i.e. species, diameter...) and time can be cyclic or not. To have an overview of disturbance effect without confounding effect of disturbance type specificity, we used untargeted disturbance happening only once. We manipulated species number and identity across a large number of simulations, and measured the biodiversity net effect on simulated forest recovery after disturbance. In order to further investigate the mechanisms underlying such potential effect of biodiversity, we partitioned it into complementarity and selection effects. Based on the general hypothesis of a positive relationships between biodiversity and productivity [@Liang2016], we hypothesized that more diverse forest will recover quicker to a disturbance event due to an increased productivity.
 
 # Material and Methods
 
 ## TROLL Model
 
-TROLL is an individual-based and spatially explicit forest dynamic model in which the life cycle of individual trees (recruitment, growth, seed production and death) $>1cm$ diameter is simulated. Trees grows in a forest light environment explicitly computed within a $1m^3$ resolution voxel grid. Seedlings below the $1cm$ size class are not modeled explicitly, but are part of a seed/seedlings pool. A maximum of one tree can establish in each $1*1m$ pixel. Each tree is defined by its age, diameter at breast height (dbh), height (h), crown radius (CR), crown depth (CD) and leaf area (LA). Tree geometry is calculated with allometric relationships. Additionally, each tree is flagged with a species label inherited from the parent tree through the seedling recruitment. To each species label is associated a number of species-specific traits (Table \@ref(tab:traits)) from which processes are simulated using up-to-date established relationships drawn from the literature. The model thus represents tree biodiversity in a realistic way, where data requirement and model outputs parallel current trait collection efforts and field inventories, respectively.
+TROLL is an individual-based and spatially explicit forest dynamic model in which the life cycle of individual trees (recruitment, growth, seed production and death) $>1cm$ diameter is simulated. Trees grow in a forest light environment explicitly computed within a $1m^3$ resolution voxel grid. Seedlings below the $1cm$ size class are not modeled explicitly, but are part of a seed/seedlings pool. A maximum of one tree can establish in each $1*1m$ pixel. Each tree is defined by its age, diameter at breast height (dbh), height (h), crown radius (CR), crown depth (CD) and leaf area (LA). Tree geometry is calculated with allometric relationships. Additionally, each tree is flagged with a species label inherited from the parent tree through the seedling recruitment. To each species label is associated a number of species-specific traits (Table \@ref(tab:traits)) from which processes are simulated using up-to-date established relationships drawn from the literature. The model thus represents tree biodiversity in a realistic way, where data requirement and model outputs parallel current trait collection efforts and field inventories, respectively.
 
 Carbon assimilation is computed over half-hourly period of a representative day per month using the Farquhar, von Caemmerer, and Berry model of photosynthesis [@Farquhar1980].  Photosynthetic capacities, as well as leaf respiration rate, are computed from species-specific leaf concentration of nitrogen (N) and phosphorous (P), and leaf mass per area [LMA; @Atkin2015; @Domingues2010]. The net amount of assimilated carbon available for growth is then partitioned among the different plant organs using empirical factors, and converted into increments of stem volume and leaf area using species-specific wood-density and LMA respectively. Leaf demography is simulated using species-specific leaf lifespan derived from LMA. Following an underestimation of leaf lifespan for low LMA species, we designed our own leaf lifespan allometry, specific to tropical tree species, to be used in subsequent analysis (see supplementary materials S1). Natural tree deaths are stochastic events whose background rate is negatively correlated with wood density, as observed pan-tropically [@kraft_functional_2010; @poorter_are_2008; @Wright2010]. Additionally, tree can die due to carbon starvation or treefalls. Below-ground processes, herbaceous plants, epiphytes and lianas are not simulated in this version of TROLL. The source code is written in C++ and available at https://github.com/TROLL-code/TROLL. A further detailed description of the model is available in @Marechaux2017.
 
@@ -102,11 +98,11 @@ table <- data.frame(
 knitr::kable(table, caption = 'Species-specific parameters used in TROLL from @Marechaux2017 Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.', format = 'pandoc')
 ```
 
-A new disturbance module was developed for this study. At a given iteration $disturb_{iter}$, individual trees are randomly picking following a uniform law and without any individuals nor species targeting. Selected individuals are then removed without triggering a treefall to avoid any side effect. The operation is repeated until the disturbance result in a defined removed basal area ($disturb_{intensity}$).
+A new disturbance module was developed for this study. In order to have a general overview of disturbance effect on forest recovery, we used untargeted disturbance happening only once to be free of confounding factors due to disturbance type specificity. At a given iteration $disturb_{iter}$, individual trees are randomly picked following a uniform law and without any individuals nor species targeting. Selected individuals are then removed without triggering a treefall to avoid any side effect. The operation is repeated until the disturbance result in a defined removed basal area ($disturb_{intensity}$).
 
 ## Simulation experiment
 
-In order to assess the role of biodiversity on ecosystem recovery from disturbance, we  simulated forest trajectories for different levels of disturbance intensity and tree community compositions. For each simulation, we first simulated forest regeneration from bare soil for 600 years [pre-disturbance step, @Marechaux2017], then simulated the disturbance described as above ($disturb_{iter}$), and finally let the simulated forest community freely recover from the disturbance during 600 years (post-disturbance step). Disturbance intensity was quantified by the percentage of basal area loss, here fixed at 0% (control), 25%, 50% and 75%. For each level of disturbance, we performed simulations differing in the original number of species ($SR=15,25,125$) and composition. For each level of species richness, we created 1000 virtual communities by randomly picking desired number of species among the regional species pool. We used 20 communities for simulations with a large range of convex hull volume $CVH$ but with a community weighted mean close to the regional species pool community weighted mean. This led to 240 simulations varying in community composition and disturbance intensity ($3~SR*20~CHV*4~ levels~of~disturbance$).
+In order to assess the role of biodiversity on ecosystem recovery from disturbance, we  simulated forest trajectories for different levels of disturbance intensity and tree community compositions. For each simulation, we first simulated forest regeneration from bare soil for 600 years (pre-disturbance step), then simulated the disturbance described as above ($disturb_{iter}$), and finally let the simulated forest community freely recover from the disturbance during 600 years (post-disturbance step). Disturbance intensity was quantified by the percentage of basal area loss, here fixed at 0% (control), 25%, 50% and 75%. For each level of disturbance, we performed simulations differing in the original number of species ($SR=15,25,125$) and composition. We proceeded in two steps: (i) for each level of species richness, we created 1000 virtual communities by randomly picking desired number of species among the regional species pool; (ii) among those 1000 communities, we selected 20 communities for simulations with a large range of convex hull volume $CVH$ [@Cornwell2006a] but with a community weighted mean close to the regional species pool community weighted mean in order to observe change in functional diversity and not in functional composition. This led to 240 simulations varying in community composition and disturbance intensity ($3~SR*20~CHV*4~ levels~of~disturbance$). We focused on functional richness with convex hull volume $CVH$ and functional mean with community weighted mean $CWM$ to define simulation communities.
 
 All simulations were made with a parameterization for an Amazonian forest of French Guiana, with 163 parameterized species, as in @Marechaux2017.
 
@@ -114,75 +110,37 @@ All simulations were made with a parameterization for an Amazonian forest of Fre
 
 ### Quantifying simulated community diversity
 
-We focused on functional richness with convex hull volume $CHV$ and functional mean with community weighted mean $CWM$ to define simulation communities. Whereas species and functional diversities were assessed for each simulation at the end of the pre-disturbance step with species richness ($SR$) and @villeger_dynamique_2008 indices ($FRIC$, $FEve$, and $FDiv$).
+Species and functional diversities were assessed for each simulation at the end of the pre-disturbance step with species richness ($SR$) and @villeger_dynamique_2008 indices ($FDiv$, the volume of the functional space occupied by the community, and $FEve$, the regularity of the distribution of abundance in this volume) using the `FD` R package [@laliberte_distance-based_2010-1].
 
 ### Ecosystem recovery from disturbance
 
-**We described the simulated tropical forests from changes in values of forest structure (aboveground biomass ($AGB$ in $ton~C.ha^{-1}$), basal area ($BA$ in $m^2.ha^{-1}$), total number of stem ($N$), number of stem above $10~cm$ diameter ($N10$), and number of stem above $30~cm$ diameter ($N30$)) and in values of forest functioning (growth primary productivity ($GPP$ in $MgC.ha^{-1}$), net primary productivity ($NPP$ in $MgC.ha^{-1}$), tree autotrophic respiration in day ($Rday$ in $MgC.ha^{-1}$) and tree autotrophic respiration in night ($Rnight$ in $MgC.ha^{-1}$)).**
+We described the simulated tropical forests from changes in values of forest structure (aboveground biomass ($AGB$ in $ton~C.ha^{-1}$), basal area ($BA$ in $m^2.ha^{-1}$), total number of stem ($N$), number of stem above $10~cm$ diameter ($N10$), and number of stem above $30~cm$ diameter ($N30$)) and in values of forest functioning (growth primary productivity ($GPP$ in $MgC.ha^{-1}$), net primary productivity ($NPP$ in $MgC.ha^{-1}$), tree autotrophic respiration in day ($Rday$ in $MgC.ha^{-1}$) and tree autotrophic respiration in night ($Rnight$ in $MgC.ha^{-1}$)).
 
-The recovery of the simulated forest ecosystem at a time $t(R(t))$ regarding a given properties $X$ was defined ad follows:
+The recovery of the simulated forest ecosystem, i.e. the ecosystem capacity to recover from a disturbance event, at a time $t$, $R(t)$ regarding a given property $X$ was defined ad follows (Figure \@ref(fig:IrGraphFinal)):
 
 \begin{equation}
-  R\left(t\right)= \frac{X_T(t)}{X_C(t)}
+  R[X(t)] = \frac{X_D(t)}{X_C(t)}
   (\#eq:Recovery)
 \end{equation}
 
-where $X_T(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the disturbed simulation ($disturb_{intensity} = 25\%, 50\%, 75\%$) and in the undisturbed control simulation ($disturb_{intensity} = 0\%$). Note that demographic stochasticity in the model induces a low variability among replicated simulations with the same set-up so that **XX** [@Marechaux2017]. When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$. **Ecosystem euclidean distance to equilibrium distance was calculated in a multi-dimensional space for (the two functions described above: (i) forest structure (AGB, BA, N, N10, and N30) and (ii) forest functioning (GPP, NPP, Rday, and Rnight). We then integrate the euclidean distances over time to get our ecosystem recovery indicators.** (Figure \@ref(fig:datatrans)). We used the cumulative integral after 600 years $Ieq_{600}$ as a measurement of ecosystem recovery. A high value of $Ieq_{600}$ indicating a slow recovery. The influence of pre-disturbance species richness ($SR$), functional evenness ($FEve$) and functional diversity ($FDiv$) on ecosystem recovery index $Ieq_{600}$  was finally investigated by linear regression ($Ieq_{600} \sim SR + FEve + FDiv$).
+where $X_D(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the disturbed simulation ($disturb_{intensity} = 25\%, 50\%, 75\%$) and in the undisturbed control simulation ($disturb_{intensity} = 0\%$). Note that demographic stochasticity in the model induces a low variability among replicated simulations with the same set-up so that we did not include repetition of virtual communities simulations [@Marechaux2017].
 
-```{r datatrans, echo=FALSE, fig.cap='Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate recovery (**B**); recovery of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance at equilibrium is integrated over time in a cumulative sum (**D**). ', cache=TRUE, fig.height=8, fig.width=12, message=FALSE}
-cols <- RColorBrewer::brewer.pal(3, "YlOrRd")
-g_agb <- ecosystem %>% 
-  left_join(., doe, by = 'sim') %>%
-  filter(richness == 125) %>% 
-  filter(cvh == 1) %>% 
-  ggplot(aes(x = time, y = agb/1000, color = disturbance)) +
-  geom_point() +
-  xlab('Time (years)') +
-  ylab('Aboveground biomass (tonC/ha)') +
-  scale_color_manual('Disturbance\nintensity\n(% of BA)',
-                       values=c("#999999", cols))
-g_resilience <- resilience %>% 
-  left_join(., doe, by = 'sim') %>%
-  filter(richness == 125) %>% 
-  filter(cvh == 1) %>% 
-  ggplot(aes(x = time, y = agb, color = disturbance)) +
-  geom_hline(yintercept = 1, col = 'red') +
-  geom_point() +
-  xlab('Time (years)') +
-  ylab('Resilience of aboveground biomass') +
-  scale_color_manual('Disturbance\nintensity\n(% of BA)',
-                     values = cols)
-g_deq <- deq %>% 
-  left_join(., doe, by = 'sim') %>%
-  filter(richness == 125) %>% 
-  filter(cvh == 1) %>% 
-  ggplot(aes(x = time, y = structure, 
-             color = disturbance, fill = disturbance)) +
-  geom_hline(yintercept = 0, col = 'red') +
-  geom_point() +
-  geom_area(alpha = 0.2) +
-  xlab('Time (years)') +
-  ylab('Distance to forest structure equilibrium\n(AGB, BA, N, N10 and N30)') +
-  scale_color_manual('Disturbance\nintensity\n(% of BA)',
-                     values = cols) +
-  scale_fill_manual('Disturbance\nintensity\n(% of BA)',
-                     values = cols)
-g_Ieq <- Ieq %>% 
-  left_join(., doe, by = 'sim') %>%
-  filter(richness == 125) %>% 
-  filter(cvh == 1) %>% 
-  ggplot(aes(x = time, y = Ieq.structure, color = disturbance)) +
-  geom_point() +
-  xlab('Time (years)') +
-  ylab('Cummulative integral of\ndistance to forest structure equilibrium\n(AGB, BA, N, N10 and N30)') +
-  scale_color_manual('Disturbance\nintensity\n(% of BA)',
-                     values = cols)
-cowplot::plot_grid(g_agb, g_resilience, g_deq, g_Ieq, labels = LETTERS[1:4])
+When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$. Because the intensity of disturbance was the same for all simulations, our analysis did not include any ecosystem resistance, i.e. the ecosystem capacity to absorb a disturbance event. Consequently in this particular case, we can use the cummulated recovery as an index of ecosystem resilience, further defined as $I_R$ (Figure \@ref(fig:IrGraphFinal)):
+
+\begin{equation}
+  I_R(X) = \int _{t=0} ^{t=600} \frac{X_D(t)}{X_C(t)}.dt
+  (\#eq:Resilience)
+\end{equation}
+
+A high value of $I_R$ indicating a slow recovery. Ecosystem euclidean distance to equilibrium and resilience index $I_R$ was calculated in a multi-dimensional space for the two following forest functions : (i) forest structure ($AGB$, $BA$, $N$, $N10$, and $N30$) and (ii) forest functioning ($GPP$, $NPP$, $Rday$, and $Rnight$). The influence of pre-disturbance species richness ($SR$), functional evenness ($FEve$) and functional diversity ($FDiv$) on ecosystem resilience index $I_R$  was finally investigated by linear regression ($I_R \sim SR + FEve + FDiv$).
+
+```{r IrGraphFinal, fig.cap="Definition of recovery function and resilience indice shown on aboveground biomass dynamics of a control and disturbed ecosystem before and after the disturbance event."}
+knitr::include_graphics("images/final.png")
 ```
 
 ### Biodiversity effect
 
-The net effect of biodiversity on ecosystem recovery (NE) is defined as the difference between the ecosystem recovery of the mixed-species community and the one expected under the null hypothesis that there is no effect of biodiversity, i.e. ecosystem recovery for the mixed-species community equals the abundance-weighted sum of that in monoculture [@Loreau2001]. We then split this net biodiversity effect in complementarity and selection effect using @Loreau2001 partitioning:
+The net effect of biodiversity ($NE$) on ecosystem property $X$ is defined as the difference between the ecosystem property $X$ of the mixed-species community and the one expected under the null hypothesis that there is no effect of biodiversity, i.e. ecosystem property $X$ for the mixed-species community equals the abundance-weighted sum of that in monoculture [@Loreau2001]. We then split this net biodiversity effect in complementarity and selection effect using @Loreau2001 partitioning:
 
 \begin{equation}
   \begin{array}{c}
@@ -200,7 +158,7 @@ where $N$ represents the total number of species, and $M$ the vector of monocult
   (\#eq:DeltaRY)
 \end{equation}
 
-where $X_{sp}$ is the ecosystem variable value for one species either in mixture $X_{sp}(mixture)$ or in monoculture $X_{sp}(monoculture)$. $P_{sp}$ is the proportion of the species in the mixture represented by species relative abundance. Consequently, $CE$ averages diversity effects of all species presents in the mixture (both negatives and positives). Whereas $SE$ become positive when dominant species outperform themselves in mixture than in monoculture, and negative when less dominant species outperform themselves in mixture than in monoculture [@Tobner2016]. But similarly, to recovery measurement, biodiversity net effect $NE$ is a dynamic equilibrium and vary over time without disturbance. So in order to correctly assess selection and complementarity effect in answer to disturbance, we normalized it by ecosystem net effect $NE_C$ from the undisturbed control simulation ($disturb_{intensity} = 0\%$) to measure treatments net effect recovery $R(NE_T)$:
+where $X_{sp}$ is the ecosystem variable value for one species either in mixture $X_{sp}(mixture)$ or in monoculture $X_{sp}(monoculture)$. $P_{sp}$ is the proportion of the species in the mixture represented by species relative abundance. Consequently, $CE$ averages diversity effects of all species presents in the mixture (both negatives and positives). Whereas $SE$ become positive when dominant species outperform themselves in mixture than in monoculture, and negative when less dominant species outperform themselves in mixture than in monoculture [@Tobner2016]. But similarly, to recovery measurement, biodiversity net effect $NE$ is a dynamic equilibrium and vary over time without disturbance. So in order to correctly assess selection and complementarity effect role in tropical forest resilience, we normalized it by ecosystem net effect $NE_C$ from the undisturbed control simulation ($disturb_{intensity} = 0\%$) to measure treatments net effect recovery $R(NE_T)$:
 
 \begin{equation}
   R(NE_T) = \frac{NE_T}{NE_C} = \frac{SE_T}{NE_C} + \frac{CE_T}{NE_C}
@@ -213,33 +171,35 @@ Recovery trajectories of ecosystem variable after disturbance were partitioned b
 
 ## Ecosystem functions
 
-Species richness was not significantly influencing $Ieq_{600}$ with forest structure and had a small positive effect on forest production (Table \@ref(tab:tgIeq)). Increased functional diversity reduced cumulative integral from ecosystem distance to equilibrium after 600 years ($Ieq_{600}$) and functional evenness was complementary reducing $Ieq_{600}$ (Figure \@ref(fig:gIeq) and Table \@ref(tab:tgIeq)). Finally, low species richness could result in variant $Ieq_{600}$, but increased species richness resulted in increased functional diversity and consequently lower $Ieq_{600}$. We found similar results for all disturbance levels (see [Appendix 5: Disturbance simulations]).
+Species richness was not significantly influencing ecosystem resilience index $I_R$ for both forest structure and forest production (Table \@ref(tab:tgIr)). Increased functional diversity reduced  ecosystem resilience index $I_R$ and functional evenness was complementary reducing $I_R$ (Figure \@ref(fig:gIr) and Table \@ref(tab:tgIr)). Finally, low species richness could result in variant $I_R$, but increased species richness resulted in increased functional diversity and consequently lower $I_R$. We found similar results for all disturbance levels (see [Appendix S4: Linear models]).
 
-```{r gIeq, echo=FALSE, fig.cap='Ecosystem recovery after 600 years with taxonomic and functional diversity for different levels of disturbance. Cumulative integral from ecosystem distance to forest structure equilibrium after 600 years was represented against functional diversity [FDiv, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness whereas dot color represents functional evenness [FEve, @villeger_new_2008]. Solid lines and grey areas show fitted relationships with their mean and variance of the form $Ieq_600 = FDiv + \\epsilon$.', cache=TRUE}
-Ieq %>% 
-  left_join(., doe, by = 'sim') %>% 
-  filter(time == 600) %>% 
-  ggplot(aes(x = FDiv, y = Ieq.structure, label = sim)) + 
+```{r gIr, echo=FALSE, fig.cap='Ecosystem resilience $I_R$ with taxonomic and functional diversity for different levels of disturbance. Resilience indice $I_R$ was represented against functional diversity [FDiv, @villeger_new_2008] for different level of disturbance (25, 50 and 75% of total basal area); dot shapes represents the species richness whereas dot color represents functional evenness [FEve, @villeger_new_2008]. Solid lines and grey areas show fitted relationships with their mean and variance of the form $I_R = FDiv + \\epsilon$.'}
+Ir %>% 
+  left_join(doe, by = "sim") %>% 
+  ungroup() %>% 
+  select(disturbance, 
+         structure, SR, FEve, FDiv) %>% 
+  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), value.name = "Ir") %>% 
+  ggplot(aes(FDiv, Ir, shape = SR, col = FEve, group = NA)) +
   geom_smooth(method = 'lm', alpha = 0.3, colour= 'grey') +
-  geom_point(aes(shape = richness, color = FEve)) +
-  facet_wrap(~disturbance, scales = "free", labeller = 'label_both') + 
+  geom_point() +
+    facet_wrap(~disturbance, scales = "free", labeller = 'label_both') + 
   xlab('Functional diversity (FDiv)') +
-  ylab('Cummulative integral from ecosystem 
-       distance to forest structure equilibrium after 600 years') +
+  ylab('Resilience indice Ir') +
   scale_shape_discrete('Species\nrichness\n(SR)') +
   scale_color_continuous('Functional\nevenness\n(FEve)')
 ```
 
-
-```{r tgIeq, cache=T}
-Ieq %>% 
-  left_join(., doe, by = 'sim') %>% 
-  mutate(SR = as.integer(richness)) %>% 
-  select(disturbance, Ieq.structure, Ieq.production, SR, FEve, FDiv) %>% 
-  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"),
-                 variable.name = "Ieq.type", value.name = "Ieq.value") %>% 
-  group_by(Ieq.type, disturbance) %>%
-  do(fit = lm(Ieq.value ~ SR + FEve + FDiv, data = .)) %>% 
+```{r tgIr, cache=T}
+Ir %>% 
+  left_join(doe, by = "sim") %>% 
+  ungroup() %>% 
+  mutate(SR = as.numeric(SR)) %>% 
+  select(disturbance, structure, production,
+         SR, FEve, FDiv) %>% 
+  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), value.name = "Ir") %>% 
+  group_by(variable, disturbance) %>%
+  do(fit = lm(Ir ~ SR + FEve + FDiv, data = .)) %>% 
   tidy(fit) %>% 
   ungroup() %>% 
   filter(term != "(Intercept)") %>% 
@@ -248,11 +208,15 @@ Ieq %>%
                               ifelse(p.value < 0.05, "*",
                                      ifelse(p.value < 0.1, ".", "n.s."))))) %>% 
   mutate(Coefficient = round(estimate,2)) %>% 
-  mutate(Recovery = gsub("Ieq.", "", Ieq.type)) %>% 
+  mutate(Recovery = variable) %>% 
   rename(Variable = term, `Disturbance intensity` = disturbance) %>%
-  select(Recovery, `Disturbance intensity`, Variable, Coefficient, `P-value`) %>%
-  kable(caption = "Result of linear regression testing the effect of species richness and functional diversity indices on the recovery index by recovery type and disturbance intensity.") %>% 
-  kable_styling(full_width = F) %>%
+  select(Recovery, `Disturbance intensity`, Variable, Coefficient, `P-value`) %>% 
+  mutate(value = paste(Coefficient, `P-value`)) %>% 
+    mutate(value = cell_spec(value, 
+                           bold = ifelse(grepl("*", value, fixed = T), T, F))) %>%
+  reshape2::dcast(Recovery + `Disturbance intensity` ~ Variable, value.var = "value") %>% 
+  kable(caption = "Result of linear regression testing the effect of species richness and functional diversity indices on the recovery index by recovery type and disturbance intensity.", escape = F) %>% 
+  kable_styling(full_width = F) %>% 
   column_spec(1, bold = T) %>%
   collapse_rows(columns = 1:2)
 ```
@@ -264,7 +228,7 @@ load(file.path(path, 'disturbanceBE.Rdata'))
 load(file.path(path, 'disturbanceBErecovery.Rdata'))
 ```
 
-The net effect of biodiversity on ecosystem recovery was partitioned between selection and complementarity effect after normalizing using undisturbed control simulation ($disturb_{intensity}=0\%$, see Table \@ref(tab:tNE)) for every ecosystem global variable, e.g. aboveground biomass (see Figure \@ref(fig:gBE)). We found that complementarity effect was dominant in the biodiversity net effect in the first decades. But after few decades the complementarity effect diminished toward an extremely low value. On the contrary, selection effect was reduced in the initial times after disturbance. It increased during the first decades and was then greater. The time lag for which complementarity effect overcame the selection effect increased with disturbance intensity. Finally, 600 years after disturbance, the biodiversity net effect on aboveground biomass was still not at equilibrium for a disturbance intensity greater than 25% of basal area. We found similar results but with an amplified signal for basal area ($BA$) and stem abundance ($N$ but with an inverted signal because of the forest self thinning) (see Supplementary materials S2). Finally, forest growth primary productivity ($GPP$) recovered in few years (proportionally to disturbance), and its net effect was maintained by complementarity effect (see Supplementary materials S2).
+The recovery from net effect of biodiversity on ecosystem properties was partitioned between selection and complementarity effect after normalizing using undisturbed control simulation ($disturb_{intensity}=0\%$, see Table \@ref(tab:tNE)) for every ecosystem global variable, e.g. aboveground biomass (see Figure \@ref(fig:gBE)). We found that complementarity effect was dominant in the biodiversity net effect in the first decades. But after few decades the complementarity effect diminished toward an extremely low value. On the contrary, selection effect was reduced in the initial times after disturbance. It increased during the first decades and was then greater. The time lag for which complementarity effect overcame the selection effect increased with disturbance intensity. Finally, 600 years after disturbance, the biodiversity net effect on aboveground biomass was still not at equilibrium for a disturbance intensity greater than 25% of basal area. We found similar results but with an amplified signal for basal area ($BA$) and stem abundance ($N$ but with an inverted signal because of the forest self thinning). Finally, forest growth primary productivity ($GPP$) recovered in few years (proportionally to disturbance), and its net effect was maintained by complementarity effect.
 
 ```{r tNE, echo=FALSE, cache=TRUE}
 library(reshape2)
@@ -274,7 +238,7 @@ BE %>%
   filter(BE == 'NE') %>%
   melt(id.vars = c('BE', 'time', 'sim')) %>% 
   left_join(., doe, by = 'sim') %>%
-  filter(richness == 125) %>%
+  filter(SR == 125) %>%
   filter(disturbance == 0) %>%
   group_by(variable) %>% 
   summarise(mean = mean(value, na.rm = T), 
@@ -290,12 +254,12 @@ BE %>%
   kable(caption = 'Mean value and standard deviation of biodiversity net effect accross mature simulations before the disturbance event for different ecosystem variable.', digits = 3, format = 'pandoc')
 ```
 
-```{r gBE, echo=FALSE, fig.cap='recovery of complementarity and selection effects. Complementarity effect (CE) and selection effect (SE) where normalized by control net effect (NEc), thus measuring their recovery over time. Solid lines represents the mean value whereas areas represents the interval of values among simulations.', cache=TRUE}
+```{r gBE, echo=FALSE, fig.cap='recovery of complementarity and selection effects. Complementarity effect (CE) and selection effect (SE) where normalized by control net effect (NEc), thus measuring their recovery over time. Solid lines represents the mean value whereas areas represents the interval of values among simulations.'}
 BEresilience %>% 
   left_join(., doe, by = 'sim') %>%
-  filter(richness == 125) %>% 
+  filter(SR == 125) %>% 
   # filter(BE %in% c('SE', 'CE')) %>%
-  group_by(time, BE, disturbance, richness) %>%
+  group_by(time, BE, disturbance, SR) %>%
   summarise(qt1 =quantile(agb, probs=0.05),
             qt2 =quantile(agb, probs=0.75),
             mean=mean(agb),
@@ -305,7 +269,7 @@ BEresilience %>%
   geom_hline(yintercept = 0, color = 'blue') +
   geom_ribbon(aes(ymin = qt1, ymax = qt2, fill = BE), alpha = 0.3) +
   geom_line(aes(y = mean, color = BE)) +
-  facet_grid(disturbance ~ richness, labeller = 'label_both') +
+  facet_grid(disturbance ~ SR, labeller = 'label_both') +
   xlab('Time (years)') +
   ylab('Recovery of aboveground biomass net effect')
 ```
@@ -317,8 +281,6 @@ In the limit of the model, we were able to show that functional diversity improv
 ## Functional diversity improve tropical forest recovery
 
 Our results validated the hypothesis of a significant positive relationship between forest recovery and functional diversity and evenness. More particularly, functional diversity [volume of the functional space occupied by the community, @villeger_new_2008] seems a major aspect of recovery if it's strengthened by a high functional evenness [regularity of the distribution of abundance in this volume, @villeger_new_2008]. Indeed, high functional diversity combined to high evenness avoid hegemonic effect of a few dominant species. Our results thus confirms both the review of @Diaz2001,advocating for an under-evaluated importance of plant functional diversity in ecosystem processes, and @Zhang2012 who highlighted the role of evenness in productivity and resilience of terrestrial ecosystems. Finally, species richness is not directly increasing resilience, thus supporting the idea that species diversity is often an inadequate surrogate of functional diversity [@Diaz2001; but see @Poorter2015]. Still, increased species richness will increase chance for high functional diversity through the sampling effect [@Loreau1998]. An higher sampling of regional species pool will allow a greater chance to pick more functionally diverse species.
-
-<!-- OK good point. But you need to go more into the details of the diversity effect, perhaps highlighting the key choice of the traits? BH -->
 
 ## Complementarity and selection insure forest recovery
 
@@ -332,14 +294,16 @@ Finally, our findings confirm results from experimental studies. @Williams2017 a
 
 ## Conclusion
 
-We used closed forest system simulated with TROLL forest model to evaluate the role and mechanisms of biodiversity in tropical forest recovery from disturbance, and thus in tropical forest resilience. We found that diversity improved forest recovery, similarly to productivity [@Liang2016; @Poorter2015]. Additionally, we found that complementarity between species was insuring forest recovery in forest succession start with facilitation, before more productive species dominate the forest and insure the final forest recovery.
+We used closed forest system simulated with TROLL forest model to evaluate the role and mechanisms of biodiversity in tropical forest resilience to disturbance. We found that diversity improved forest resilience, similarly to productivity [@Liang2016; @Poorter2015]. Additionally, we found that complementarity between species was insuring forest resilience in forest succession start with facilitation, before more productive species dominate the forest and insure the final forest resilience.
+
+Our results advocate for an important interplay of diversity and dominant species in forest resilience depending on the recovery stage, similarly to findings of @Sakschewski2016. Moreover, we studied a generic form of disturbance, and our findings might be modulated depending on the disturbance type. For instance, selective logging will induce both species targeting diminishing selection effect if dominant species are chosen and cyclic perturbation, increasing the role of early recovery where complementarity effect play the most. Consequently, we could hypothesize that biodiversity will be more of primary importance regarding selective logging compared to less targeted disturbances with longer cycles such as drought, fires and hurricanes.
 
 # Supplementary materials
 
 * Supplementary materials S1: Leaf lifespan model
     + [HTML](S1-LL.html)
     + [PDF](S1-LL.pdf)
-* Supplementary materials S2: Resilience indice
+* Supplementary materials S2: Resilience index
     + [HTML](S2-Resilience.html)
     + [PDF](S2-Resilience.pdf)
 * Supplementary materials S3: Biodiversity net effect and resilience 

@@ -24,26 +24,26 @@ opts_chunk$set( echo = F, message = F, warning = F,
                 cache = T, cache.lazy = F)
 ```
 
-We want to merge two functions to analyse the output of ecosystem after disturbance: (i) the biodiversity net effect (NE) and its partitionning in complementarity (CE) and selection (SE) effects, and (ii) the resilience function of the ecosystem. More particularly we computed $R[NE(X)]$, and we want to know if $R[NE(X)]=NE[R(X)]$. In order to do that we will proceed in three times. First we need to define all mathematic functions. Then we will use a simulation approach to test for the equality (easy way to reject it). Finally if the simulation did not rejected the equality we will try to prove it mathematically.
+We want to merge two functions to analyse the output of ecosystem after disturbance: (i) the biodiversity net effect (NE) and its partitionning in complementarity (CE) and selection (SE) effects, and (ii) the resilience function of the ecosystem properties (R). More particularly we computed $R[NE(X)]$, and we want to know how $R[NE(X)]$ relate to $NE[R(X)]$. In order to do that we will proceed in three times. First we need to define all mathematic functions. Then we will use a simulation approach to test for the equality (easy way to reject it). Finally if the simulation did not rejected the equality we will try to prove it mathematically.
 
 # Mathematic definitions
 
-We first need to define the resilience function, the biodiversity net effect functions, and their composed functions for any variable $X$ from the ecosystem.
+We first need to define the resilience function, the biodiversity net effect function, and their composed functions for any variable $X$ of the ecosystem.
 
 ## Resilience
 
-Resilience has been defined by us as:
+We defined resilience as follows:
 
 \begin{equation}
-  R(t) = \frac{X_T(t)}{X_C(t)}
+  R(t) = \frac{X_D(t)}{X_C(t)}
   (\#eq:R)
 \end{equation}
 
-where $X_T(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the disturbed simulation and in the undisturbed control simulation.
+where $X_D(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the disturbed simulation and in the undisturbed control simulation.
 
 ## Biodiversity net effect
 
-The net effect of biodiversity on ecosystem recovery (NE) is defined as the difference between the ecosystem recovery of the mixed-species community and the one expected under the null hypothesis that there is no effect of biodiversity, i.e. ecosystem recovery for the mixed-species community equals the abundance-weighted sum of that in monoculture [@Loreau2001]. We then split this net biodiversity effect in complementarity and selection effect using @Loreau2001 partitioning:
+The net effect of biodiversity on an ecosystem variable X (NE) is defined as the difference between the ecosystem variable of the mixed-species community and the one expected under the null hypothesis that there is no effect of biodiversity, i.e. ecosystem variable for the mixed-species community equals the abundance-weighted sum of that in monoculture [@Loreau2001]. We then split this net biodiversity effect in complementarity and selection effects using @Loreau2001 partitioning:
 
 \begin{equation}
   \begin{array}{c}
@@ -63,8 +63,8 @@ Using equations \@ref(eq:R) and \@ref(eq:NE) we can easily define resilience of 
 
 \begin{equation}
   \begin{array}{c}
-    R[NE(X)]=\frac{NE_T(X)}{NE_C(X)} \\
-    R[NE(X)]=\frac{CE_T(X)}{NE_C(X)} + \frac{SE_T(X)}{NE_C(X)} \\
+    R[NE(X)]=\frac{NE_D(X)}{NE_C(X)} \\
+    R[NE(X)]=\frac{CE_D(X)}{NE_C(X)} + \frac{SE_D(X)}{NE_C(X)} \\
     CE(X) = N* \overline{\Delta _R(X)} \overline{M}\\
     SE(X) = N*cov(\Delta _R(X),M) \\
     \Delta _RX_{sp} = \frac{X_{sp}(mixture)}{X_{sp}(monoculture)} - P_{sp}
@@ -91,8 +91,8 @@ So this property must be respected when defining $\Delta _R[R(X)]$.
 \begin{equation}
   \begin{array}{c}
     \Delta _R[R(X)]_{sp} = \frac{R(X)_{sp}(mixture)}{R(X)_{sp}(monoculture)} - P_{sp} \\
-    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{       \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
-    R(M_{sp})= \frac{{M_{sp}}_T}{{M_{sp}}_C} \\
+    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_C(mixture)} }{       \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
+    R(M_{sp})= \frac{{M_{sp}}_D}{{M_{sp}}_C} \\
     CE[R(X)] = N* \overline{\Delta _R[R(X)]} \overline{R(M)}\\
     SE[R(X)] = N*cov(\Delta _R[R(X)],R(M)) \\
     NE[R(X)] = CE[R(X)] + SE[R(X)]  
@@ -102,7 +102,7 @@ So this property must be respected when defining $\Delta _R[R(X)]$.
 
 # Simulation test of the equality
 
-Let's imagine a mixture ($C_T$) of three species $sp1$, $sp2$ and $sp3$ with an ecosystem variable $X$ evolving after a disturbance event, the corresponding three monoculture (${M_{sp1}}_T$, ${M_{sp2}}_T$, ${M_{sp3}}_T$) which encountered the same disturbance, and the corresponding control mixture ($C_C$) and three control monoculture (${M_{sp1}}_C$, ${M_{sp2}}_C$, ${M_{sp3}}_C$) which did not encoutered any disturbance.
+Let's imagine a mixture ($C_D$) of three species $sp1$, $sp2$ and $sp3$ with an ecosystem variable $X$ evolving after a disturbance event, the corresponding three monoculture (${M_{sp1}}_D$, ${M_{sp2}}_D$, ${M_{sp3}}_D$) which encountered the same disturbance, and the corresponding control mixture ($C_C$) and three control monoculture (${M_{sp1}}_C$, ${M_{sp2}}_C$, ${M_{sp3}}_C$) which did not encoutered any disturbance.
 
 ## Generation of fake data
  
@@ -230,16 +230,16 @@ In the simplest case where $\Delta _R[R(X)]_{sp} = 0$:
 
 \begin{equation}
   \begin{array}{c}
-    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
+    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
     \Delta _R[R(X)]_{sp} = 0 \\
-    \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } = P_{sp} \\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} = P_{sp} * \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)}\\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)}*\frac{1}{{X_{sp}}_C(mixture)} = P_{sp} * \frac{1}{{X_{sp}}_C(monoculture)}\\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} = P_{sp} * \frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)}\\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} + P_{sp} - P_{sp} = P_{sp} * (\frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)} + P_{sp} - P_{sp})\\
-    {\Delta _R(X)_{sp}}_T + P_{sp} = P_{sp} * ({\Delta _R(X)_{sp}}_C + P_{sp}) \\
-    {\Delta _R(X)_{sp}}_T + 1 = {\Delta _R(X)_{sp}}_C + P_{sp}, \forall P_{sp} \neq 0\\
-    {\Delta _R(X)_{sp}}_T = {\Delta _R(X)_{sp}}_C + P_{sp} - 1 \\
+    \frac{ \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} } = P_{sp} \\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_C(mixture)} = P_{sp} * \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_D(monoculture)}*\frac{1}{{X_{sp}}_C(mixture)} = P_{sp} * \frac{1}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_D(monoculture)} = P_{sp} * \frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_D(monoculture)} + P_{sp} - P_{sp} = P_{sp} * (\frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)} + P_{sp} - P_{sp})\\
+    {\Delta _R(X)_{sp}}_D + P_{sp} = P_{sp} * ({\Delta _R(X)_{sp}}_C + P_{sp}) \\
+    {\Delta _R(X)_{sp}}_D + 1 = {\Delta _R(X)_{sp}}_C + P_{sp}, \forall P_{sp} \neq 0\\
+    {\Delta _R(X)_{sp}}_D = {\Delta _R(X)_{sp}}_C + P_{sp} - 1 \\
     R[\Delta _R(X)_{sp}] = 1 + \frac{ P_{sp} - 1 }{ {\Delta _R(X)_{sp}}_C }, \forall {\Delta _R(X)_{sp}}_C \neq 0
   \end{array}
   (\#eq:DeltaR0)
@@ -249,16 +249,16 @@ If we note $\Delta _R[R(X)]_{sp} = a, \forall a in \mathcal R$:
 
 \begin{equation}
   \begin{array}{c}
-    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
+    \Delta _R[R(X)]_{sp} = \frac{ \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} } - P_{sp} \\
     \Delta _R[R(X)]_{sp} = a \\
-    \frac{ \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} } = (P_{sp} + a) \\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_C(mixture)} = (P_{sp} + a) * \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)}\\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)}*\frac{1}{{X_{sp}}_C(mixture)} = (P_{sp} + a) * \frac{1}{{X_{sp}}_C(monoculture)}\\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} = (P_{sp} + a) * \frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)}\\
-    \frac{{X_{sp}}_T(mixture)}{{X_{sp}}_T(monoculture)} + P_{sp} - P_{sp} = (P_{sp} + a) * (\frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)} + P_{sp} - P_{sp})\\
-    {\Delta _R(X)_{sp}}_T + P_{sp} = (P_{sp} + a) * ({\Delta _R(X)_{sp}}_C + P_{sp}) \\
-    {\Delta _R(X)_{sp}}_T = (P_{sp} + a)*{\Delta _R(X)_{sp}}_C + (P_{sp} + a)*P_{sp} - P_{sp} \\
-    {\Delta _R(X)_{sp}}_T = (P_{sp} + a)*{\Delta _R(X)_{sp}}_C + P_{sp}*(P_{sp} + a - 1)\\
+    \frac{ \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_C(mixture)} }{ \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} } = (P_{sp} + a) \\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_C(mixture)} = (P_{sp} + a) * \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_D(monoculture)}*\frac{1}{{X_{sp}}_C(mixture)} = (P_{sp} + a) * \frac{1}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_D(monoculture)} = (P_{sp} + a) * \frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)}\\
+    \frac{{X_{sp}}_D(mixture)}{{X_{sp}}_D(monoculture)} + P_{sp} - P_{sp} = (P_{sp} + a) * (\frac{{X_{sp}}_C(mixture)}{{X_{sp}}_C(monoculture)} + P_{sp} - P_{sp})\\
+    {\Delta _R(X)_{sp}}_D + P_{sp} = (P_{sp} + a) * ({\Delta _R(X)_{sp}}_C + P_{sp}) \\
+    {\Delta _R(X)_{sp}}_D = (P_{sp} + a)*{\Delta _R(X)_{sp}}_C + (P_{sp} + a)*P_{sp} - P_{sp} \\
+    {\Delta _R(X)_{sp}}_D = (P_{sp} + a)*{\Delta _R(X)_{sp}}_C + P_{sp}*(P_{sp} + a - 1)\\
     R[\Delta _R(X)_{sp}] = P_{sp} + a + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0 \\
     R[\Delta _R(X)_{sp}] = \Delta _R[R(X)]_{sp} + P_{sp} + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0
   \end{array}
@@ -269,7 +269,7 @@ If we note $\Delta _R[R(X)]_{sp} = a, \forall a in \mathcal R$:
 
 This one is straightforward, it only depends on the order of the indices.
 \begin{equation}
-  M[R(X)] = \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
+  M[R(X)] = \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
   (\#eq:M)
 \end{equation}
 
@@ -281,7 +281,7 @@ Using equations \@ref(eq:NE), \@ref(eq:DeltaRa) and \@ref(eq:M), we have:
   \begin{array}{c}
     CE[R(X)] = N* \overline{\Delta _R[R(X)]} \overline{R(M)}\\
     R[\Delta _R(X)_{sp}] = \Delta _R[R(X)]_{sp} + P_{sp} + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0 \\
-    M[R(X)] = \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
+    M[R(X)] = \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
   \end{array}
   (\#eq:CER1)
 \end{equation}
@@ -305,7 +305,7 @@ Using equations \@ref(eq:NE), \@ref(eq:DeltaRa) and \@ref(eq:M), we have:
   \begin{array}{c}
     SE[R(X)] = N*cov(\Delta _R[R(X)],M[R(X)]) \\
     R[\Delta _R(X)_{sp}] = \Delta _R[R(X)]_{sp} + P_{sp} + \frac{ P_{sp}*(P_{sp} + a - 1) }{ {\Delta _R(X)_{sp}}_C } \forall {\Delta _R(X)_{sp}}_C \neq 0 \\
-    M[R(X)] = \frac{{X_{sp}}_T(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
+    M[R(X)] = \frac{{X_{sp}}_D(monoculture)}{{X_{sp}}_C(monoculture)} = R[M(X)]
   \end{array}
   (\#eq:SER1)
 \end{equation}
