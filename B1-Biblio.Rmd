@@ -1,0 +1,124 @@
+---
+title: "B1: Bibliography"
+date: '`r Sys.Date()`'
+output:
+  bookdown::html_document2:
+    number_sections: false
+    toc: true
+    toc_float: yes
+  bookdown::pdf_document2:
+    number_sections: false
+    toc: false
+  bookdown::word_document2: default
+csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
+
+```{r config, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls()); invisible(gc())
+library(knitr)
+opts_chunk$set( echo = F, message = F, warning = F, 
+                fig.height = 8, fig.width = 8,
+                cache = T, cache.lazy = F)
+```
+
+# Biodiversity & Ecosystem resilience / stability
+
+## @Morin2014a
+
+* First our results show that variability in productivity between stands differing in species composition decreases as species richness and functional diversity increase.
+* Stability increases with increasing diversity due to compensatory dynamics across species, supporting the biodiversity insurance hypothesis.
+
+## Others
+
+[x] @Sakschewski2016 already included
+
+# Temporal dynamic of complementarity and selection effects
+
+## @Fargione2007
+
+* 10 years of grasslands
+* effect of biodiversity on plant biomass production shifted from sampling to complementarity over time
+* with more efficient N use at higher diversity
+
+## @Cardinale2007
+
+* Thus, much like the tradeoff between yield and stability in an investment portfolio, a select few species may be able to produce higher yield than a diverse community, but this might come at the expense of the stability of yield through time
+
+# Glossary example & Introduction
+
+[x] @Niklaus2017a
+
+# Selection effect > Complementarity effect
+
+## @Bauters2015
+
+* Monospecific and two species mixture plots of a 77-year-old tree diversity experiment in Yangambi in the Congo basin
+* the proportion of planted species in the total stand basal area (BApl) and effective species richnesswere identified as compositional parameters with a significant effect on the aboveground carbon (AGC), with BApl being more important
+* no clear benefits, but also no drawbacks, for AGC of two speciesmixture plots over monospecific plots
+
+## @Finegan2015
+
+* Data are presented for three rain forests in Bolivia, Brazil and Costa Rica. Initial above-ground biomass and biomass increments of survivors, recruits and survivors + recruits (total) were estimated for trees ≥10 cm d.b.h. in 62 and 21 1.0-ha plots, respectively.
+* We found no support for the niche complementarity hypothesis and support for the green soup hypothesis only for biomass increments of recruits. We have strong support for the biomass ratio hypothesis. CWM Hmax is a strong driver of ecosystem biomass and carbon storage and CWM SLA, and other CWM leaf traits are especially important for biomass increments and carbon sequestration.
+
+## Others 
+
+* [x] @Chiang2016 already included
+
+## @Lohbeck2016
+
+* __stable ecosystem__
+* human- modified tropical forest landscape in Southern Mexico.
+* We quantified aboveground standing biomass, primary productivity, litter production, and wood decomposition at the landscape level, and evaluated the extent to which tree species contribute to these ecosystem functions.
+* We found that dominance was more important than species traits in determining a species’ contribution to ecosystem functions.
+
+## @Prado-Junior2016
+
+* __stable ecosystem__
+* above-ground net biomass change and its underlying biomass dynamics (biomassrecruitment, growth and mortality)
+* soil fertility, biomass ratio, niche complementarity and vegetation quantity hypotheses.
+* 5-year period in 200 permanent sample plots in 8 tropical dry forests in Brazil
+* dominance of conser-vative species, rather than of acquisitive species, is associated with high biomass growth and storage
+* Biomass stor-age was favoured by low- rather than high trait diversity, as most of the biomass is concentrated in species with large stem diameter and high wood density
+
+## @Poorter2017
+
+* aboveground biomass (AGB) and biomass dynamics (i.e., net biomass productivity and its underly-ing demographic drivers: biomass recruitment, growth and mortality) to forest attributes (tree diversity, community-mean traits and stand basal area) and environmental conditions (water avail-ability, soil fertility and disturbance)
+* 26 sites, 201 1-ha plots and >92,000 trees distributed across the Neotropics
+* vegetation attributes were more frequently associated significantly with biomass stocks and dynamics than environmental conditions (in 67 vs. 33% of the relationships)
+* light disturbance increased biomass growth
+* Rarefied tree species richness had consistent positive relationships with biomass stocks and dynamics
+* Community-mean traits were good predictors of biomass stocks and dynamics
+
+## @VanderSande2018
+
+* effects of abiotic factors (light variation, caused by logging distur-bance, and soil fertility) and biotic factors (species richness and functional trait composition) on biomass stocks (above- ground biomass, fine root biomass), SOM and productivity in a relatively monodominant Guyanese tropical rainforest
+* Disturbance increased productivity but decreased above- ground biomass stocks
+* As expected, species richness did not affect productivity
+
+# Others
+
+## @DeAvila2018 
+
+* unclear how above- ground biomass (AGB) recovery of species- rich tropical forests is affected by disturbance intensity and post- disturbance (remain-ing) tree- community attributes
+* ($\DeltaAGB$) decreases with management- related disturbance intensity (disturbance hypothesis), and increases with the diversity (niche- complementarity hypothesis) and the community-weighted mean (CWM) of acquisitive traits of dominant species (biomass- ratio hypothesis)
+* AGB increment of survivors and of the total tree community increased with basal area remaining
+* We did not find consistent support for the niche- complementarity and biomass- ratio hypotheses
+
+## @VanderSande2017a
+
+* __Review__
+* empirical studies that analyzed the relationships between plant biodiversity attributes and carbon stocks and carbon uptake in tropical forests. Our results show that biodiversity attributes related to species, traits or structure signifi-cantly affect carbon stocks or uptake in 64% of the evaluated relationships
+* biodi- versity is not only a co-benefit, but also a requirement for short- and long-term maintenance of carbon stocks and enhancement of lighting the importance of performing a comprehensive analysis that adequately accounts for environmental drivers. In summary, biodi- versity is not only a co-benefit, but also a requirement for short- and long-term maintenance of carbon stocks and enhancement of uptake
+
+## @Huang2018
+
+* manipulated tree species richness by planting more than 150,000 trees in plots with 1 to 16 species
+* richness strongly increased stand-level productivity. After 8 years, 16-species mixtures had accumulated over twice the amount of carbon found in average monocultures and similar amounts as those of two commercial monocultures
+* increasing complementarity effect with null to negative selection effect depending on species richness
+* faster growth of live trees inmore diverse stands because tree survival rate did not increase with species richness
+* 10% decrease in tree spe-cies richness would lead to a 2.7% decrease in for-est productivity on average (24), which is within the range of productivity decreases (2.1 to 3.1%) reported for the same tree species loss scenario in a recent observational study that used plot data covering a large part of the global forests (3). In that study, itwas estimated that such a loss would correspond to around $20 billion per year of com-mercial wood production.
+
+# References

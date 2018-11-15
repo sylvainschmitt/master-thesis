@@ -1,3 +1,6 @@
+# Draft 0.1.9008
+* Fifth version with IM references (B1-Biblio.Rmd)
+
 # Draft 0.1.9007
 * Fourth version after @BrunoHerault meeting
 
