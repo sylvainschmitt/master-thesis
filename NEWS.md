@@ -1,4 +1,7 @@
 # Draft 0.1.9008
+* Final 1 Intro, M&M and 1/2 Res
+
+# Draft 0.1.9008
 * Fifth version with IM references (B1-Biblio.Rmd)
 
 # Draft 0.1.9007

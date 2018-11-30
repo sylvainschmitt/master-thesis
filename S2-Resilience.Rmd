@@ -54,11 +54,11 @@ Deq <- resilience %>%
 Ir <- Deq %>% 
   group_by(sim) %>% 
   arrange(time) %>% 
-  mutate_at(vars(-time), cumsum) %>% 
+  mutate_at(vars(-time, -sim), cumsum) %>% 
   filter(time == 600)
 ```
 
-```{r IrGraph, eval=F, include=F}
+```{r IrGraph1, eval=F, include=F}
 mature %>% 
   select(time, sim, agb) %>% 
   separate(sim, c("SR", "CVH"), remove = F) %>% 
@@ -67,6 +67,7 @@ mature %>%
           select(time, sim, agb) %>% 
           separate(sim, c("SR", "CVH", "disturbance"), remove = F)) %>% 
   filter(SR == 25, CVH == 4, disturbance %in% c(0, 50)) %>% 
+  mutate(agb = agb/10^3) %>% 
   reshape2::dcast(time ~ disturbance, value.var = "agb") %>% 
   rename(control = `0`, treatment = `50`) %>% 
   ggplot(aes(x = time)) +
@@ -76,10 +77,54 @@ mature %>%
               fill = "lightgrey", col = NA, alpha = 0.5) +
   xlab("Time (years)") +
   ylab("Aboveground biomass (tonC/ha)") +
-  scale_color_discrete("Simulation") +
   scale_color_discrete("Disturbance\nintensity\n(% of BA)", 
-                       labels = c("0 (control)", "50 (disturbed)")) + 
-  ggsave(filename = "./images/original.png", width = 20, height = 10, units = "cm")
+                       labels = c("0 (control)", "50 (disturbed)")) +
+  ggsave(filename = "./images/original1.png", width = 20, height = 10, units = "cm")
+```
+
+```{r IrGraph2, eval=F, include=F}
+bind_rows(
+  mature %>% 
+    select(time, sim, agb) %>% 
+    separate(sim, c("SR", "CVH"), remove = F) %>% 
+    mutate(disturbance = 50) %>% 
+    rbind(ecosystem %>% 
+            select(time, sim, agb) %>% 
+            separate(sim, c("SR", "CVH", "disturbance"), remove = F)) %>% 
+    filter(SR == 25, CVH == 4, disturbance %in% c(0, 50)) %>% 
+    mutate(agb = agb/10^3) %>% 
+    reshape2::dcast(time ~ disturbance, value.var = "agb") %>% 
+    rename(control = `0`, treatment = `50`) %>% 
+    mutate(control = ifelse(is.na(control), treatment, control)) %>% 
+    mutate(type = "Raw"),
+  mature %>% 
+    select(time, sim, agb) %>% 
+    separate(sim, c("SR", "CVH"), remove = F) %>% 
+    mutate(disturbance = 50) %>% 
+    rbind(ecosystem %>% 
+            select(time, sim, agb) %>% 
+            separate(sim, c("SR", "CVH", "disturbance"), remove = F)) %>% 
+    filter(SR == 25, CVH == 4, disturbance %in% c(0, 50)) %>% 
+    mutate(agb = agb/10^3) %>% 
+    reshape2::dcast(time ~ disturbance, value.var = "agb") %>% 
+    rename(control = `0`, treatment = `50`) %>% 
+    mutate(control = ifelse(is.na(control), treatment, control)) %>% 
+    mutate(treatment = treatment/control) %>% 
+    mutate(control = control/control) %>%
+    mutate(type = 'Normalized by control')
+) %>% 
+  mutate(type = factor(type, levels=c('Raw', 'Normalized by control'))) %>% 
+  ggplot(aes(x = time)) +
+  geom_line(aes(y = control, color = "control")) +
+  geom_line(aes(y = treatment, color = "disturbed")) +
+  geom_ribbon(aes(ymax = control, ymin = treatment), 
+              fill = "lightgrey", col = NA, alpha = 0.5) +
+  xlab("Time (years)") +
+  ylab("Aboveground biomass (tonC/ha)") +
+  scale_color_discrete("Disturbance\nintensity\n(% of BA)", 
+                       labels = c("0 (control)", "50 (disturbed)")) +
+  facet_wrap(~type, nrow = 2, scales = "free") +
+  ggsave(filename = "./images/original2.png", width = 20, height = 20, units = "cm")
 ```
 
 This document introduces and explains the recovery function $R(X)$ and the resilience indice $I_R$ definitions (figure \@ref(fig:IrGraphFinal)). Resilience concept has met numerous definitions, but resilience in ecology can encompass both ecosystem ability to adsorb and recover from disturbance, resistance and recovery respectively [@Gunderson2010].
