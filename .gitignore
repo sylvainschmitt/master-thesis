@@ -7,3 +7,4 @@
 *.docx
 *.tex
 images/*
+.httr-oauth

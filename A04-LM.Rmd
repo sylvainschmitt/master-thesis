@@ -1,5 +1,5 @@
 ---
-title: "Supplementary material S4: Linear models"
+title: "A04: Linear models"
 date: '`r Sys.Date()`'
 output:
   bookdown::html_document2:

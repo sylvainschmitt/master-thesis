@@ -1,27 +1,29 @@
 ---
 title: Biodiversity improves tropical forest resilience
-author: "Sylvain Schmitt, Isabelle Maréchaux, Jerome Chave, Fabian Fischer, Camille Piponiot, Stéphane Traissac & Bruno Hérault"
+author: Sylvain Schmitt, Isabelle Maréchaux, Jerome Chave, Fabian Fischer, Camille
+  Piponiot, Stéphane Traissac & Bruno Hérault
 date: '`r Sys.Date()`'
 output:
-  bookdown::word_document2: default
+  bookdown::html_document2:
+    number_sections: no
+    toc: yes
+    toc_float: yes
   bookdown::pdf_document2:
     includes:
       before_body: ./template/doc_prefix.tex
       in_header: ./template/preamble.tex
-    number_sections: false
-    toc: false
-    keep_tex: true
-  github_document: default
-  bookdown::html_document2:
-    number_sections: false
-    toc: true
-    toc_float: yes
+    number_sections: no
+    toc: no
+    keep_tex: yes
+  gdoc::gdoc: default
+  bookdown::word_document2: default
 linestretch: 1.5
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes
+gdoc_id: 1yRJitcL7DfCwTmZlUEuQEJg4-QcTfsznYqJ999VV-p8
 ---
-
+ 
 ```{r config, message=FALSE, warning=FALSE, include=FALSE}
 rm(list = ls()); invisible(gc())
 library(knitr)
@@ -71,7 +73,7 @@ Ir <- Deq %>%
 
 Natural disturbances play a major role in tropical forest functioning through gap-phase regeneration [@Veblen1992]. Climate change and direct human activities are currently deeply modifying forest disturbance regimes [@Davidson2012; @Lewis2015] and while deforestation has been rightly the focus of worldwide attention, the consequences of human-induced disturbance on tropical forests has been less studied [@Putz2010; @Simula2009]. However, degraded forests currently cover areas over ten times larger than deforested ones [@Herold2011], a majority of which is being unsustainably logged for timber production [@Blaser2011]. Forest degradation can trigger severe biodiversity loss [@Burivalova2014] and is estimated to account for 20.7 billion of tons of carbon dioxide emissions per year [@Pearson2017], representing, for instance, 20% of greenhouse gas emissions in the Brazilian Amazon [@Asner2005].  In addition to the direct impact of human on forests, a more insidious disturbance is climate change that modifies regional climates with, for instance, projected increases in the frequency and intensity of convective storms in the Amazon having the potential to increase wind-related tree mortality [@Negron-Juarez2018]. Understanding the drivers of tropical forest resilience to disturbance is thus critical. Here we explored the role of biodiversity in tropical forest recovery after disturbance through a simulation approach.
 
-The concept of ecological resilience has met numerous definitions, but encompass both ecosystem ability to adsorb, the resistance component, and recover from disturbance [@Gunderson2010]. Both exogenous (e.g. climate, disturbance features) and endogenous (e.g. forest structure and composition) factors can drive ecosystem recovery after disturbance. Among the former, logging intensity has been reported to strongly control and increase time-to-recovery of post-logging tree carbon, subsequent animal biodiversity loss, and change in tree species composition [@Burivalova2014; @DeAvila2015; @Rutishauser2015]. Among endogenous drivers, forest pre-disturbance composition has been identified as a key driver of forest recovery [@Herault2018], as different species respond differently to perturbations depending on their ecological strategies and functional properties [@herault_functional_2011]. Beyond species identity, tree community diversity may also foster forest resilience to perturbations [@Cadotte2011; @Ives2007; @Loreau2013]. Finally, disturbance intensity itself has been shown to be a key component of forest resilience [@DeAvila2018].
+The concept of ecological resilience has met numerous definitions, but encompass both ecosystem ability to adsorb, the resistance component, and recover from disturbance [@Gunderson2010]. Both exogenous (*e.g.* climate, disturbance features) and endogenous (*e.g.* forest structure and composition) factors can drive ecosystem recovery after disturbance. Among the former, logging intensity has been reported to strongly control and increase time-to-recovery of post-logging tree carbon, subsequent animal biodiversity loss, and change in tree species composition [@Burivalova2014; @DeAvila2015; @Rutishauser2015]. Among endogenous drivers, forest pre-disturbance composition has been identified as a key driver of forest recovery [@Herault2018], as different species respond differently to perturbations depending on their ecological strategies and functional properties [@herault_functional_2011]. Beyond species identity, tree community diversity may also foster forest resilience to perturbations [@Cadotte2011; @Ives2007; @Loreau2013]. Finally, disturbance intensity itself has been shown to be a key component of forest resilience [@DeAvila2018].
 
 Two types of mechanisms can underlie the effect of biodiversity on ecosystem properties: complementarity and selection effects [@Loreau2001]. Complementarity effect results from resources partitioning and niche differentiation, and facilitation, leading to a more efficient use of available resources at the community level. Selection effect results from a higher probability of more diverse community to include particularly efficient species regarding ecosystem processes. Moreover the sampling effect additionally implies redundancy and a lower risk to lose important functional traits, further improving resilience of species rich-forest [@Hooper2005a; @Tilman2001].
 
@@ -147,7 +149,7 @@ A high value of $I_R$ indicates a fast resilience. Ecosystem euclidean distance 
 <!-- $$d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$$ -->
 <!-- $$I_R(X) = \frac1{\int _{t=disturb_{iter}} ^{t=disturb_{iter}+600} d_{eq}(t).dt}$$ -->
 
-```{r IrGraphFinal, fig.cap="Definition of recovery function R and resilience indice $I_R$ shown on aboveground biomass dynamics for a simulation with $disturb_{intensity}=50%$."}
+```{r IrGraphFinal, fig.cap="Definition of recovery function R and resilience indice $I_R$ shown on aboveground biomass dynamics for a simulation with $disturb_{intensity}=50\\%$."}
 knitr::include_graphics("images/figure3.png")
 ```
 
@@ -265,7 +267,7 @@ Ir %>%
               mutate(r.squared = round(r.squared, 2)) %>% 
               select(Ir, disturbance, r.squared)) %>% 
   mutate(Ir = ifelse(Ir == "production", "functioning", "structure")) %>% 
-  kable(caption = "Effects of functional diversity on forest resilience. Results of the linear regression testing the effect of functional diversity indices (FDiv and FEve) on the resilience index ($I_R$) for forest structure and functionning and for each level of disturbance intensity ($disturb_{intensity}$). To meet the assumption of normality $I_R$ was log-transformed. Test of FDiv and FEve effects was done by linear regression with FDiv and FEve as independant variables. Values of FDiv and FEve are coefficients from linear regressions. Significant $p-values$ are shown in bold. ns, non‐significant; . p < 0.1; * p < 0.05; ** p < 0.01; *** p < 0.001.",
+  kable(caption = "Effects of functional diversity on forest resilience. Results of the linear regression testing the effect of functional diversity indices (FDiv and FEve) on the resilience index ($I_R$) for forest structure and functionning and for each level of disturbance intensity ($disturb_{intensity}$). To meet the assumption of normality $I_R$ was log-transformed. Test of FDiv and FEve effects was done by linear regression with FDiv and FEve as independant variables. Values of FDiv and FEve are coefficients from linear regressions. Significant $p-values$ are shown in bold. ns, non-significant; . p < 0.1; * p < 0.05; ** p < 0.01; *** p < 0.001.",
         escape = F, col.names = c("$I_R$", "Disturbance intensity",
                                   "FDiv", "FEve", "$R^2$")) %>% 
   kable_styling(full_width = F) %>% 
@@ -383,7 +385,7 @@ BE %>%
   kable_styling(full_width = F)
 ```
 
-```{r gBE, echo=FALSE, fig.cap='Post-disturbance trajectories of complementarity and selection effects. The net biodiversity ($NE$), complementarity ($CE$) and selection ($SE$) effects were normalized by the net effect of biodiversity in the control simulation ($disturb_{intensity}=0%$). Solid lines represents the mean value whereas areas represents the range of values across the 20 simulations with a species richness ($SR$) of 125. Time axis has been square-root transformed to highlight first decades dynamic.'}
+```{r gBE, echo=FALSE, fig.cap='Post-disturbance trajectories of complementarity and selection effects. The net biodiversity ($NE$), complementarity ($CE$) and selection ($SE$) effects were normalized by the net effect of biodiversity in the control simulation ($disturb_{intensity}=0\\%$). Solid lines represents the mean value whereas areas represents the range of values across the 20 simulations with a species richness ($SR$) of 125. Time axis has been square-root transformed to highlight first decades dynamic.'}
 BEresilience %>% 
   left_join(., doe, by = 'sim') %>%
   filter(SR == 125) %>% 
@@ -408,29 +410,29 @@ BEresilience %>%
 
 # Discussion
 
-We investigated the effect of biodiversity on tropical forest resilience to disturbance and the variation of biodiversity effect on ecosystem functioning along trajectory of recovery from disturbance by means of a virtual experiment. We found that functional diversity improved tropical forest resilience from disturbance. Additionally, the mechanisms that underlie the biodiversity effect on forest functioning changed in dominance as trajectories of recovery unfolded. Complememtarity between species was the dominant effect of biodiversity in the early times after disturbance. Complementarity was then progressively overtaken by a selection effect as more competitive species dominate the forest community. This shift was all the more pronounced that disturbance increased in intensity. Our results suggest that ecosystem state and past history can strongly influence the mechanisms by which biodiversity impacts ecosystem processes. This can help reconciling previous contrasted results obtained when dealing with snapshots of ecosystem state.
+Using an *in silico* experiment, we investigated the effect of biodiversity on tropical forest resilience to disturbance and the variation of biodiversity effect on ecosystem functioning along the recovery trajectory. We found that functional diversity improved tropical forest resilience from disturbance with underlying ecological mechanisms changing in dominance with times. Complementarity effect was dominant in the early times after disturbance and was progressively overtaken by a selection effect as more competitive species dominate the forest community, a pattern that increased with disturbance intensity. Overall, our results suggest that past-disturbance history is a key to our understanding of the ecological mechanisms that underlie the resilience of tropical forests. This can help reconciling previous contrasted results obtained with limited snapshots of ecosystem state.
 
-## Functional diversity improves tropical forest recovery
+## Functional diversity accelerates tropical forest recovery
 
-Our results validated the hypothesis of a significant positive relationship between forest recovery and functional diversity. More particularly, functional diversity [volume of the functional space occupied by the community, @villeger_new_2008] appeared as a major aspect of resilience if it is strengthened by a high functional evenness [regularity of the distribution of abundance in this volume, @villeger_new_2008]. Indeed, high functional diversity combined to high evenness avoid hegemonic effect of a few dominant species. Functional diversity positive effect on forest resilience can be due to (i) temporal complementarity with the diversity of species response to disturbances and response asynchronicity, resulting in ecological sorting [@Loreau2013; @Sakschewski2016; @Morin2014a], and (ii) functional complementarity reducing competition strength [@Loreau2013] advocating both for the biodiversity insurance hypothesis [@Yachi1999]. Our results thus confirms both the review of @Daz2001a, advocating against an under-evaluated importance of plant functional diversity in ecosystem processes, and @Zhang2012 who highlighted the role of evenness in productivity of forest ecosystems. In addition, increased species richness will de facto increase chance for high functional diversity through the sampling effect [@Loreau1998; @Morin2014a]. A higher sampling of regional species pool will thus allow a greater chance to pick more functionally diverse species.
+Our results validated the hypothesis of a significant positive relationship between functional diversity and forest recovery rate. More particularly, functional diversity [volume of the functional space occupied by the community, @villeger_new_2008], and especially its evenness component, appeared as a major aspect of the system resilience by avoiding the hegemonic effect of a few dominant species. This can be due to (i) temporal complementarity with the diversity of species response to disturbances and response asynchronicity, resulting in ecological sorting [@Loreau2013; @Sakschewski2016; @Morin2014a], and (ii) functional complementarity reducing competition strength [@Loreau2013] advocating both for the biodiversity insurance hypothesis [@Yachi1999]. Our results thus confirms both the review of @Daz2001a, advocating against an under-evaluated importance of plant functional diversity in ecosystem processes, and @Zhang2012 who highlighted the role of evenness in productivity of forest ecosystems. In addition, increased species richness will *de facto* increase chance for high functional diversity through the sampling effect [@Loreau1998; @Morin2014a].
 
-## Mechanisms underlying the biodiveristy effect on forest ecosystem change along trajectories of recovery from disturbances
+## First complementarity, then selection insure biodiversity effect after disturbance
 
-We found that complementarity among the species was the prevailing effect of biodiversity on forest functioning during the beginning of forest post-disturbance trajectory. We interpreted this result as the consequence of niche partitioning. By creating additional gaps in the simulated mature forest plots, the simulated disturbances resulted in an increased heterogeneity in the availability in light, which is the main limited resource in dense tropical forest. Species are known to vary widely in their growth response to gap creation depending on their functional strategy [@Herault2010; @Laurans2012; @Ruger2009]. Pioneer species with productive leaf tissue and light wood typically quickly close gaps, hence creating a shaded environment where late successional species with more conservative leaf tissue are more competitive. By promoting a higher diversity of shade tolerance and growth response to light, species richness hence foster forest response to small-scale perturbations [@Morin2011]. This complementarity effect quickly reduced through time letting the selection effect progressively gain in dominance. The diminishing of complementarity effect is attributed to the increased abundance of the most competitive species in more stable and less heterogeneous environment.
+We found that complementarity among the species was the prevailing effect of biodiversity on forest functioning during the beginning of post-disturbance ecosystem trajectory. We interpreted this result as the direct consequence of the simulation of natural gaps that resulted in an increased heterogeneity in the availability in light, the main limited resource in dense tropical forest, opening the way for niche partitioning. Species are known to vary widely in their demography response to light-enrichment depending on their functional strategy [@Herault2010; @Laurans2012; @Ruger2009]. Pioneer species with productive leaf tissue and light wood typically quickly close gaps, hence creating a shaded environment where late successional species with more conservative leaf tissue are more competitive. By inducing a higher diversity of shade tolerance and growth response to light, species richness hence fosters forest response to perturbations [@Morin2011]. This complementarity effect quickly reduced through time letting the selection effect progressively gain in dominance. The diminishing of complementarity effect is attributed to the increased abundance of the most competitive species in more stable and less heterogeneous environment.
 
 ## Perspectives in forest ecosystem modelling
 
 In this study we took advantage of a forest simulator able to jointly simulate biodiversity and ecosystem functioning to explore the effect of biodiversity on forest resilience on a long temporal scale, that remains out of reach of most experimental approaches. By virtually manipulating the number and identity of species across a large number of simulations, we were able to evidence the role of diversity in forest resilience and the changing driver of biodiversity effect on forest functioning along trajectory of recovery.
 
-As any modelling approaches, it also comes with simplifications and assumptions. In our simulations, light was the unique resource whose variability was explicitly accounted for [@Marechaux2017]. Our results should thus be restricted to situations where aboveground competition for light overcomes the effect of belowground competition for water and nutrients, a reasonable assumption in humid tropical forests, even in early successional stages [@VanBreugel2012]. However this assumption may be less suitable under the predicted increase in drought intensity and frequency. We did not include the effect of topography, known to result in higher micro environmental heterogeneity. Overall, we expect a stronger role of complementarity effect through hydrological and edaphic niche partitioning as water become more limited and in more heterogeneous landscapes [@Baltzer2005; @Jucker2018; @Silvertown2004a]. Additionally, we simulated a generic form of disturbance, and our findings might be modulated depending on the disturbance specificity. For instance, selective logging will induce both species targeting which could lower the selection effect if dominant species are chosen and cyclic perturbation, increasing the prevalence of early recovery stages where complementarity effect plays the most. Consequently, we could hypothesize that species complementarity and functional diversity will be of primary importance regarding selective logging compared to less targeted disturbances with longer cycles such as drought, fires and hurricanes.
+As any modelling approaches, it also comes with simplifications and assumptions. In our simulations, light was the unique resource whose variability was explicitly accounted for [@Marechaux2017]. Our results should thus be restricted to situations where aboveground competition for light overcomes the effect of belowground competition for water and nutrients, a reasonable assumption in humid tropical forests, even in early successional stages [@VanBreugel2012]. However this assumption may be less suitable under the predicted increase in drought intensity and frequency. We did not include the effect of topography, known to result in higher micro environmental heterogeneity. Overall, we expect a stronger role of complementarity effect through hydrological and edaphic niche partitioning as water become locally more limited in more heterogeneous landscapes [@Baltzer2005; @Jucker2018; @Silvertown2004a]. Additionally, we simulated a generic form of disturbance, and our findings might be modulated depending on the disturbance specificity. For instance, selective logging will induce both species targeting which could lower the selection effect if dominant species are chosen and cyclic perturbation, increasing the prevalence of early recovery stages where complementarity effect plays the most. Consequently, we could hypothesize that species complementarity and functional diversity will be of primary importance regarding the system trajectory after selective logging as compared to less targeted disturbances with longer cycles such as drought, fires and hurricanes.
 
 ## Unifying biodiversity-ecosystem functioning studies
 
-Our results suggest that the mechanisms through which biodiversity influence forest functioning strongly depends on the ecosystem state and its history of perturbation, with dominant complementarity effect in recently disturbed mature ecosystem whereas selection effect takes over complementarity in more stable systems with older disturbances. In agreement with this, studies in recently disturbed mature forest did found a stronger complementarity effect [@Huang2018; @Poorter2017], whereas a dominant selection effect has been found both in undisturbed forests our new plantations [@Bauters2015; @Finegan2015; @Marechaux2017; @Tobner2016] but see [@DeAvila2018; @Lohbeck2016].
+Our results suggest that the mechanisms through which biodiversity influence forest functioning strongly depends on the current ecosystem state and its previous history of perturbations, with dominant complementarity effect in recently disturbed mature ecosystem whereas selection effect takes over complementarity in more stable systems with older disturbances. In agreement with this, studies in recently disturbed mature forest did found a stronger complementarity effect [@Huang2018; @Poorter2017], whereas a dominant selection effect has been found both in undisturbed forests and new plantations [@Bauters2015; @Finegan2015; @Marechaux2017; @Tobner2016] but see [@DeAvila2018; @Lohbeck2016]. Dominant selection effect of plantation might be explained by the absence of remaining diversity to insure complementarity as opposed to disturbed mature forest (results unshown).
 
-Moreover, we here focus on the effect of biodiversity along trajectory of post-disturbance recovery, and our simulations and analyses were all made at a 16-ha scale. However, in addition to the influence of disturbance intensity and temporal trajectory we evidenced here, @Chisholm2013 and @Sullivan2017 found that biodiversity effect vary across spatial scale, with typically a stronger effect at smaller scale (e.g. 0.04-ha). Finally, ecological constraints may differ between ecosystems, for instance pioneer species (e.g. hard-wood pioneer species in dry forest [@Prado-Junior2016]), light importance (e.g. nitrogen importance in grasslands [@Fargione2007; @Prado-Junior2016]), and maturity concept (e.g. temperate versus tropical forests) can differ from tropical wet forest to another system, that may at the origin of biodiversity effects differences.
+Moreover, we here focus on the effect of biodiversity along trajectory of post-disturbance recovery, and our simulations and analyses were all made at a 16-ha scale. However, in addition to the influence of disturbance intensity and temporal trajectory we evidenced here, @Chisholm2013 and @Sullivan2017 found that biodiversity effect vary across spatial scale, with typically a stronger effect at smaller scale (*e.g.* 0.04-ha). Finally, ecological constraints may differ between ecosystems, for instance pioneer species (*e.g.* hard-wood pioneer species in dry forest [@Prado-Junior2016]), light importance (*e.g.* nitrogen importance in grasslands [@Fargione2007; @Prado-Junior2016]), and maturity definition (*e.g.* temperate versus tropical forests) can differ from tropical wet forest to another system, that might originate biodiversity effects differences.
 
-Together, this paves the way to a unifying framework to reconcile the apparent contradictions between studies advocating for the sole effect of complementarity or selection effects, and call for an accurate description of the ecosystem spatial-temporal and ecological context in future studies to improve global understanding of biodiversity and ecosystem functioning relations, and thus further open perspectives to a better prediction of ecosystem resilience in a context of increasing disturbances and biodiversity crisis.
+Together, this paves the way to a unifying framework to reconcile the apparent contradictions between studies advocating for the sole effect of complementarity or selection effects, and call for an accurate description of the ecosystem spatial-temporal and ecological context in future studies to improve global understanding of biodiversity and ecosystem functioning relations. This further open perspectives to a better prediction of ecosystem resilience in a context of increasing disturbances and biodiversity crisis.
 
 ```{r LiteratureBiodiversityEffect, eval=F}
 literature <- data.frame(
@@ -498,17 +500,5 @@ literature %>%
 * Supplementary materials S1: Leaf lifespan model
     + [HTML](S1-LL.html)
     + [PDF](S1-LL.pdf)
-* Supplementary materials S2: Resilience index
-    + [HTML](S2-Resilience.html)
-    + [PDF](S2-Resilience.pdf)
-* Supplementary materials S3: Biodiversity net effect and resilience 
-    + [HTML](S3-RNE.html)
-    + [PDF](S3-RNE.pdf)
-* Supplementary materials S4: Linear models
-    + [HTML](S4-LM.html)
-    + [PDF](S4-LM.pdf)
-* Supplementary materials S5: Biodiversity effect results
-    + [HTML](S5-Biodiversity.html)
-    + [PDF](S5-Biodiversity.pdf)
     
 # References

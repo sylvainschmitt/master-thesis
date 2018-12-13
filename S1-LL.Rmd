@@ -2,13 +2,18 @@
 title: "Supplementary material S1: Leaf lifespan model"
 date: '`r Sys.Date()`'
 output:
+  bookdown::word_document2: default
   bookdown::html_document2:
-    number_sections: false
-    toc: true
+    number_sections: no
+    toc: yes
     toc_float: yes
   bookdown::pdf_document2:
-    number_sections: false
-    toc: false
+    includes:
+      before_body: ./template/doc_prefix.tex
+      in_header: ./template/preamble.tex
+    number_sections: no
+    toc: no
+    keep_tex: yes
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes
@@ -18,7 +23,7 @@ TROLL model previous implementation encompass Reich's 1991 and 1997 and Wright's
 
 # Material and methods
 
-We compiled functional traits from GLOPNET [@wright_worldwide_2004], TRY [@Kattge2011], and DRYAD [@chave_towards_2009] databases (see \@ref(tab:A2traits)). We kept dataset given by GLOPNET as origin dataset for observations. Dataset defined as origin corresponded to leaf lifespan ($LL$) and most of the time to leaf mass per area ($LMA$) and leaf nitrogen content per leaf dry mass ($Nmass$). We measured variable importance in functionnal traits to explain leaf lifespan with an out-of the bag method applied on a random forest. Then, we used a bayesian apporach to test different models with growing level of complexity. We retained the model with the best tradeoff between model complexity (number of parameters $K$), convergence, likelihood, and prediction quality (root mean sqaure error of prediciton $RMSEP$). We finally tested the new allometry obtained with the selected model with TROLL simulations.
+We compiled functional traits from GLOPNET [@wright_worldwide_2004], TRY [@Kattge2011], and DRYAD [@chave_towards_2009] databases (see \@ref(tab:A2traits)). We kept dataset given by GLOPNET as origin dataset for observations. Dataset defined as origin corresponded to leaf lifespan ($LL$) and most of the time to leaf mass per area ($LMA$) and leaf nitrogen content per leaf dry mass ($Nmass$). We measured variable importance in functional traits to explain leaf lifespan with an out-of the bag method applied on a random forest. Then, we used a Bayesian approach to test different models with growing level of complexity. We retained the model with the best trade-off between model complexity (number of parameters $K$), convergence, likelihood, and prediction quality (root mean square error of prediction $RMSEP$). We finally tested the new allometry obtained with the selected model with TROLL simulations.
 
 ```{r A2traits, echo=FALSE}
 knitr::kable(data.frame(
@@ -104,7 +109,7 @@ The selected model had a maximum likelihood of 13.6 and a RMSEP of 12 months:
   (\#eq:LL)
 \end{equation}
 
-Leaf lifespan $LL$ follows a lognormal law with location infered from leaf lifespan $LMA$, nitrogen content $N$ and wood specific gravity $wsg$ and a scale $\sigma$. Each ${\beta_i}_d$ is following a normal law located on $\beta_i$ with a scale of $\sigma_i$. All $\beta_i$, $\sigma_i$, and $\sigma$ are assumed without presemption following a gamma law. $d$ represents the dataset random effects and encompass environmental and protocol variations.
+Leaf lifespan $LL$ follows a log-normal law with location inferred from leaf lifespan $LMA$, nitrogen content $N$ and wood specific gravity $wsg$ and a scale $\sigma$. Each ${\beta_i}_d$ is following a normal law located on $\beta_i$ with a scale of $\sigma_i$. All $\beta_i$, $\sigma_i$, and $\sigma$ are assumed without preemption following a gamma law. $d$ represents the dataset random effects and encompass environmental and protocol variations.
 
 ```{r A2LLpred, echo=FALSE, fig.cap='Leaflifespan predictions for the selected model with leaf mass per area (LMA), leaf nitrogen content (Nmass), wood specific gravity (wsg) and predicted versus observed values. Leaf lifespan (LL) is predicted with model M10 fit. Leaf mass per area (LMA) and leaf nitrogen content (Nmass), and wood specific gravity (wsg) are taken in a composite dataset of GLOPNET, TRY and DRYAD  datasets.Warning LMA (resp. Nmass and wsg) is not constant and depend on the closest point value for right (resp. center and left) graph.', cache=TRUE, fig.height=12, fig.width=12}
 library(ggplot2)
@@ -178,7 +183,7 @@ predvsobs<- ggplot(pred, aes(x = obs, y = mean)) +
 cowplot::plot_grid(lma, nm, wsg, predvsobs, labels = c('LMA', 'Nmass', 'wsg', 'P v. O'))
 ```
 
-Simulations are validating that this new allometry resolve the issue of unrealistically low aboveground biomass for low LMA species due to an early death of individuals inside simulations. For instance with this allometry Symphonia sp 1 (a low LMA species) is now reaching a realistic aboveground biomass above 400 $tonC.ha^{-1}$ and realistic diameter and age distribution inside the final population.
+Simulations are validating that this new allometry resolve the issue of unrealistically low aboveground biomass for low LMA species due to an early death of individuals inside simulations. For instance with this allometry *Symphonia sp 1* (a low LMA species) is now reaching a realistic aboveground biomass above 400 $tonC.ha^{-1}$ and realistic diameter and age distribution inside the final population.
 
 # References
 

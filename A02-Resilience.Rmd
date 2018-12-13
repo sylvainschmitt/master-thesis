@@ -1,5 +1,5 @@
 ---
-title: "Supplementary material S2: Resilience indice"
+title: "A02 - Resilience index"
 date: '`r Sys.Date()`'
 output:
   bookdown::html_document2:
@@ -127,10 +127,10 @@ bind_rows(
   ggsave(filename = "./images/original2.png", width = 20, height = 20, units = "cm")
 ```
 
-This document introduces and explains the recovery function $R(X)$ and the resilience indice $I_R$ definitions (figure \@ref(fig:IrGraphFinal)). Resilience concept has met numerous definitions, but resilience in ecology can encompass both ecosystem ability to adsorb and recover from disturbance, resistance and recovery respectively [@Gunderson2010].
+This document introduces and explains the recovery function $R(X)$ and the resilience index $I_R$ definitions (figure \@ref(fig:IrGraphFinal)). Resilience concept has met numerous definitions, but resilience in ecology can encompass both ecosystem ability to adsorb and recover from disturbance, resistance and recovery respectively [@Gunderson2010].
 
 ```{r IrGraphFinal, fig.cap="Definition of recovery function and resilience indice shown on aboveground biomass dynamics of a control and disturbed ecosystem before and after the disturbance event."}
-knitr::include_graphics("images/final.png")
+knitr::include_graphics("images/figure3.png")
 ```
 
 # Recovery
@@ -146,7 +146,7 @@ where $X_D(t)$ and $X_C(t)$ are the ecosystem metric values at time $t$ in the d
 
 # Resilience
 
-When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$. Because the intensity of disturbance was the same for all simulations, our analysis did not include any ecosystem resistance, i.e. the ecosystem capacity to absorb a disturbance event,. Consequently **in this particular case**, we can use the cummulated recovery as an indice of ecosystem resilience, further defined as $I_R$:
+When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$. Because the intensity of disturbance was the same for all simulations, our analysis did not include any ecosystem resistance, i.e. the ecosystem capacity to absorb a disturbance event,. Consequently **in this particular case**, we can use the cummulated recovery as an index of ecosystem resilience, further defined as $I_R$:
 
 \begin{equation}
   I_R(X) = \int _{t=0} ^{t=600} \frac{X_D(t)}{X_C(t)}.dt
@@ -158,6 +158,7 @@ A high value of $I_R$ indicating a slow recovery. Ecosystem euclidean distance t
 ```{r datatrans, echo=FALSE, fig.cap='Ecosystem outputs data transformation. Ecosystem outputs (**A**) are normalized by the control value over time to calculate recovery (**B**); recovery of different ecosystem outputs is then used in a multidimensional space to caluclate ecosystem distance to equilibrium (**C**); finally distance at equilibrium is integrated over time in a cumulative sum (**D**). ', cache=TRUE, fig.height=8, fig.width=12, message=FALSE}
 cols <- RColorBrewer::brewer.pal(3, "YlOrRd")
 g_agb <- ecosystem %>% 
+  ungroup() %>% 
   left_join(., doe, by = 'sim') %>%
   filter(SR == 125) %>% 
   filter(cvh == 1) %>% 
@@ -168,6 +169,7 @@ g_agb <- ecosystem %>%
   scale_color_manual('Disturbance\nintensity\n(% of BA)',
                        values=c("#999999", cols))
 g_resilience <- resilience %>% 
+  ungroup() %>%
   left_join(., doe, by = 'sim') %>%
   filter(SR == 125) %>% 
   filter(cvh == 1) %>% 
@@ -180,6 +182,7 @@ g_resilience <- resilience %>%
                      values = cols)
 g_deq <- Deq %>% 
   left_join(., doe, by = 'sim') %>%
+  ungroup() %>%
   filter(SR == 125) %>% 
   filter(cvh == 1) %>% 
   ggplot(aes(x = time, y = structure, 
