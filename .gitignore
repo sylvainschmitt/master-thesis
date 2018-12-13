@@ -8,3 +8,6 @@
 *.tex
 images/*
 .httr-oauth
+share
+*.zip
+*.url

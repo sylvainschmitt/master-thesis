@@ -1,5 +1,5 @@
 ---
-title: "Supplementary material S1: Leaf lifespan model"
+title: 'Supplementary material S1: Leaf lifespan model'
 date: '`r Sys.Date()`'
 output:
   bookdown::word_document2: default
@@ -14,11 +14,13 @@ output:
     number_sections: no
     toc: no
     keep_tex: yes
+  gdoc::gdoc: default
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
 link-citations: yes
+gdoc_id: 1G5GQy7yxmwSsUCcC_Exky_cPYDhwHxNcVXnnILdPAUs
 ---
-
+ 
 TROLL model previous implementation encompass Reich's 1991 and 1997 and Wright's 2004 allometries to estimate leaf lifespan with  [@Reich1991a; @Reich1997; @wright_worldwide_2004]. But we have shown that Reich's allometries are underestimating leaf lifespan for low LMA species. Moreover simulations estimated unrealistically low aboveground biomass for low LMA species. We assumed Reich's allometries underestimation of leaf lifespan for low LMA species being the source of unrealistically low aboveground biomass inside TROLL simulations. We decided to find a better allometry with @wright_worldwide_2004 GLOPNET dataset.
 
 # Material and methods
@@ -186,4 +188,3 @@ cowplot::plot_grid(lma, nm, wsg, predvsobs, labels = c('LMA', 'Nmass', 'wsg', 'P
 Simulations are validating that this new allometry resolve the issue of unrealistically low aboveground biomass for low LMA species due to an early death of individuals inside simulations. For instance with this allometry *Symphonia sp 1* (a low LMA species) is now reaching a realistic aboveground biomass above 400 $tonC.ha^{-1}$ and realistic diameter and age distribution inside the final population.
 
 # References
-

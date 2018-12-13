@@ -4,10 +4,7 @@ author: Sylvain Schmitt, Isabelle Maréchaux, Jerome Chave, Fabian Fischer, Cami
   Piponiot, Stéphane Traissac & Bruno Hérault
 date: '`r Sys.Date()`'
 output:
-  bookdown::html_document2:
-    number_sections: no
-    toc: yes
-    toc_float: yes
+  bookdown::word_document2: default
   bookdown::pdf_document2:
     includes:
       before_body: ./template/doc_prefix.tex
@@ -16,7 +13,10 @@ output:
     toc: no
     keep_tex: yes
   gdoc::gdoc: default
-  bookdown::word_document2: default
+  bookdown::html_document2:
+    number_sections: no
+    toc: yes
+    toc_float: yes
 linestretch: 1.5
 csl: /home/sylvain/Documents/Bibliography/csl/mee.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
