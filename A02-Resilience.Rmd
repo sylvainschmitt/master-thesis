@@ -78,8 +78,8 @@ mature %>%
   xlab("Time (years)") +
   ylab("Aboveground biomass (tonC/ha)") +
   scale_color_discrete("Disturbance\nintensity\n(% of BA)", 
-                       labels = c("0 (control)", "50 (disturbed)")) +
-  ggsave(filename = "./images/original1.png", width = 20, height = 10, units = "cm")
+                       labels = c("0 (control)", "50 (disturbed)")) #+
+  # ggsave(filename = "./images/original1.png", width = 20, height = 10, units = "cm")
 ```
 
 ```{r IrGraph2, eval=F, include=F}
@@ -96,7 +96,7 @@ bind_rows(
     reshape2::dcast(time ~ disturbance, value.var = "agb") %>% 
     rename(control = `0`, treatment = `50`) %>% 
     mutate(control = ifelse(is.na(control), treatment, control)) %>% 
-    mutate(type = "Raw"),
+    mutate(type = "Above-ground biomass (MgC/ha)"),
   mature %>% 
     select(time, sim, agb) %>% 
     separate(sim, c("SR", "CVH"), remove = F) %>% 
@@ -111,16 +111,15 @@ bind_rows(
     mutate(control = ifelse(is.na(control), treatment, control)) %>% 
     mutate(treatment = treatment/control) %>% 
     mutate(control = control/control) %>%
-    mutate(type = 'Normalized by control')
-) %>% 
-  mutate(type = factor(type, levels=c('Raw', 'Normalized by control'))) %>% 
+    mutate(type = 'AGB recovery')
+) %>%
   ggplot(aes(x = time)) +
   geom_line(aes(y = control, color = "control")) +
   geom_line(aes(y = treatment, color = "disturbed")) +
   geom_ribbon(aes(ymax = control, ymin = treatment), 
               fill = "lightgrey", col = NA, alpha = 0.5) +
   xlab("Time (years)") +
-  ylab("Aboveground biomass (tonC/ha)") +
+  ylab("") +
   scale_color_discrete("Disturbance\nintensity\n(% of BA)", 
                        labels = c("0 (control)", "50 (disturbed)")) +
   facet_wrap(~type, nrow = 2, scales = "free") +
