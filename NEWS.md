@@ -1,3 +1,6 @@
+# Draft 0.1.9012
+* Co-authors sharing v2
+
 # Draft 0.1.9011
 * JC and CP review except discussion last paragraph
 

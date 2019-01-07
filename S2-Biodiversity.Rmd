@@ -1,0 +1,99 @@
+---
+title: 'Supplementary material S2: Biodiversity trajectories'
+output:
+  bookdown::word_document2: default
+  bookdown::pdf_document2:
+    number_sections: false
+  bookdown::html_document2:
+    number_sections: false
+    toc_float: yes
+csl: /home/sylvain/Documents/Bibliography/csl/joe.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
+
+```{r config, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls()); invisible(gc())
+library(knitr)
+library(kableExtra)
+if(knitr:::is_html_output()) options(knitr.table.format = "html") 
+if(knitr:::is_latex_output()) options(knitr.table.format = "latex") 
+library(tidyverse)
+library(broom)
+theme_set(bayesplot::theme_default())
+opts_chunk$set( echo = F, message = F, warning = F, 
+                fig.height = 8, fig.width = 12,
+                cache = T, cache.lazy = F)
+```
+
+```{r BE, echo=FALSE}
+rich <- c(5,25,125)
+cvh <- 1:20
+dist <- c(0,25,50,75)
+path <- '~/Documents/ECOFOG/Results/disturbance/disturbance/data'
+load(file.path(path, 'disturbanceDOE.Rdata'))
+doe <- rename(doe, SR = richness)
+load(file.path(path, 'disturbanceData.Rdata'))
+load(file.path(path, 'disturbanceBE.Rdata'))
+load(file.path(path, 'disturbanceBErecovery.Rdata'))
+load(file.path(path, '../../maturity', 'matureBE.Rdata'))
+load(file.path(path, '../../maturity', 'matureData.Rdata'))
+mature <- datal$time ; rm(datal)
+```
+
+This document explore the biodiversity trajectories of aboveground biomass partitioned into complementarity and selection effects from forest establishment from a bare soil to 600 years after the disturbance event (Figure \@ref(fig:gBE)). Similarly to the aboveground biomass of the ecosystem, the net biodiversity effect and selection effect decrease following the disturbance, whereas the complementarity effect directly increases following the disturbance (sub-figure on right-bottom on figure \@ref(fig:gBE)). Interestingly, we can see that this pattern of decrease of selection effect after disturbance and recovery after is similar to the effect of succession in forest early stages, when the new cohort arrives selection effect suddenly decreases and complementarity effect insure a small net effect (first century, sub-figure on left-bottom on figure \@ref(fig:gBE)). Anyway the pattern is stronger after a disturbance, maybe due to an increased diversity allowing a stronger diversity effect compared to the absence of already existing diversity when forest established from bare soil.
+
+```{r gBE, fig.cap='Dynamic of complementarity and selection effects before and after the disturbance event for one ecosystem simulation including 125 species. Solid lines represents the mean value whereas shaded areas represents the interval of values among simulations.', fig.height=10}
+g <- BE %>% 
+  select(sim, BE, time, agb) %>% 
+  separate(sim, c("SR", "CHV", "disturbance"), remove = F) %>% 
+  rbind(ecosystem %>% 
+          mutate(BE = "ecosystem") %>%
+          select(sim, BE, time, agb) %>% 
+          separate(sim, c("SR", "CHV", "disturbance"), remove = F)) %>% 
+  rbind(BE_mature %>% 
+          mutate(time = time - 600) %>% 
+          select(sim, BE, time, agb) %>% 
+          separate(sim, c("SR", "CHV"), remove = F) %>% 
+          mutate(disturbance = "0-75") %>% 
+          separate_rows(disturbance, sep = "-", convert = T)) %>% 
+  rbind(mature %>% 
+          mutate(time = time-600) %>% 
+          mutate(BE = "ecosystem") %>% 
+          select(sim, BE, time, agb) %>% 
+          separate(sim, c("SR", "CHV"), remove = F) %>% 
+          mutate(disturbance = "0-75") %>% 
+          separate_rows(disturbance, sep = "-", convert = T)) %>% 
+  filter(SR == 125, disturbance %in% c(0,75), CHV == 10) %>% # 10, 3
+  reshape2::dcast(SR + CHV + BE + time ~ disturbance, value.var = "agb") %>% 
+  rename(control = `0`, disturbed = `75`) %>% 
+  ggplot(aes(x = time, col = BE, group = BE)) +
+  geom_line(aes(y = control, linetype = "control")) +
+  geom_line(aes(y = disturbed, linetype = "disturbed")) + 
+  xlab("Time (years)") + 
+  ylab("Aboveground biomass (tonC/ha)") +
+  theme(text = element_text(size=20),
+        legend.key.size=unit(2,"line"))
+g0 <- g + 
+  geom_line(aes(y = control, linetype = "control")) +
+  geom_line(aes(y = disturbed, linetype = "disturbed")) + 
+  geom_ribbon(aes(ymin = disturbed, ymax = control), 
+              col = NA, fill = "lightgrey", alpha = 0.5) +
+  scale_color_discrete("Biodiversity\neffect") +
+  xlab("")
+gdist <- g + 
+  geom_line(aes(y = control, linetype = "control"), lwd = 1.4) +
+  geom_line(aes(y = disturbed, linetype = "disturbed"), lwd = 1.4) + 
+  xlim(-10,100) + ylim(-30000, 40000) +
+  scale_color_discrete(guide = F) +
+  scale_linetype_discrete(guide = F) +
+  ylab("")
+gstart <- g + 
+  geom_line(aes(y = control, linetype = "control"), lwd = 1.4) +
+  geom_line(aes(y = disturbed, linetype = "disturbed"), lwd = 1.4) + 
+  xlim(-600,-500) + ylim(-30000, 40000) +
+  scale_color_discrete(guide = F) +
+  scale_linetype_discrete(guide = F) +
+  ylab("")
+gridExtra::grid.arrange(g0, gstart, gdist, layout_matrix = rbind(c(1, 1), c(2, 3)))
+```
