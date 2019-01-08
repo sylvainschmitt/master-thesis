@@ -1,0 +1,25 @@
+---
+author: 
+- Sylvain Schmitt,
+- on the behalf of the authors
+opening: Dear Editor-in-chief,
+closing: Sincerely,
+address:
+- "__Object__: Submission of a manuscript to Journal of Ecology"
+return-address:
+- Sylvain Schmitt
+- Campus agronomique
+- BP 316
+- 97379 Kourou, French Guiana
+output: linl::linl
+---
+
+We would like to submit an original research article entitled “Biodiversity improves tropical forest resilience” for consideration by Journal of Ecology. In this manuscript, we present an original research assessing *in silico* the effect of species and functional diversity on long-term forest recovery from disturbances.
+
+In tropical forests, the role of biodiversity in ecosystem resilience remain under-documented. Using an individual-based and spatially-explicit model of tropical forest simulating high-diversity levels, we assessed the biodiversity effect on forest resilience and underlying mechanisms. We found that functional diversity improved tropical forest resilience from disturbance with underlying ecological mechanisms changing in dominance with time. In addition, our results suggest that pre-disturbance history is a key to our understanding of the ecological mechanisms that underlie the resilience of tropical forests and can help reconciling previous contrasted results obtained with limited snapshots of ecosystem state.
+
+We believe that this manuscript is appropriate for publication by Journal of Ecology because the journal recently published several articles related to forest or ecosystem resilience focusing on ecological mechanisms, and more generally to the field of Biodiversity and Ecosystem Functioning. Moreover, we believe that our specific research is likely to attract a large audience because it shed new lights on previous contrasted biodiversity-ecosystem functioning studies.
+
+We have no conflicts of interest to disclose. This work is all original research and is not being considered for publication elsewhere
+
+Thank you for your consideration.

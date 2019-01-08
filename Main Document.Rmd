@@ -1,6 +1,6 @@
 ---
 title: Biodiversity improves tropical forest resilience
-author: Sylvain Schmitt$^{1,*}$, Isabelle Maréchaux$^2$, Jerome Chave $^3$, Fabian Fischer$^3$, Camille  Piponiot$^4$, Stéphane Traissac$^5$, Bruno Hérault$^6$
+author: Sylvain Schmitt$^{*,1,2}$, Isabelle Maréchaux$^3$, Jerome Chave $^4$, Fabian Fischer$^4$, Camille  Piponiot$^5$, Stéphane Traissac$^6$, Bruno Hérault$^{7,8}$
 output:
   bookdown::pdf_document2:
     includes:
@@ -9,11 +9,6 @@ output:
     number_sections: no
     toc: no
     keep_tex: yes
-  bookdown::word_document2: default
-  bookdown::html_document2:
-    number_sections: no
-    toc: yes
-    toc_float: yes
 linestretch: 1.5
 csl: /home/sylvain/Documents/Bibliography/csl/joe.csl
 bibliography: /home/sylvain/Documents/Bibliography/library.bib
@@ -24,8 +19,7 @@ link-citations: yes
 rm(list = ls()); invisible(gc())
 library(knitr)
 library(kableExtra)
-if(knitr:::is_html_output()) options(knitr.table.format = "html") 
-if(knitr:::is_latex_output()) options(knitr.table.format = "latex") 
+options(knitr.table.format = "latex") 
 library(tidyverse)
 library(broom)
 theme_set(bayesplot::theme_default())
@@ -61,20 +55,31 @@ Ir <- Deq %>%
   filter(time == 600)
 ```
 
-$^1$ UMR BIOGECO, Université de Bordeaux, 69 route d’Arcachon, F-33612 Cestas cedex France
+```{r BE, echo=FALSE}
+load(file.path(path, 'disturbanceBE.Rdata'))
+load(file.path(path, 'disturbanceBErecovery.Rdata'))
+```
 
-$^2$ AMAP, INRA, University of Montpellier, IRD, CIRAD, CNRS, , Montpellier, France
+$^1$ CNRS, UMR EcoFoG (Agroparistech, Inra, Université des Antilles, Université de la Guyane, Cirad), Campus Agronomique, 97310 Kourou, French Guiana
 
-$^3$ Laboratoire Evolution et Diversité Biologique, UMR5174, CNRS, Université Paul Sabatier, IRD, Toulouse Cedex 9, France
+$^2$ UMR BIOGECO, Université de Bordeaux, 69 route d’Arcachon, F-33612 Cestas cedex France
 
-$^4$ Université de Guyane, UMR EcoFoG (Agroparistech, CNRS, Inra, Université des
+$^3$ AMAP, INRA, University of Montpellier, IRD, CIRAD, CNRS, , Montpellier, France
+
+$^4$ Laboratoire Evolution et Diversité Biologique, UMR5174, CNRS, Université Paul Sabatier, IRD, Toulouse Cedex 9, France
+
+$^5$ Université de Guyane, UMR EcoFoG (Agroparistech, CNRS, Inra, Université des
 Antilles, Cirad), Kourou, French Guiana
 
-$^5$ AgroParisTech, UMR ECOlogie des FOrêts de Guyane, 97387 Kourou, France
+$^6$ AgroParistech, UMR EcoFoG (CNRS, Inra, Université des Antilles, Université de la Guyane, Cirad), Campus Agronomique, 97310 Kourou, French Guiana
 
-$^6$ INPHB, Institut National Polytechnique Félix Houphouët-Boigny, BP 1093, Yamoussoukro, Ivory Coast
+$^7$ Cirad, UMR EcoFoG (AgroParistech, CNRS, Inra, Université des Antilles, Université de la Guyane), Campus Agronomique, 97310 Kourou, French Guiana
 
-$^*$ Corresponding author: sylvain.schmitt@agroparistech.fr
+$^8$ INPHB, Institut National Polytechnique Félix Houphouët-Boigny, BP 1093, Yamoussoukro, Ivory Coast
+
+__$^*$ Corresponding author:__ sylvain.schmitt@agroparistech.fr
+
+\newpage 
 
 # Abstract
 
@@ -88,6 +93,8 @@ $^*$ Corresponding author: sylvain.schmitt@agroparistech.fr
 ## Keywords
 
 Resilience; Recovery; Functional diversity; Tropical forest; Complementarity effect; Selection effect; Biodiversity-ecosystem functioning; 
+
+\newpage 
 
 # Introduction 
 
@@ -109,15 +116,6 @@ TROLL is an individual-based and spatially explicit forest dynamic model. The mo
 
 Carbon assimilation is computed over half-hourly period of a representative day per month using the Farquhar, von Caemmerer, and Berry model of photosynthesis [@Farquhar1980].  Photosynthetic capacities, as well as leaf respiration rate, are computed from species-specific leaf concentration of nitrogen (N) and phosphorous (P), and leaf mass per area [LMA; @Atkin2015; @Domingues2010]. The net amount of assimilated carbon allocated to growth is then partitioned among the different plant organs using empirical factors, and the fraction allocated to woody growth is converted into increments of stem volume using species-specific wood density; while the fraction allocated to leaves is converted into leaf area increment using LMA. Leaf demography is simulated using species-specific leaf lifespan derived from LMA. Here we did not use the same relationship between LMA and leaf lifespan as in @Marechaux2017, as we found that it generated an underestimation of leaf lifespan for low LMA species. We thus designed a new leaf lifespan allometry, specific to tropical tree species, used throughout this study (see supplementary materials S1). Natural tree deaths are stochastic events and their rate is negatively correlated with wood density within TROLL, as observed pan-tropically [@kraft_functional_2010; @poorter_are_2008; @Wright2010] an also locally [@Aubry-Kientz2013]. Additionally, trees can die due to carbon starvation or treefalls. Below-ground processes, herbaceous plants, epiphytes and lianas are not simulated in this version of TROLL. The source code is written in C++ and version 2.3.1 used in this study are available at https://github.com/TROLL-code/TROLL. A further detailed description of the model is available in @Marechaux2017.
 
-```{r traits, echo=FALSE}
-table <- data.frame(
-  Abbreviation = c('$LMA$', '$N_m$', '$P_m$', '$wsg$', '$dbh_{thresh}$', '$h_{lim}$', '$a_h$'),
-  Description = c('leaf mass per area', 'leaf nitrogen content per dry mass', 'leaf phosphorous content per dry mass', 'wood specific gravity', 'diameter at breast height threshold', 'asymptotic height', 'parameter of the tree height-dbh allometry'),
-  Units = c('$\\textrm{g.m}^{-2}$', '$\\textrm{mg.g}^{-1}$', '$\\textrm{mg.g}^{-1}$', '$\\textrm{g.cm}^{-3}$', '$\\textrm{m}$', '$\\textrm{m}$', '$\\textrm{m}$')
-)
-knitr::kable(table, caption = 'Species-specific parameters used in TROLL from @Marechaux2017 Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.', format = 'pandoc')
-```
-
 In order to have a general overview of disturbance effect, a generic disturbance module was developed for this study. At a given iteration $disturb_{iter}$, individual trees are randomly picked following a uniform law, targeting neither individuals nor species. This ensures that there are no confounding factors due to disturbance type specificity. Selected individuals are then removed without triggering a treefall to control disturbed biomass volume. The operation is repeated until the cumulative basal area of removed trees reaches targeted threshold ($disturb_{intensity}$).
 
 ## Simulation experiment
@@ -125,15 +123,6 @@ In order to have a general overview of disturbance effect, a generic disturbance
 In order to assess the role of biodiversity on ecosystem recovery from disturbance, we  simulated forest trajectories for different levels of disturbance intensity ($disturb_{intensity}$) and tree community compositions. For each simulation, we first conducted a spin-up run, where we simulated forest regeneration from bare soil for 600 years (pre-disturbance step). We then simulated the disturbance described as above ($disturb_{iter}$), and finally let the simulated forest community freely recover from the disturbance during 600 years (post-disturbance step). Disturbance intensity ($disturb_{intensity}$) was fixed at 0% (control), 25%, 50% or 75% of basal area loss. For each level of disturbance, we performed 20 simulations differing in the original number of species (species richness $SR\{15,25,125\}$) and in floristic composition. For each level of species richness, we first created 1000 virtual communities by randomly picking the desired number of species among the regional species pool. Then of those 1000 communities, we selected 20 communities with a large range of convex hull volume $CVH$ [@Cornwell2006a] but with a community mean ($CM$) close to the one of the regional species pool ($CM_{LMA} = 115 \pm 19 ~\textrm{g.m}^{-2}$, $CM_{wsg} = 0.73 \pm 0.07~\textrm{g.cm}^{-3}$, $CM_{dmax} = 0.37 \pm 0.1~\textrm{m}$, $CM_{hmax} = 40 \pm 11~\textrm{m}$) in order to control for average functional composition. This led to 240 simulations varying in community composition and disturbance intensity ($3~SR*20~CHV*4~ levels~of~disturbance$). We focused on functional richness with convex hull volume $CVH$ and functional mean with community weighted mean $CWM$ to define simulation communities.
 
 All simulations were made with a parameterization for an Amazonian forest of French Guiana, picked in a pool of 163 parameterized species, as in @Marechaux2017.
-
-```{r, eval=F}
-doe %>% 
-  select(starts_with("CWM")) %>% 
-  reshape2::melt() %>% 
-  group_by(variable) %>% 
-  summarise_all(funs(mean, sd, min, max))
-```
-
 
 ## Analysis
 
@@ -145,7 +134,7 @@ Species and functional diversities were assessed for each simulation at the end 
 
 Simulated tropical forests were characterized in terms of changes in ecosystem properties regarding (i) forest structure (aboveground biomass ($AGB$ in $\textrm{Mg~C.ha}^{-1}$), basal area ($BA$ in $\textrm{m}^2.\textrm{ha}^{-1}$), total number of stem ($N$), number of stem above $10~\textrm{cm}$ diameter ($N10$), and number of stem above $30~\textrm{cm}$ diameter ($N30$)) and (ii) forest functioning (growth primary productivity ($GPP$ in $\textrm{MgC.ha}^{-1}$), net primary productivity ($NPP$ in $\textrm{MgC.ha}^{-1}$), tree autotrophic day-time respiration ($Rday$ in $\textrm{MgC.ha}^{-1}$) and tree autotrophic night-time respiration ($Rnight$ in $\textrm{MgC.ha}^{-1}$)).
 
-The recovery of the simulated forest at a time $t$, $R(t)$ regarding a given property $X$ was defined as follows (Figure \@ref(fig:IrGraphFinal)):
+The recovery of the simulated forest at a time $t$, $R(t)$ regarding a given property $X$ was defined as follows (Fig. \@ref(fig:IrGraphFinal)):
 
 \begin{equation}
   R[X(t)] = \frac{X_D(t)}{X_C(t)}
@@ -154,7 +143,7 @@ The recovery of the simulated forest at a time $t$, $R(t)$ regarding a given pro
 
 where $X_D(t)$ and $X_C(t)$ are the values for the ecosystem property $X$ at time $t$ in the disturbed simulation ($disturb_{intensity} = 25\%, 50\%, 75\%$) and in the control simulation ($disturb_{intensity} = 0\%$), respectively. Note that variability among replicated simulations with the same set-up, due to demographic stochasticity in the model, is low enough to assume a given simulation is representative of the community properties and dynamics given an initial species pool and disturbance intensity [@Marechaux2017].
 
-When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the Euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$ (Figure \@ref(fig:IrGraphFinal)). Because we set up the intensity of disturbance, our analysis did not include any ecosystem resistance, i.e. the ecosystem capacity to absorb a disturbance event. Consequently, in this particular case, we used the inverse of the cumulative Euclidean distance to the equilibrium as an index of ecosystem resilience, further defined as $I_R$ (Figure \@ref(fig:IrGraphFinal)):
+When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are considered equivalent, indicating a perfect recovery. We then calculated the Euclidean distance to this state of perfect recovery as $d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$ (Fig. \@ref(fig:IrGraphFinal)). Because we set up the intensity of disturbance, our analysis did not include any ecosystem resistance, i.e. the ecosystem capacity to absorb a disturbance event. Consequently, in this particular case, we used the inverse of the cumulative Euclidean distance to the equilibrium as an index of ecosystem resilience, further defined as $I_R$ (Fig. \@ref(fig:IrGraphFinal)):
 
 \begin{equation}
   I_R(X) = \frac 1 {\int _{t=disturb_{iter}} ^{t=disturb_{iter}+600} d_{eq}(t).dt}
@@ -162,14 +151,6 @@ When $R(t)$ approaches $R_{eq}=1$, the disturbed and control systems are conside
 \end{equation}
 
 A high value of $I_R$ indicates a high resilience. Distance to equilibrium $d_{eq}$ and resilience index $I_R$ were calculated in a multi-dimensional space for the two sets of ecosystem property values: (i) forest structure ($AGB$, $BA$, $N$, $N10$, and $N30$) and (ii) forest functioning ($GPP$, $NPP$, $Rday$, and $Rnight$). 
-
-<!-- $$R[X(t)] = \frac{X_D(t)}{X_C(t)}$$ -->
-<!-- $$d_{eq}(t) = \sqrt{(R_{eq}-R(t))^2}$$ -->
-<!-- $$I_R(X) = \frac1{\int _{t=disturb_{iter}} ^{t=disturb_{iter}+600} d_{eq}(t).dt}$$ -->
-
-```{r IrGraphFinal, fig.cap="Definition of recovery function R and resilience index $I_R$ shown for aboveground biomass dynamics for a simulation with $disturb_{intensity}=50\\%$."}
-knitr::include_graphics("images/figure3.png")
-```
 
 ### Biodiversity effect
 
@@ -207,224 +188,12 @@ where $X_{sp}$ is the ecosystem variable value for one species either in mixture
 
 ## Biodiversity effect on forest resilience
 
-```{r, eval=F}
-doe %>% 
-  select(SR, FDiv, FEve) %>% 
-  reshape2::melt(id.vars = "SR") %>% 
-  mutate(variable = paste0("$", variable, "$")) %>% 
-  group_by(variable, SR) %>% 
-  summarise(mean =  paste0("$", round(mean(value),2), 
-                           "\\pm", round(sd(value),2), "$")) %>% 
-  arrange(variable, desc(SR)) %>% 
-  kable(caption = 'Mean and standard deviation of the predisturbance functional diversity indices for each level of species richness.',
-        format = 'pandoc', col.names = c("Variable", "Species richness ($SR$)", 
-                                         "Mean")) %>% 
-  kable_styling(full_width = F)
-```
-
-As species richness ($SR$) increased from 5 to 125 species, functional diversity varied from $0.76\pm0.18$ to $0.96\pm0.02$ and evenness ($FEve$) varied from $0.46\pm0.24$ to $0.64\pm0.02$. Species richness ($SR$) was significantly correlated to functional indices (one-way ANOVA $p-value < 0.001$ for both $FDiv$ and $FEve$) and model $AIC$ was higher without $SR$, consequently we kept only $FDiv$ and $FEve$ within linear regressions. Both functional diversity ($FDiv$) and functional evenness ($FEve$) were positively related with $I_R$, i.e. forest resilience increased with both functional diversity and functional evenness (Figure \@ref(fig:gIr) and Table \@ref(tab:tgIr)). Similar results were obtained for all disturbance levels, with smaller p-values for higher disturbance intensity.
-
-```{r gIr, echo=FALSE, fig.cap='Variation of forest resilience with taxonomic and functional diversity for different levels of disturbance. Resilience index $I_R$ was represented against functional diversity ($FDiv$) for different levels of disturbance ($disturb_{intensity}$} = 25, 50 and 75% of total basal area); dot shapes varies with species richness whereas dot color indicates functional evenness ($FEve$). Solid lines and grey areas show fitted relationships with their mean and variance of the form $I_R = FDiv + \\epsilon$.', fig.width=10, fig.height=15}
-Ir %>% 
-  left_join(doe, by = "sim") %>% 
-  ungroup() %>% 
-  select(disturbance, 
-         structure, SR, FEve, FDiv) %>% 
-  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), value.name = "Ir") %>% 
-  ggplot(aes(FDiv, Ir, shape = SR, col = FEve, group = NA)) +
-  geom_smooth(method = 'lm', alpha = 0.3, colour= 'grey') +
-  geom_point(size = 4) +
-  facet_wrap(~disturbance, scales = "free", labeller = 'label_both', 
-             nrow = 3) + 
-  xlab('Functional diversity (FDiv)') +
-  ylab('Resilience indice Ir') +
-  scale_shape_discrete('Species\nrichness\n(SR)') +
-  scale_color_continuous('Functional\nevenness\n(FEve)') +
-  theme(text = element_text(size=20),
-        legend.key.size=unit(4,"line"))
-```
-
-```{r tgIr, cache=T}
-Ir %>% 
-  left_join(doe, by = "sim") %>% 
-  ungroup() %>% 
-  mutate(SR = as.numeric(SR)) %>% 
-  select(disturbance, structure, production,
-         SR, FEve, FDiv) %>% 
-  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), 
-                 variable.name = "Ir") %>% 
-  group_by(Ir, disturbance) %>%
-  do(fit = lm(log(value) ~ FEve + FDiv, data = .)) %>% 
-  # do(fit = lm(log(value) ~ FEve + FDiv, data = .)) %>% 
-  tidy(fit) %>% 
-  ungroup() %>% 
-  filter(term != "(Intercept)") %>% 
-  filter(!grepl("SR", term)) %>% 
-  mutate(`P-value` = ifelse(p.value < 0.001, "***",
-                            ifelse(p.value < 0.01, "**",
-                                   ifelse(p.value < 0.05, "*",
-                                          ifelse(p.value < 0.1, ".", 
-                                                 "n.s."))))) %>% 
-  mutate(Coefficient = round(estimate,2)) %>% 
-  mutate(value = paste(Coefficient, `P-value`)) %>%
-  mutate(value = cell_spec(value,
-                           bold = ifelse(grepl("*", value,
-                                               fixed = T), T, F))) %>%
-  reshape2::dcast(Ir + disturbance ~ term, value.var = "value") %>% 
-  left_join(Ir %>% 
-              left_join(doe, by = "sim") %>% 
-              ungroup() %>% 
-              mutate(SR = as.factor(SR)) %>% 
-              select(disturbance, structure, production,
-                     SR, FEve, FDiv) %>% 
-              reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), 
-                             variable.name = "Ir") %>% 
-              group_by(Ir, disturbance) %>%
-              do(fit = lm(log(value) ~ FEve + FDiv, data = .)) %>% 
-              glance(fit) %>% 
-              mutate(r.squared = round(r.squared, 2)) %>% 
-              select(Ir, disturbance, r.squared)) %>% 
-  mutate(Ir = ifelse(Ir == "production", "functioning", "structure")) %>% 
-  kable(caption = "Effects of functional diversity on forest resilience. Results of the linear regression testing the effect of functional diversity indices (FDiv and FEve) on the resilience index ($I_R$) for forest structure and functioning and for each level of disturbance intensity ($disturb_{intensity}$). To meet the assumption of normality $I_R$ was log-transformed. Test of FDiv and FEve effects was done by linear regression with FDiv and FEve as independent variables. Values of FDiv and FEve are coefficients from linear regressions. Significant $p-values$ are shown in bold. ns, non-significant; . p < 0.1; * p < 0.05; ** p < 0.01; *** p < 0.001.",
-        escape = F, col.names = c("$I_R$", "Disturbance intensity",
-                                  "FDiv", "FEve", "$R^2$")) %>% 
-  kable_styling(full_width = F) %>% 
-  column_spec(1, bold = T) %>%
-  collapse_rows(columns = 1:2)
-```
-
-
-```{r anova, eval=F}
-tHSD <- doe %>% 
-  ungroup() %>% 
-  mutate(SR = as.factor(SR)) %>% 
-  select(disturbance,
-         SR, FEve, FDiv) %>% 
-  reshape2::melt(id.vars = c("disturbance", "SR")) %>% 
-  group_by(variable) %>% 
-  do(anova = aov(value ~ SR, data = .)) %>% 
-  mutate(tHSD = TukeyHSD(anova, ordered = F, conf.level = 0.95)) %$%
-  lapply(tHSD, function(x) multcompView::multcompLetters(x[,4])) %>% 
-  lapply(function(x) data.frame(SR = names(x$Letters), group = x$Letters)) %>% 
-  bind_rows() %>% 
-  mutate(axis = c(rep("FEve", 3), rep("FDiv", 3)))
-doe %>% 
-  ungroup() %>% 
-  mutate(SR = as.factor(SR)) %>% 
-  select(disturbance,
-         SR, FEve, FDiv) %>% 
-  reshape2::melt(id.vars = c("disturbance", "SR")) %>% 
-  left_join(tHSD) %>% 
-  ggplot(aes(SR, value, fill = SR, label = group)) +
-  geom_boxplot() +
-  geom_text(aes(y = 1.1)) +
-  ggpubr::stat_compare_means(method = "anova", aes(label = paste("Anova", ..p.signif..))) +
-  facet_wrap(~ variable, scales = "free") +
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank())
-```
-
-```{r residualsHist, eval=F}
-Ir %>% 
-  left_join(doe, by = "sim") %>% 
-  ungroup() %>% 
-  mutate(SR = as.factor(SR)) %>% 
-  select(disturbance, structure, production,
-         SR, FEve, FDiv) %>% 
-  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), 
-                 variable.name = "Ir") %>% 
-  group_by(Ir, disturbance) %>%
-  do(residuals = residuals(lm(log(value) ~ FEve + FDiv, data = .))) %>% 
-  tidy(residuals) %>% 
-  ggplot(aes(x)) +
-  geom_histogram(bin = 20) +
-  geom_vline(xintercept = 0, col = "red") +
-  facet_grid(~ Ir + disturbance, scales = "free") +
-  xlab("Residuals")
-```
-
-```{r residualsTest, eval=F}
-Ir %>% 
-  left_join(doe, by = "sim") %>% 
-  ungroup() %>% 
-  mutate(SR = as.factor(SR)) %>% 
-  select(disturbance, structure, production,
-         SR, FEve, FDiv) %>% 
-  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), 
-                 variable.name = "Ir") %>% 
-  group_by(Ir, disturbance) %>%
-  do(residuals = residuals(lm(log(value) ~ FEve + FDiv, data = .))) %>% 
-  tidy(residuals) %>% 
-  group_by(Ir, disturbance) %>% 
-  do(normality = shapiro.test(.$x)) %>%
-  tidy(normality) %>% 
-  transmute(p.value = ifelse(p.value < 0.001, "***",
-                             ifelse(p.value < 0.01, "**",
-                                    ifelse(p.value < 0.05, "*",
-                                           ifelse(p.value < 0.1, ".", 
-                                                  "n.s.")))))
-```
+As species richness ($SR$) increased from 5 to 125 species, functional diversity varied from $0.76\pm0.18$ to $0.96\pm0.02$ and evenness ($FEve$) varied from $0.46\pm0.24$ to $0.64\pm0.02$. Species richness ($SR$) was significantly correlated to functional indices (one-way ANOVA $p-value < 0.001$ for both $FDiv$ and $FEve$) and model $AIC$ was higher without $SR$, consequently we kept only $FDiv$ and $FEve$ within linear regressions. Both functional diversity ($FDiv$) and functional evenness ($FEve$) were positively related with $I_R$, i.e. forest resilience increased with both functional diversity and functional evenness (Fig. \@ref(fig:gIr) and Table \@ref(tab:tgIr)). Similar results were obtained for all disturbance levels, with smaller p-values for higher disturbance intensity.
 
 ## Post-disturbance trajectories of biodiversity effect
 
-```{r BE, echo=FALSE}
-load(file.path(path, 'disturbanceBE.Rdata'))
-load(file.path(path, 'disturbanceBErecovery.Rdata'))
-```
+The net effect of biodiversity on each ecosystem property was quantified and partitioned into selection and complementarity effects after normalizing, as explained in the Methods section. We found that the complementarity effect sharply increased immediately after disturbance, was the dominant effect of biodiversity during the first decades and then progressively vanished (Fig. \@ref(fig:gBE)). When increasing the disturbance intensity, the effect of complementarity increased further and dominated even longer. The selection effect, on the other hand, sharply decreased just after disturbance, and only gradually came to play a more important role, dominating the net biodiversity effect ca. a century after disturbance. Finally, at high disturbance intensity, the net effect of biodiversity on aboveground biomass was still lower than the control 600 years after disturbance (Fig. \@ref(fig:gBE)). We found similar results, but with an amplified signal, for basal area ($BA$) and stem abundance ($N$). Finally, forest growth primary productivity ($GPP$) recovered only within a few years with a dominant complementarity effect.
 
-The net effect of biodiversity on each ecosystem property was quantified and partitioned into selection and complementarity effects after normalizing, as explained in the Methods section. We found that the complementarity effect sharply increased immediately after disturbance, was the dominant effect of biodiversity during the first decades and then progressively vanished (Figure \@ref(fig:gBE)). When increasing the disturbance intensity, the effect of complementarity increased further and dominated even longer. The selection effect, on the other hand, sharply decreased just after disturbance, and only gradually came to play a more important role, dominating the net biodiversity effect ca. a century after disturbance. Finally, at high disturbance intensity, the net effect of biodiversity on aboveground biomass was still lower than the control 600 years after disturbance (Figure \@ref(fig:gBE)). We found similar results, but with an amplified signal, for basal area ($BA$) and stem abundance ($N$). Finally, forest growth primary productivity ($GPP$) recovered only within a few years with a dominant complementarity effect.
-
-```{r tNE, echo=FALSE, cache=TRUE}
-library(reshape2)
-library(knitr)
-BE %>%
-  mutate(agb = agb/1000) %>% 
-  filter(BE == 'NE') %>%
-  melt(id.vars = c('BE', 'time', 'sim')) %>% 
-  left_join(., doe, by = 'sim') %>%
-  filter(SR == 125) %>%
-  filter(disturbance == 0) %>%
-  group_by(variable) %>% 
-  summarise(mean = mean(value, na.rm = T), 
-            sd = sd(value, na.rm = T)) %>% 
-  filter(variable != 'n30') %>% 
-  bind_cols(., data.frame(
-    name = c('aboveground biomass', 'basal area', 'number of stems', 
-             'number of stems above 10 cm dbh', 'growth primary production', 
-             'net primary production', 'autotrophic respiration during day',
-             'autotrophic respiration during night'),
-    unit = c('$\\textrm{MgC.ha}^{-1}$', '$\\textrm{m}^2.\\textrm{ha}^{-1}$', '$\\textrm{n.ha}^{-1}$', '$\\textrm{n.ha}^{-1}$', 
-             '$\\textrm{MgC.ha}^{-1}$', '$\\textrm{MgC.ha}^{-1}$', '$\\textrm{MgC.ha}^{-1}$', '$\\textrm{MgC.ha}^{-1}$'))) %>% 
-  mutate(NE = paste0("$", round(mean,2), "\\pm", round(sd,2), "$")) %>% 
-  select(name, NE, unit) %>% 
-  kable(caption = 'Mean and standard deviation of the biodiversity net effect across mature simulations before the disturbance event (i.e. after 600 years of regeneration) for different ecosystem variables.',
-        format = 'pandoc', col.names = c("Ecosystem property", "Net effect", "Unit")) %>% 
-  kable_styling(full_width = F)
-```
-
-```{r gBE, echo=FALSE, fig.cap='Post-disturbance trajectories of complementarity and selection effects on aboveground biomass for increasing levels of disturbance (25%, 50% and 75% of basal area loss). The net biodiversity ($NE$), complementarity ($CE$) and selection ($SE$) effects were normalized by the net effect of biodiversity in the control simulation ($disturb_{intensity}=0\\%$). Solid lines represents the mean value whereas shaded areas represent the range of values across the 20 simulations with a species richness ($SR$) of 125. Time axis has been square-root transformed to highlight first decades dynamic.'}
-BEresilience %>% 
-  left_join(., doe, by = 'sim') %>%
-  filter(SR == 125) %>% 
-  # filter(BE %in% c('SE', 'CE')) %>%
-  group_by(time, BE, disturbance, SR) %>%
-  summarise(qt1 =quantile(agb, probs=0.05),
-            qt2 =quantile(agb, probs=0.75),
-            mean=mean(agb),
-            n=n()) %>% 
-  ggplot(aes(x = time)) +
-  geom_hline(yintercept = 1, color = 'red') +
-  geom_hline(yintercept = 0, color = 'blue') +
-  geom_ribbon(aes(ymin = qt1, ymax = qt2, fill = BE), alpha = 0.3) +
-  geom_line(aes(y = mean, color = BE)) +
-  facet_grid(disturbance ~ SR, labeller = 'label_both') +
-  xlab('Time since disturbance (years)') +
-  ylab('Biodiversity effect on aboveground biomass') +
-  scale_x_sqrt() +
-  theme(text = element_text(size=20),
-        legend.key.size=unit(2,"line"))
-```
 
 # Discussion
 
@@ -456,67 +225,6 @@ However, our results suggest that the mechanisms through which biodiversity infl
 
 Together, this paves the way to a unifying framework to reconcile the apparent contradictions between previous studies advocating for the sole effect of complementarity or selection effects, and call for an accurate description of the ecosystem temporal context and past-history in future studies to improve global understanding of biodiversity and ecosystem functioning relations. This further open perspectives to a better prediction of ecosystem resilience in a context of increasing disturbances and biodiversity crisis.
 
-```{r LiteratureBiodiversityEffect, eval=F}
-literature <- data.frame(
-  Study = c("@Bauters2015", "@Finegan2015", "@Prado-Junior2016",
-            "@Lohbeck2016", "@DeAvila2018", "@Marechaux2017", "@Tobner2016",
-            "@Morin2014a", "@Cardinale2007", "@VanderSande2017a",
-            "@Poorter2017", "@Huang2018", "@Niklaus2017a",
-            "@Fargione2007"),
-  StudyType = c("Observation", "Observation", "Observation",
-                "Observation", "Experiment", "Simulation", "Experiment",
-                "Simulation", "Review", "Review",
-                "Observation", "Experiment", "Experiment", 
-                "Experiment"),
-  Type = c("Forest", "Forest", "Forest", 
-           "Forest", "Forest", "Forest", "Forest",
-           "Forest", "Grasslands-Tundra-Estuaries", "Forest",
-           "Forest", "Forest", "Forest", 
-           "Grassland"),
-  Biome = c("Tropical", "Tropical", "Tropical",
-            "Tropical", "Tropical", "Tropical", "Temperate",
-            "Temperate", "Temperate", "Tropical",
-            "Tropical", "SubTropical", "SubToprical", 
-            ""),
-  SubBiome = c("Wet", "Wet-Dry", "Dry",
-               "Wet?", "Wet", "Wet", "",
-               "", "", "",
-               "Wet", "", "", 
-               ""),
-  Effect = c("SE", "SE", "SE",
-             "SE", "SE", "SE", "SE",
-             "CE", "CE", "CE",
-             "CE", "CE", "CE", 
-             "SE-CE"),
-  Disturbed = c("Y", "N?", "Y",
-                "Y", "Y", "N", "Y",
-                "N", "?", "?",
-                "50%Y", "Y", "", 
-                "Y"),
-  Age = c("77yo", "", "12yo",
-          "1-29yo", "21yo", "600yo", "8yo",
-          "200yo", "", "",
-          "14-32yo", "8yo", "18yo", 
-          "10yo"),
-  DisturbationType = c("Plantation", "", "Grazing/Logging",
-                       "Secondary forest from fallow", "Logging-Thinning-Fire", "",
-                       "Plantation",
-                       "", "", "",
-                       "Logging", "Plantation", "Plantation", 
-                       "Plantation")
-)
-literature %>% 
-  select(Effect, Disturbed, Age, DisturbationType, Study, 
-         StudyType, Type, Biome, SubBiome) %>% 
-  arrange(Effect,
-          factor(Disturbed, levels = c("Y", "50%Y", "N", "N?", "?")),
-          factor(Age, levels = c("8yo", "10yo", "12yo", "18yo", "1-29yo",
-                                 "21yo", "14-32yo", "77yo", "200yo", "600yo", " "))) %>% 
-  kable() %>% 
-  kable_styling(full_width = F)
-```
-
-
 # Supplementary materials
 
 * Supplementary materials S1: Leaf lifespan model
@@ -531,4 +239,162 @@ literature %>%
 
 SS, BH and ST conceived the ideas, designed methodology and analysed model outputs; SS, IM and BH led the writing of the manuscript. All authors contributed critically to the drafts and gave final approval for publication.
 
-# References
+# References {-}
+
+<div id="refs"></div>
+
+\newpage 
+
+## Table captions
+
+__Table \@ref(tab:traits)__ Species-specific parameters used in TROLL from @Marechaux2017 Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.
+
+__Table \@ref(tab:tgIr)__ Effects of functional diversity on forest resilience. Results of the linear regression testing the effect of functional diversity indices (FDiv and FEve) on the resilience index ($I_R$) for forest structure and functioning and for each level of disturbance intensity ($disturb_{intensity}$). To meet the assumption of normality $I_R$ was log-transformed. Test of FDiv and FEve effects was done by linear regression with FDiv and FEve as independent variables. Values of FDiv and FEve are coefficients from linear regressions. Significant $p-values$ are shown in bold. ns, non-significant; . p < 0.1; * p < 0.05; ** p < 0.01; *** p < 0.001.
+
+__Table \@ref(tab:tNE)__ Mean and standard deviation of the biodiversity net effect across mature simulations before the disturbance event (i.e. after 600 years of regeneration) for different ecosystem variables.
+
+## Figure captions
+
+__Figure \@ref(fig:IrGraphFinal)__ Definition of recovery function R and resilience index $I_R$ shown for aboveground biomass dynamics for a simulation with $disturb_{intensity}=50\%$.
+
+__Figure \@ref(fig:gIr)__ Variation of forest resilience with taxonomic and functional diversity for different levels of disturbance. Resilience index $I_R$ was represented against functional diversity ($FDiv$) for different levels of disturbance ($disturb_{intensity}$} = 25, 50 and 75% of total basal area); dot shapes varies with species richness whereas dot color indicates functional evenness ($FEve$). Solid lines and grey areas show fitted relationships with their mean and variance of the form $I_R = FDiv + \epsilon$.
+
+__Figure \@ref(fig:gBE)__ Post-disturbance trajectories of complementarity and selection effects on aboveground biomass for increasing levels of disturbance (25%, 50% and 75% of basal area loss). The net biodiversity ($NE$), complementarity ($CE$) and selection ($SE$) effects were normalized by the net effect of biodiversity in the control simulation ($disturb_{intensity}=0\%$). Solid lines represents the mean value whereas shaded areas represent the range of values across the 20 simulations with a species richness ($SR$) of 125. Time axis has been square-root transformed to highlight first decades dynamic.
+
+\newpage 
+
+<!-- tables -->
+
+```{r traits, echo=FALSE}
+table <- data.frame(
+  Abbreviation = c('$LMA$', '$N_m$', '$P_m$', '$wsg$', '$dbh_{thresh}$', '$h_{lim}$', '$a_h$'),
+  Description = c('leaf mass per area', 'leaf nitrogen content per dry mass', 'leaf phosphorous content per dry mass', 'wood specific gravity', 'diameter at breast height threshold', 'asymptotic height', 'parameter of the tree height-dbh allometry'),
+  Units = c('$\\textrm{g.m}^{-2}$', '$\\textrm{mg.g}^{-1}$', '$\\textrm{mg.g}^{-1}$', '$\\textrm{g.cm}^{-3}$', '$\\textrm{m}$', '$\\textrm{m}$', '$\\textrm{m}$')
+)
+knitr::kable(table, caption = 'Species-specific parameters used in TROLL from @Marechaux2017 Data originates from the BRIDGE [@Baraloto2010] and TRY [@Kattge2011] datasets.', format = 'pandoc')
+```
+
+```{r tgIr}
+Ir %>% 
+  left_join(doe, by = "sim") %>% 
+  ungroup() %>% 
+  mutate(SR = as.numeric(SR)) %>% 
+  select(disturbance, structure, production,
+         SR, FEve, FDiv) %>% 
+  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), 
+                 variable.name = "Ir") %>% 
+  group_by(Ir, disturbance) %>%
+  do(fit = lm(log(value) ~ FEve + FDiv, data = .)) %>% 
+  tidy(fit) %>% 
+  ungroup() %>% 
+  filter(term != "(Intercept)") %>% 
+  filter(!grepl("SR", term)) %>% 
+  mutate(`P-value` = ifelse(p.value < 0.001, "***",
+                            ifelse(p.value < 0.01, "**",
+                                   ifelse(p.value < 0.05, "*",
+                                          ifelse(p.value < 0.1, ".", 
+                                                 "n.s."))))) %>% 
+  mutate(Coefficient = round(estimate,2)) %>% 
+  mutate(value = paste(Coefficient, `P-value`)) %>%
+  mutate(value = cell_spec(value,
+                           bold = ifelse(grepl("*", value,
+                                               fixed = T), T, F))) %>%
+  reshape2::dcast(Ir + disturbance ~ term, value.var = "value") %>% 
+  left_join(Ir %>% 
+              left_join(doe, by = "sim") %>% 
+              ungroup() %>% 
+              mutate(SR = as.factor(SR)) %>% 
+              select(disturbance, structure, production,
+                     SR, FEve, FDiv) %>% 
+              reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), 
+                             variable.name = "Ir") %>% 
+              group_by(Ir, disturbance) %>%
+              do(fit = lm(log(value) ~ FEve + FDiv, data = .)) %>% 
+              glance(fit) %>% 
+              mutate(r.squared = round(r.squared, 2)) %>% 
+              select(Ir, disturbance, r.squared)) %>% 
+  mutate(Ir = ifelse(Ir == "production", "functioning", "structure")) %>% 
+  kable(caption = "Effects of functional diversity on forest resilience. Results of the linear regression testing the effect of functional diversity indices (FDiv and FEve) on the resilience index ($I_R$) for forest structure and functioning and for each level of disturbance intensity ($disturb_{intensity}$). To meet the assumption of normality $I_R$ was log-transformed. Test of FDiv and FEve effects was done by linear regression with FDiv and FEve as independent variables. Values of FDiv and FEve are coefficients from linear regressions. Significant $p-values$ are shown in bold. ns, non-significant; . p < 0.1; * p < 0.05; ** p < 0.01; *** p < 0.001.",
+        col.names = c("$I_R$", "Disturbance intensity",
+                      "FDiv", "FEve", "$R^2$"), escape = F, format = "pandoc") %>% 
+  kable_styling(full_width = F) %>% 
+  column_spec(1, bold = T) %>%
+  collapse_rows(columns = 1:2)
+```
+
+```{r tNE, echo=FALSE, cache=TRUE}
+library(reshape2)
+library(knitr)
+BE %>%
+  mutate(agb = agb/1000) %>% 
+  filter(BE == 'NE') %>%
+  melt(id.vars = c('BE', 'time', 'sim')) %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(SR == 125) %>%
+  filter(disturbance == 0) %>%
+  group_by(variable) %>% 
+  summarise(mean = mean(value, na.rm = T), 
+            sd = sd(value, na.rm = T)) %>% 
+  filter(variable != 'n30') %>% 
+  bind_cols(., data.frame(
+    name = c('aboveground biomass', 'basal area', 'number of stems', 
+             'number of stems above 10 cm dbh', 'growth primary production', 
+             'net primary production', 'autotrophic respiration during day',
+             'autotrophic respiration during night'),
+    unit = c('$\\textrm{MgC.ha}^{-1}$', '$\\textrm{m}^2.\\textrm{ha}^{-1}$', '$\\textrm{n.ha}^{-1}$', '$\\textrm{n.ha}^{-1}$', 
+             '$\\textrm{MgC.ha}^{-1}$', '$\\textrm{MgC.ha}^{-1}$', '$\\textrm{MgC.ha}^{-1}$', '$\\textrm{MgC.ha}^{-1}$'))) %>% 
+  mutate(NE = paste0("$", round(mean,2), "\\pm", round(sd,2), "$")) %>% 
+  select(name, NE, unit) %>% 
+  kable(caption = 'Mean and standard deviation of the biodiversity net effect across mature simulations before the disturbance event (i.e. after 600 years of regeneration) for different ecosystem variables.',
+        format = 'pandoc', col.names = c("Ecosystem property", "Net effect", "Unit")) %>% 
+  kable_styling(full_width = F)
+```
+
+<!-- figures -->
+
+```{r IrGraphFinal, fig.cap="Definition of recovery function R and resilience index $I_R$ shown for aboveground biomass dynamics for a simulation with $disturb_{intensity}=50\\%$."}
+knitr::include_graphics("images/figure3.png") 
+```
+
+```{r gIr, echo=FALSE, fig.cap='Variation of forest resilience with taxonomic and functional diversity for different levels of disturbance. Resilience index $I_R$ was represented against functional diversity ($FDiv$) for different levels of disturbance ($disturb_{intensity}$} = 25, 50 and 75% of total basal area); dot shapes varies with species richness whereas dot color indicates functional evenness ($FEve$). Solid lines and grey areas show fitted relationships with their mean and variance of the form $I_R = FDiv + \\epsilon$.', fig.height=12, dpi=600}
+Ir %>% 
+  left_join(doe, by = "sim") %>% 
+  ungroup() %>% 
+  select(disturbance, 
+         structure, SR, FEve, FDiv) %>% 
+  reshape2::melt(id.vars = c("disturbance", "SR", "FEve", "FDiv"), value.name = "Ir") %>% 
+  ggplot(aes(FDiv, Ir, shape = SR, col = FEve, group = NA)) +
+  geom_smooth(method = 'lm', alpha = 0.3, colour= 'grey') +
+  geom_point(size = 4) +
+  facet_wrap(~disturbance, scales = "free", labeller = 'label_both', 
+             nrow = 3) + 
+  xlab('Functional diversity (FDiv)') +
+  ylab('Resilience indice Ir') +
+  scale_shape_discrete('Species\nrichness\n(SR)') +
+  scale_color_continuous('Functional\nevenness\n(FEve)') +
+  theme(text = element_text(size=20),
+        legend.key.size=unit(4,"line"))
+```
+
+```{r gBE, echo=FALSE, fig.cap='Post-disturbance trajectories of complementarity and selection effects on aboveground biomass for increasing levels of disturbance (25%, 50% and 75% of basal area loss). The net biodiversity ($NE$), complementarity ($CE$) and selection ($SE$) effects were normalized by the net effect of biodiversity in the control simulation ($disturb_{intensity}=0\\%$). Solid lines represents the mean value whereas shaded areas represent the range of values across the 20 simulations with a species richness ($SR$) of 125. Time axis has been square-root transformed to highlight first decades dynamic.', fig.height=12, dpi=600}
+BEresilience %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(SR == 125) %>% 
+  # filter(BE %in% c('SE', 'CE')) %>%
+  group_by(time, BE, disturbance, SR) %>%
+  summarise(qt1 =quantile(agb, probs=0.05),
+            qt2 =quantile(agb, probs=0.75),
+            mean=mean(agb),
+            n=n()) %>% 
+  ggplot(aes(x = time)) +
+  geom_hline(yintercept = 1, color = 'red') +
+  geom_hline(yintercept = 0, color = 'blue') +
+  geom_ribbon(aes(ymin = qt1, ymax = qt2, fill = BE), alpha = 0.3) +
+  geom_line(aes(y = mean, color = BE)) +
+  facet_grid(disturbance ~ SR, labeller = 'label_both') +
+  xlab('Time since disturbance (years)') +
+  ylab('Biodiversity effect on aboveground biomass') +
+  scale_x_sqrt() +
+  theme(text = element_text(size=20),
+        legend.key.size=unit(2,"line"))
+```
