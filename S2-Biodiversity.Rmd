@@ -1,5 +1,5 @@
 ---
-title: 'Supplementary material S2: Biodiversity trajectories'
+title: 'Supplementary material S2: Biodiversity effect trajectories'
 output:
   bookdown::word_document2: default
   bookdown::pdf_document2:
@@ -41,7 +41,7 @@ load(file.path(path, '../../maturity', 'matureData.Rdata'))
 mature <- datal$time ; rm(datal)
 ```
 
-This document explore the biodiversity trajectories of aboveground biomass partitioned into complementarity and selection effects from forest establishment from a bare soil to 600 years after the disturbance event (Figure \@ref(fig:gBE)). Similarly to the aboveground biomass of the ecosystem, the net biodiversity effect and selection effect decrease following the disturbance, whereas the complementarity effect directly increases following the disturbance (sub-figure on right-bottom on figure \@ref(fig:gBE)). Interestingly, we can see that this pattern of decrease of selection effect after disturbance and recovery after is similar to the effect of succession in forest early stages, when the new cohort arrives selection effect suddenly decreases and complementarity effect insure a small net effect (first century, sub-figure on left-bottom on figure \@ref(fig:gBE)). Anyway the pattern is stronger after a disturbance, maybe due to an increased diversity allowing a stronger diversity effect compared to the absence of already existing diversity when forest established from bare soil.
+This document explores the trajectories of biodiversity effect on aboveground biomass partitioned into complementarity and selection effects from forest establishment from a bare soil to 600 years after the disturbance event (Figure \@ref(fig:gBE)). Similarly to the aboveground biomass of the ecosystem, the net biodiversity effect and selection effect decrease following the disturbance, whereas the complementarity effect directly increases following the disturbance (sub-figure on right-bottom on figure \@ref(fig:gBE)). Interestingly, this pattern of post-disturbance decrease of selection effect, followed by a recovery phase, is similar to the effect of succession in forest early stages: when the new cohort arrives selection effect suddenly decreases and complementarity effect insures a small net effect (first century, sub-figure on left-bottom on figure \@ref(fig:gBE)). The pattern is stronger after a disturbance, maybe due to an increased diversity allowing a stronger diversity effect compared to the absence of already existing diversity when forest established from bare soil.
 
 ```{r gBE, fig.cap='Dynamic of complementarity and selection effects before and after the disturbance event for one ecosystem simulation including 125 species. Solid lines represents the mean value whereas shaded areas represents the interval of values among simulations.', fig.height=10}
 g <- BE %>% 

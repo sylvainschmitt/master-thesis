@@ -1,0 +1,64 @@
+---
+title: 'Supplementary material S3: ?'
+output:
+  bookdown::word_document2: default
+  bookdown::pdf_document2:
+    number_sections: false
+  bookdown::html_document2:
+    number_sections: false
+    toc_float: yes
+csl: /home/sylvain/Documents/Bibliography/csl/joe.csl
+bibliography: /home/sylvain/Documents/Bibliography/library.bib
+link-citations: yes
+---
+
+```{r config, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls()); invisible(gc())
+library(knitr)
+library(kableExtra)
+options(knitr.table.format = "latex") 
+library(tidyverse)
+library(broom)
+theme_set(bayesplot::theme_default())
+opts_chunk$set( echo = F, message = F, warning = F, 
+                fig.height = 8, fig.width = 12,
+                cache = T, cache.lazy = F)
+```
+
+```{r BE, echo=FALSE}
+path <- '~/Documents/ECOFOG/Results/disturbance/disturbance/data'
+load(file.path(path, 'disturbanceDOE.Rdata'))
+doe <- rename(doe, SR = richness)
+load(file.path(path, 'disturbanceBE.Rdata'))
+load(file.path(path, 'disturbanceBErecovery.Rdata'))
+```
+
+This document explores the trajectories of biodiversity effect on aboveground biomass partitioned into complementarity and selection effects from forest establishment from a bare soil to 600 years after the disturbance event (Figure \@ref(fig:gBE)). Similarly to the aboveground biomass of the ecosystem, the net biodiversity effect and selection effect decrease following the disturbance, whereas the complementarity effect directly increases following the disturbance (sub-figure on right-bottom on figure \@ref(fig:gBE)). Interestingly, this pattern of post-disturbance decrease of selection effect, followed by a recovery phase, is similar to the effect of succession in forest early stages: when the new cohort arrives selection effect suddenly decreases and complementarity effect insures a small net effect (first century, sub-figure on left-bottom on figure \@ref(fig:gBE)). The pattern is stronger after a disturbance, maybe due to an increased diversity allowing a stronger diversity effect compared to the absence of already existing diversity when forest established from bare soil.
+
+```{r gBE, echo=FALSE, fig.cap='Post-disturbance trajectories of complementarity and selection effects on aboveground biomass for increasing levels of disturbance (25%, 50% and 75% of basal area loss). The net biodiversity ($NE$), complementarity ($CE$) and selection ($SE$) effects were normalized by the net effect of biodiversity in the control simulation ($disturb_{intensity}=0\\%$). Solid lines represents the mean value whereas shaded areas represent the range of values across the 20 simulations with a species richness ($SR$) of 125. Time axis has been square-root transformed to highlight first decades dynamic.', fig.height=12, dpi=600}
+BEresilience %>% 
+  left_join(., doe, by = 'sim') %>%
+  filter(SR == 125) %>% 
+  select(time, BE, disturbance, SR,
+         agb, ba, n, n10, n30,
+         gpp, npp, Rday, Rnight) %>% 
+  reshape2::melt(id.vars = c("time", "BE", "disturbance", "SR")) %>% 
+  group_by(time, BE, disturbance, SR, variable) %>%
+  filter(!is.na(value)) %>% 
+  summarise(qt1 =quantile(value, probs=0.05),
+            qt2 =quantile(value, probs=0.75),
+            mean=mean(value),
+            n=n()) %>% 
+  ggplot(aes(x = time)) +
+  geom_hline(yintercept = 1, color = 'red') +
+  geom_hline(yintercept = 0, color = 'blue') +
+  geom_ribbon(aes(ymin = qt1, ymax = qt2, fill = BE), alpha = 0.3) +
+  geom_line(aes(y = mean, color = BE)) +
+  facet_grid(variable ~ disturbance, labeller = 'label_both', scales = "free") +
+  xlab('Time since disturbance (years)') +
+  ylab('Biodiversity effect') +
+  scale_x_sqrt() +
+  theme(text = element_text(size=20),
+        legend.key.size=unit(2,"line")) +
+  ylim(-0.5, 1.5)
+```

@@ -1,13 +1,13 @@
 ---
 author: 
-- Sylvain Schmitt,
+- Sylvain Schmitt & Bruno Hérault,
 - on the behalf of the authors
 opening: Dear Editor-in-chief,
 closing: Sincerely,
 address:
 - "__Object__: Submission of a manuscript to Journal of Ecology"
 return-address:
-- Sylvain Schmitt
+- Sylvain Schmitt & Bruno Hérault
 - Campus agronomique
 - BP 316
 - 97379 Kourou, French Guiana
